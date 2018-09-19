@@ -4,7 +4,7 @@
 
 Git may be the most popular distributed version control system in the world.
 It is created by Linus Torvalds for development of the Linux kernel. Git is
-primarilly used for source code management in software development, but it can
+primarily used for source code management in software development, but it can
 be used to for any set of files.
 
 Next, let's briefly talk about the Version Control System and the features of git briefly.
@@ -24,32 +24,32 @@ files over time so that you can go back to the previous states. Also it provides
 In general there are two types of version control systems, *Centralized Version
 Control Systems* and *Distributed Version Control Systems*. Centralized system has
 a client-server structure. All files are stored in a central server and users just
-can access specific files which adminitrators allow them to.
+can access specific files which administrators allow them to.
 
 Like we said before, git is a *distributed version control system*. Instead of
 certain files, it fully mirror the repository from the server, including history.
-This approach gives disctributed system some advantages that centralized system
+This approach gives distributed system some advantages that centralized system
 does not have. Such as users can work offline; if one server dies, any client
-can restore it easily. Furthermore, we can have several remote repositores working
+can restore it easily. Furthermore, we can have several remote repositories working
 simultaneously within the same project.
 
 ## How to Use Git
 
-At this part, let's talk about how to use git. I will just list some basic operations to let you get into git's world. If you want to know more, Pro Git[link] is a good book to read. You can get it free online.
+At this part, let's talk about how to use git. I will just list some basic operations to let you get into Git's world. If you want to know more, Pro Git[link] is a good book to read. You can get it free online.
 
 ### The Basic Construct of Git
 
 The files in git has three main states: committed, modified and staged:
-- Modifed means that you have changed something but have not put them into your database yet.
-- Staged means that you tell git which modifed files you want to commit.
-- Committed files are files that stroed in our local database
+- Modified means that you have changed something but have not put them into your database yet.
+- Staged means that you tell git which modified files you want to commit.
+- Committed files are files that stored in our local database
 
 [picture git states]
 
-At the root directory of each git repositoy, you can find a hidden directory called .git.
-This directory stores all the datas for your project. When you clone a repository from another computer, this is what you get. Delete .git, you will lose everything.
+At the root directory of each git repository, you can find a hidden directory called .git.
+This directory stores all the data for your project. When you clone a repository from another computer, this is what you get. Delete .git, you will lose everything.
 
-Another thing I want to talk about is *Branch*. One of the features of git is that it supports non-linear developments well. Branching means you diverge from the main line of development and to do some other works without messing with main line. Git's branching operation's overhead is small. It does not copy the files but use pointers to link your project snapshots together. This approach makes creating braches fast and lightweight. That's why git encourages people to do branch and merge often.
+Another thing I want to talk about is *Branch*. One of the features of git is that it supports non-linear developments well. Branching means you diverge from the main line of development and to do some other works without messing with main line. Git's branching operation's overhead is small. It does not copy the files but use pointers to link your project snapshots together. This approach makes creating branches fast and lightweight. That's why git encourages people to do branch and merge often.
 We will talk how to use branch later.
 
 ### First Time with Git
@@ -94,7 +94,7 @@ No commits yet
 nothing to commit (create/copy files and use "git add" to track)
 ```
 
-To track new files, use command `git add <file>`. This command will put files into the *staging area*, both new files or modified files. Only files in the staging area will be commited into the database. Now, let's add some files.
+To track new files, use command `git add <file>`. This command will put files into the *staging area*, both new files or modified files. Only files in the staging area will be committed into the database. Now, let's add some files.
 
 ```
 $ git add README.md assignment01.tex
@@ -151,9 +151,10 @@ Date:   Mon Sep 17 21:35:30 2018 +0900
     Initial the project.
 ```
 
-There are hash values for each commit. Git use the hash values to identify commits. By the way, this is a bad example of commit message. You can get nothing meaningful from above commit messages.
+There are hash values for each commit. Git use the hash values to identify commits. By the way, this is a example of bad commit messages. You can get nothing meaningful from above commit messages.
 
 With these hash values we can go back to previous commit through command `git checkout <hash>`:
+
 ```
 $ git checkout b2e78948
 Note: checking out 'b2e78948'.
@@ -177,9 +178,122 @@ To go back to the newest commit, type `git checkout master`.
 Sometimes you tracked the wrong files or you want to remove some tracked files. Delete them from the directory may not working well, because you need to tell git to stop tracking them. Use `git rm <file>` will remove the file from git and working directory.
 
 To avoid tracking some files that we do not need, `.gitignore` comes out. List patterns to match file names in `.gitignore`. Git will ignore all the files that are listed in `.gitignore` file.
-Git use *glob patterns` that shells use. If you do not know which files need to be ignored. Do not worry,https://www.gitignore.io/ can generate these rules for you. The only thing you need to do is input the working environment.
+Git use *glob patterns` that shells use. If you do not know which files need to be ignored. Do not worry, https://www.gitignore.io/ can generate these rules for you. The only thing you need to do is input the working environment.
 
 ### Branch
+
+It's time for branch now. Like we said before, git use pointer to link snapshots(commits)
+together. That means we can use pointer to switch between snapshots easily. Creating
+a new branch just creates a new pointer for us to move around.
+
+To create a new branch, use command `git branch <branch_name>`:
+
+```
+$ git branch testing
+$ git branch
+* master
+  testing
+```
+
+`git branch` command without any option will show us current branches. The branch
+with * before it is the branch that we are working on.
+
+Switch to other branch by `git checkout <branch_name>` command. Remember, we 
+use same command to check previous commits. Since they are just snapshots linked
+together. No actual difference between the normal commits and branches:
+```
+$ git check out testing
+Switched to branch 'testing'
+```
+
+Now you can do anything you want with your files. There is no impact on the content on the master branch.
+
+Assuming that we want to develop some new features. Here is the example of branch-merge workflow.
+First we go back to master branch
+and create another branch to start development:
+```
+$ git checkout master
+Switched to branch 'master'
+$ git branch -b new_feature
+$ Switched to branch 'new_feature'
+```
+
+`git checkout -b <branch>` will create a new branch then move on it automatically.
+
+After the development, we merge the `new_feature` branch back into `master` branch to deploy the feature. We do this with the `git merge` command:
+```
+Updating 7af3559..2628c91
+Fast-forward
+ README.md | 1 +
+ 1 file changed, 1 insertion(+)
+$ git checkout master
+$ git merge new_feature
+
+$ git branch
+* master
+  new_feature
+  testing
+```
+
+Because we no longer need new_feature branch, we can delete it with `git branch -d <branch>`:
+```
+$ git branch -d new_feature
+Deleted branch new_feature (was 2628c91).
+```
+
+Let's do it again. This time we merge testing branch into master:
+```
+$ git merge testing
+Auto-merging README.md
+CONFLICT (content): Merge conflict in README.md
+Automatic merge failed; fix conflicts and then commit the result.
+```
+
+This is time something new occurs. `
+CONFLICT (content): Merge conflict in README.md
+
+What is conflict? Sometimes we modified same file on different branch, when we merge two branches together, git cannot know which one is the file that we want. Thus, we have to resolve those conflicts manually. Check status first:
+```
+$ git status
+On branch master
+You have unmerged paths.
+  (fix conflicts and run "git commit")
+  (use "git merge --abort" to abort the merge)
+
+Unmerged paths:
+  (use "git add <file>..." to mark resolution)
+
+	both modified:   README.md
+
+no changes added to commit (use "git add" and/or "git commit -a")
+```
+
+The message tells us both branches modified `README.md` file.
+Use editor open README.md:
+```
+<<<<<<< HEAD
+Made some modification on branch new_feature
+=======
+Do some modification in branch testing
+>>>>>>> testing
+```
+
+the content between <<<<<<< and >>>>>>> is the conflict part. Top block is the
+content in current branch(in our case is master). Above block is the content from
+incoming branch.
+After we resolve the conflicts, stage the conflict file then commit the change:
+```
+$ git add README.md
+$ git commit
+
+$ git status
+On branch master
+nothing to commit, working tree clean
+```
+
+Finished the merge! In this context, we have tried some of the most basic and
+most commonly used commands. Next part we will talk about Github and how to use
+Github as our remote server.
 
 ## Collaborate Through Github
 
