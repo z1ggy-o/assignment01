@@ -1,9 +1,11 @@
-\documentclass[12pt, a4papaer]{article}
+\documentclass[10pt, a4papaer]{article}
 \usepackage[utf8]{inputenc}
 \usepackage{graphicx}
 \usepackage[colorlinks,linkcolor=blue]{hyperref}
 \usepackage{listings}
 \usepackage{color}
+\usepackage[hmargin=1.25in,right=1.25in,top=1in,bottom=1in]{geometry}
+\usepackage{hyperref}
 
 % listings setting
 \definecolor{codegreen}{rgb}{0,0.6,0}
@@ -33,16 +35,37 @@
 
 \lstset{style=mystyle}
 
-\title{A Short Introduction to Git}
-\author{Zhu Guangyu 20165953}
-\date{\today}
+%%%%%%%%%%%%%%%%%%
+\newcommand*{\titleGM}{\begingroup % Create the command for including the title page in the document
+\hbox{ % Horizontal box
+\hspace*{0.2\textwidth} % Whitespace to the left of the title page
+\rule{1pt}{\textheight} % Vertical line
+\hspace*{0.05\textwidth} % Whitespace between the vertical line and title page text
+\parbox[b]{0.75\textwidth}{ % Paragraph box which restricts text to less than the width of the page
+
+{\noindent\Huge\bfseries A brief Introduction to Git \\}\\[2\baselineskip] % Title
+{\large \textit{Computer Version Class Assignment 01}}\\[4\baselineskip] % Tagline or further description
+{\large \textsc{Zhu Guangyu\\[2\baselineskip]}} % Author name
+{\large \textsc{20165953\\[3\baselineskip]}}
+{\textsc{Github Repository: \href{https://github.com/z1ggy-o/assignment01.git}{assignment01\\[\baselineskip]}}}
+{\textsc{\hyperlink{repo}{Repository Screenshot}}}
+
+\vspace{0.5\textheight} % Whitespace between the title block and the publisher
+}}
+\pagestyle{empty}
+\thispagestyle{empty}
+\endgroup}
 
 %%%%%%%%
 % body
 %%%%%%%%
 \begin{document}
 
-\maketitle
+\titleGM %title page
+\newpage
+
+\tableofcontents
+\newpage
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % First section: What is Git?
@@ -141,7 +164,7 @@ This approach makes creating branches fast and lightweight. That's why git
 encourages people to do branch and merge often.
 
 We will talk how to use branch later.
-    
+\newpage
 \end{subsection}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -194,7 +217,7 @@ This command will generate the \textbf{.git} subdirectory under the current dire
 At this point, nothing in the project is tracked yet. You have to tell Git
 which files it should working on.
 
-We can check the status of files through command \verb|git status|:\newpage
+We can check the status of files through command \verb|git status|:
 \begin{lstlisting}
 $ git status
 
@@ -284,7 +307,7 @@ There are hash values for each commit. Git use the hash values to identify
 commits. By the way, this is a example of bad commit messages. You can get
 nothing meaningful from above commit messages.
 
-With these hash values we can go back to previous commit through command
+With these hash values we can go back to previous commit through command\\
 \verb|git checkout <hash>|:
 
 \begin{lstlisting}
@@ -416,7 +439,10 @@ CONFLICT (content): Merge conflict in README.md
 Automatic merge failed; fix conflicts and then commit the result.
 \end{lstlisting}
 
-This is time something new occurs: \textbf{CONFLICT (content): Merge conflict in README.md}
+This is time something new occurs:
+\begin{lstlisting}
+CONFLICT (content): Merge conflict in README.md
+\end{lstlisting}
 
 What is conflict? Sometimes we modified same file on different branch, when we
 merge two branches together, git cannot know which one is the file that we want.
@@ -470,9 +496,166 @@ Github as our remote server.
 
 \end{subsection}
 \end{section}
-
+\newpage
 %%%%%%%%%%%%%%%%
 % Third section: Github
 %%%%%%%%%%%%%%%%
+\begin{section}{Collaborate Through Github}
 
+Github is a web-based hosting service for version control using Git. It is
+commonly used to host open-source software projects. Github may be the largest
+host of source code in the world.
+
+Once you sign up a account, you can use it free if you make your repository
+public.
+
+With Github this platform, we can talk about working with remotes now.
+
+%%%%%%%%%%%%%%%%%%%
+% subsection: Remote repository
+%%%%%%%%%%%%%%%%%%%%
+\begin{subsection}{Remote Repository}
+
+First, let's create a repository on Github:
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/create-repo}
+    \caption{Create Repository}
+\end{figure}
+
+\begin{subsubsection}{Clone Repository}
+    
+Github will ask you to do the first commit to initial the repository. Usually
+people will create a \textbf{README.md} file. After this, we can clone this 
+repository to our computer.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\textwidth]{images/clone-button}
+    \caption{HTTPS URL}
+\end{figure}
+
+There are two ways to clone repositories: HTTPS or SSH. Github recommends users
+to use HTTPS, so we will use HTTPS here.
+
+Go to the directory where you want to download the repository. Use command
+\verb|git clone <url>|:
+
+\begin{lstlisting}
+$ git clone https://github.com/z1ggy-o/assignment01.git
+Cloning into 'assignment01'...
+remote: Counting objects: 23, done.
+remote: Compressing objects: 100% (18/18), done.
+remote: Total 23 (delta 3), reused 19 (delta 2), pack-reused 0
+Unpacking objects: 100% (23/23), done.
+\end{lstlisting}
+
+\verb|git clone| adds the \verb|origin| remote for us implicitly. We can use
+command \verb|git remote| to show remote repositories:
+
+\begin{lstlisting}
+$ git remote -v
+origin	https://github.com/z1ggy-o/assignment01.git (fetch)
+origin	https://github.com/z1ggy-o/assignment01.git (push)
+\end{lstlisting}
+
+Here we can find the \verb|origin|. \verb|fetch| shows where we get data from
+and \verb|push| shows where we upload our local files to.
+
+\begin{paragraph}{Adding Remote Repositories\\}
+
+We can bind our local repository with more than one remote repositories. Add remote
+repositories by command \verb|git remote add <name> <url>|:
+
+\begin{lstlisting}
+$ git remote add assign-repo-2 https://github.com/z1ggy-o/another-assignment01.git
+$ git remote -v
+assign-repo-2	https://github.com/z1ggy-o/another-assignment01.git (fetch)
+assign-repo-2	https://github.com/z1ggy-o/another-assignment01.git (push)
+origin	https://github.com/z1ggy-o/assignment01.git (fetch)
+origin	https://github.com/z1ggy-o/assignment01.git (push)
+\end{lstlisting}
+
+Here we adds a new remote repository and call it `assign-repo-2'.
+\end{paragraph}
+
+\begin{subsubsection}{Push and Fetch}
+    
+\end{subsubsection}
+To get data from remote repository, run \verb|git fetch <remote_name>|. This 
+command just downloads the updated date to local, we need to \verb|git checkout|
+the downloaded branch then merge it manually.
+Or we can use \verb|git pull <remote_name>| to do fetch and merge at same time.
+
+To share our files, use command \verb|git push <remote_name> <branch>|. 
+
+You may find here we need to input the branch name. The default is to point to
+the master branch. Actually can fetch/push any branch:
+\begin{lstlisting}
+git push <remote_name> <local_branch>:<remote_branch>
+\end{lstlisting}
+
+Here I pushed \verb|development| branch to \verb|origin|'s development branch:
+\begin{lstlisting}
+$ git push origin development:development
+Total 0 (delta 0), reused 0 (delta 0)
+remote:
+remote: Create a pull request for 'development' on GitHub by visiting:
+remote:      https://github.com/z1ggy-o/assignment01/pull/new/development
+remote:
+To https://github.com/z1ggy-o/assignment01.git
+ * [new branch]      development -> development
+\end{lstlisting}
+
+Check our repository on Github, we can find there are a new branch \verb|development|
+be created:
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\textwidth]{images/branches}
+    \caption{Push to New Branch}
+\end{figure}
+
+\end{subsubsection}
+\end{subsection}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+% subsection: Github Workflow
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{subsection}{Github Workflow}
+
+Until now, we just talk about how to work alone. Group working is much more complex.
+To help people working on Github, Github create a workflow called
+\href{https://guides.github.com/introduction/flow/}{\underline{Github Flow}}.
+It contains six steps:
+\begin{enumerate}
+    \item Create a branch
+    \item Add commits
+    \item Open a Pull request
+    \item Discuss and review code
+    \item Deploy
+    \item Merge
+\end{enumerate}
+
+The core concept of this workflow is \textbf{Pull Request}. Pull request let
+everybody participate in discussion and code review. Once the changes are approved,
+the repository owner can choose th merge it into master branch.
+
+\hypertarget{repo}{
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=1\textwidth]{images/github-repo}
+    \caption{Github Repository}
+\end{figure}
+}
+
+At our repository page's \textbf{Issue} and \textbf{Pull request} section,
+people can discuss about the project or contribute to it.
+
+There are many excellent open-source project on Github. Check those project's
+pull request section can let you learn about them much faster.
+
+\end{subsection}
+
+\end{section}
 \end{document}
