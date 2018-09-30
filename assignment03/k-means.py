@@ -81,7 +81,7 @@ class KMeans:
         index = 0
         for cluster in self.clusters:
             x_cod = [point[0] for point in cluster[1]]
-            y_cod = [point[0] for point in cluster[1]]
+            y_cod = [point[1] for point in cluster[1]]
             centroid_x = int(sum(x_cod)/len(x_cod))
             centroid_y = int(sum(y_cod)/len(y_cod))
             self.clusters[index][0] = [centroid_x, centroid_y]
@@ -119,7 +119,7 @@ class KMeans:
         self.computeCentroid()
 
 ### plot function
-def plot_points(points):
+def plot_points(cluster):
     """Plot given points
     
     Parameter:
@@ -129,9 +129,13 @@ def plot_points(points):
     plt.xlabel('X')
     plt.ylabel('Y')
     plt.title('k-means')
-    plt.plot(points, 'ro')
+    for x, y in cluster.getPoints():
+        plt.scatter(x, y, color='red', marker='o')
 
-    ax = plt.gca() # get current axis
+    for x, y in cluster.getCentroids():
+        plt.scatter(x, y, color='blue', marker='s')
+
+    ax = plt.gca()  # get current axis
     ax.spines['right'].set_visible(False)
     ax.spines['top'].set_visible(False)
     ax.spines['left'].set_position('center')
@@ -139,7 +143,7 @@ def plot_points(points):
     plt.show()
 
 if __name__ == '__main__':
-    kmeans = KMeans(3, 30)
+    kmeans = KMeans(3, 100)
     kmeans.generatePointCluster()
     for i in range(len(kmeans.clusters)):
         print('cluster {}'.format(i + 1))
@@ -153,7 +157,7 @@ if __name__ == '__main__':
     print('centroids: ')
     print(kmeans.getCentroids())
 
-    plot_points(kmeans.getPoints())
+    plot_points(kmeans)
 #################################3
 
 
