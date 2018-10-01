@@ -34,15 +34,14 @@ class KMeans:
         self.k = k
         self.num_points = num_points
         self.num_dims = num_dims
+        self.points = []
         self.centroids = []
         self.clusters = []
         for _ in range(k):
-            centroid = [[0, 0], []]
-            self.clusters.append(centroid)
+            self.clusters.append([])
 
     def _generatePoints(self):
         randoms = np.random.rand(self.num_points, self.num_dims)
-        self.points = []
         for x, y in randoms:
             point = [int(x*500), int(y*500)]
             self.points.append(point)
@@ -50,7 +49,7 @@ class KMeans:
     def _initialLabel(self):
         for i in range(len(self.points)):
             index = i % self.k
-            self.clusters[index][1].append(self.points[i])
+            self.clusters[index].append(self.points[i])
 
     def _dispersePoints(self):
         # move each cluster's point with random offset
@@ -58,14 +57,14 @@ class KMeans:
             x_off = np.random.randint(-50, 50)
             y_off = np.random.randint(-50, 50)
             points_moved = []
-            for x, y in self.clusters[i][1]:
+            for x, y in self.clusters[i]:
                 points_moved.append([x+x_off, y+y_off])
-            self.clusters[i][1] = points_moved
+            self.clusters[i] = points_moved
 
         # update result back to points list
         new_points = []
         for i in range(self.k):
-            for point in self.clusters[i][1]:
+            for point in self.clusters[i]:
                 new_points.append(point)
         self.points = new_points
 
@@ -77,17 +76,18 @@ class KMeans:
 
         return np.linalg.norm(x - y)
 
-    def computeCentroid(self):
-        """ Compute this group's represent point """
-        index = 0
+    def _computeCentroid(self):
+        """ Compute each groups centroid then update self.controids """
+
+        new_centroids = []
         for cluster in self.clusters:
-            x_cod = [point[0] for point in cluster[1]]
-            y_cod = [point[1] for point in cluster[1]]
+            x_cod = [point[0] for point in cluster]
+            y_cod = [point[1] for point in cluster]
             centroid_x = int(sum(x_cod)/len(x_cod))
             centroid_y = int(sum(y_cod)/len(y_cod))
-            self.clusters[index][0] = [centroid_x, centroid_y]
-            self.centroids.append([centroid_x, centroid_y])
-            index += 1
+            new_centroids.append([centroid_x, centroid_y])
+
+        self.centroids = new_centroids
 
     def _assignLabel(self):
         """ Assign labels to points for generating new groups
@@ -115,10 +115,8 @@ class KMeans:
                     closest = i
             # put point into new group
             new_clusters[closest].append(point)
-            
-        self.clusters = new_clusters
 
-                
+        self.clusters = new_clusters
 
     def getPoints(self):
         return self.points
@@ -148,7 +146,7 @@ class KMeans:
         self._generatePoints()
         self._initialLabel()
         self._dispersePoints()
-        self.computeCentroid()
+        self._computeCentroid()
 
 ### plot function
 def plot_points(cluster):
@@ -179,7 +177,7 @@ if __name__ == '__main__':
     kmeans.generatePointCluster()
     for i in range(len(kmeans.clusters)):
         print('cluster {}'.format(i + 1))
-        for x, y in kmeans.clusters[i][1]:
+        for x, y in kmeans.clusters[i]:
             print('point: {}, {}'.format(x, y))
         print('\n')
     
@@ -197,8 +195,7 @@ if __name__ == '__main__':
 
 def computeEnergy(data, labels):
     """ Compute the cost of the clustering result
-    
-    """
+
     Return:
         energy(float): the energy of this clustering. 
     """
