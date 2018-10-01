@@ -20,6 +20,7 @@ write short descriptions for each graphical result
 import numpy as np
 from matplotlib import pyplot as plt
 from matplotlib import cm
+import math
 
 
 class KMeans:
@@ -68,13 +69,13 @@ class KMeans:
                 new_points.append(point)
         self.points = new_points
 
-        def _computeDistance(self, x, y):
-            """Compute the distance between two points
+    def _computeDistance(self, x, y):
+        """Compute the distance between two points
 
-            root of (x1-x2)^2 + (y1-y2)^2
-            """
+        root of (x1-x2)^2 + (y1-y2)^2
+        """
 
-            return np.linalg.norm(x - y)
+        return np.linalg.norm(x - y)
 
     def computeCentroid(self):
         """ Compute this group's represent point """
@@ -87,6 +88,37 @@ class KMeans:
             self.clusters[index][0] = [centroid_x, centroid_y]
             self.centroids.append([centroid_x, centroid_y])
             index += 1
+
+    def _assignLabel(self):
+        """ Assign labels to points for generating new groups
+
+        Compute distance between each point with each centroid,
+        assign it to the closest centroid's group.
+        """
+
+        # self.points as object
+        # for each point, compute the distance, get the closest centroid
+        # generate k new cluster
+        # no change to self.points and centroid (centroid fixed) 
+        new_cluster = []
+        for _ in range(self.clusters):
+            new_clusters.append([])
+
+        for point in self.points:
+            min = math.inf
+            closest = 0
+            # find the closest centroid
+            for i in range(len(self.clusters)):
+                dist = self._computeDistance(point, self.clusters[i])
+                if dist < min:
+                    min = dist
+                    closest = i
+            # put point into new group
+            new_clusters[closest].append(point)
+            
+        self.clusters = new_clusters
+
+                
 
     def getPoints(self):
         return self.points
@@ -121,7 +153,7 @@ class KMeans:
 ### plot function
 def plot_points(cluster):
     """Plot given points
-    
+
     Parameter:
         points: list of points
     """
@@ -161,17 +193,12 @@ if __name__ == '__main__':
 #################################3
 
 
-def assignLabel(k, distances):
-    """ Assign labels to points for generating new groups """
-
-    # depends on distance, assign closest represent's label to each point
-    pass
 
 
 def computeEnergy(data, labels):
     """ Compute the cost of the clustering result
     
-
+    """
     Return:
         energy(float): the energy of this clustering. 
     """
