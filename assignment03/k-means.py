@@ -34,16 +34,50 @@ class KMeans:
         self.k = k
         self.num_points = num_points
         self.num_dims = num_dims
+        self.energy_history = []
         self.points = []
         self.centroids = []
         self.clusters = []
         for _ in range(k):
             self.clusters.append([])
 
+    def getHistoryEnergy(self):
+        return self.energy_history
+
+    def getPoints(self):
+        return self.points
+
+    def getClusters(self):
+        return self.clusters
+
+    def getCentroids(self):
+        return self.centroids
+
+    def run(self):
+        """Run algorithm
+
+        Repeatly assign labels to points and compute new centroids.
+        Iterate until the energy of the result not change.
+        """
+
+        previous_energy = 0 
+        energy = self._generatePointCluster()
+        while(energy != previous_energy):
+            previous_energy = energy
+            self._assignLabel()
+            # After re-grouping if there are any empty cluster, delete it from 
+            # list also delete corresponding centroid.
+            for i in range(len(self.clusters)):
+                if (len(self.clusters[i]) == 0):
+                    self.clusters.pop(i)
+                    self.centroids.pop(i)
+            self._computeCentroid()
+            energy = self._computeEnergy()
+
     def _generatePoints(self):
         randoms = np.random.rand(self.num_points, self.num_dims)
         for x, y in randoms:
-            point = [int(x*500), int(y*500)]
+            point = [int(x*100), int(y*100)]
             self.points.append(point)
 
     def _initialLabel(self):
@@ -54,8 +88,10 @@ class KMeans:
     def _dispersePoints(self):
         # move each cluster's point with random offset
         for i in range(self.k):
-            x_off = np.random.randint(-50, 50)
-            y_off = np.random.randint(-50, 50)
+            # x_off = np.random.randint(-50, 50)
+            # y_off = np.random.randint(-50, 50)
+            x_off = np.random.randint(0, 10)
+            y_off = np.random.randint(0, 10)
             points_moved = []
             for x, y in self.clusters[i]:
                 points_moved.append([x+x_off, y+y_off])
@@ -74,7 +110,10 @@ class KMeans:
         root of (x1-x2)^2 + (y1-y2)^2
         """
 
-        return np.linalg.norm(x - y)
+        a = np.array(x)
+        b = np.array(y)
+
+        return np.linalg.norm(a - b)
 
     def _computeCentroid(self):
         """ Compute each groups centroid then update self.controids """
@@ -83,9 +122,14 @@ class KMeans:
         for cluster in self.clusters:
             x_cod = [point[0] for point in cluster]
             y_cod = [point[1] for point in cluster]
-            centroid_x = int(sum(x_cod)/len(x_cod))
-            centroid_y = int(sum(y_cod)/len(y_cod))
-            new_centroids.append([centroid_x, centroid_y])
+            # there are may some clusters is empty
+            # this means sometimes k != #clusters
+            try:
+                centroid_x = int(sum(x_cod)/len(x_cod))
+                centroid_y = int(sum(y_cod)/len(y_cod))
+                new_centroids.append([centroid_x, centroid_y])
+            except:
+                pass
 
         self.centroids = new_centroids
 
@@ -100,16 +144,16 @@ class KMeans:
         # for each point, compute the distance, get the closest centroid
         # generate k new cluster
         # no change to self.points and centroid (centroid fixed) 
-        new_cluster = []
-        for _ in range(self.clusters):
+        new_clusters = []
+        for _ in range(len(self.clusters)):
             new_clusters.append([])
 
         for point in self.points:
             min = math.inf
             closest = 0
             # find the closest centroid
-            for i in range(len(self.clusters)):
-                dist = self._computeDistance(point, self.clusters[i])
+            for i in range(len(self.centroids)):
+                dist = self._computeDistance(point, self.centroids[i])
                 if dist < min:
                     min = dist
                     closest = i
@@ -118,35 +162,42 @@ class KMeans:
 
         self.clusters = new_clusters
 
-    def getPoints(self):
-        return self.points
+    def _computeEnergy(self):
+        """ Compute the cost of the clustering result
 
-    def getClusters(self):
-        return self.clusters
+        Return:
+            energy(float): the energy of this clustering.
+        """
 
-    def getCentroids(self):
-        return self.centroids
+        energy = 0
+        for i in range(len(self.centroids)):
+            centroid = self.centroids[i]
+            part_energy = 0
+            for point in self.clusters[i]:
+                part_energy += (
+                    math.pow(self._computeDistance(point, centroid), 2)
+                )
+            energy += part_energy
+        energy = energy / len(self.points)
+        self.energy_history.append(energy)
 
-    def generatePointCluster(self):
+        return energy
+
+    def _generatePointCluster(self):
         """Generate random points
 
         1. Generate random points
         2. Randomly assgin label to each points
         3. Disperse points by cluster one more time
-
-        Parameter:
-            k(int): number of clusters
-            num_points(int): number of points
-            num_dims(int): the dimension of vectors
-
-        Returns:
-            2d list: element is the list of points in each cluster
+        4. Return the initial energy
         """
 
         self._generatePoints()
         self._initialLabel()
         self._dispersePoints()
         self._computeCentroid()
+
+        return self._computeEnergy()
 
 ### plot function
 def plot_points(cluster):
@@ -173,32 +224,13 @@ def plot_points(cluster):
     plt.show()
 
 if __name__ == '__main__':
-    kmeans = KMeans(3, 100)
-    kmeans.generatePointCluster()
-    for i in range(len(kmeans.clusters)):
-        print('cluster {}'.format(i + 1))
-        for x, y in kmeans.clusters[i]:
-            print('point: {}, {}'.format(x, y))
-        print('\n')
-    
-    for point in kmeans.points:
-        print(point)
+    kmeans = KMeans(3, 5)
+    kmeans.run()
 
     print('centroids: ')
     print(kmeans.getCentroids())
+    print('Energy: ')
+    print(kmeans._computeEnergy())
+    print(kmeans.getHistoryEnergy())
 
     plot_points(kmeans)
-#################################3
-
-
-
-
-def computeEnergy(data, labels):
-    """ Compute the cost of the clustering result
-
-    Return:
-        energy(float): the energy of this clustering. 
-    """
-
-    # the sum of distance between points and their group represent point.
-    pass
