@@ -38,10 +38,15 @@ class KMeans:
         self.points = []
         self.centroids = []
         self.colors = list(cm.rainbow(np.linspace(0, 1, k)))
-        print(type(self.colors))
         self.clusters = []
         for _ in range(k):
             self.clusters.append([])
+
+    def getNumOfClusters(self):
+        return self.k
+
+    def getColors(self):
+        return self.colors
 
     def getEnergyHistory(self):
         return self.energy_history
@@ -62,20 +67,25 @@ class KMeans:
         Iterate until the energy of the result not change.
         """
 
-        previous_energy = 0
-        energy = self._generatePointCluster()
-        while(energy != previous_energy):
-            previous_energy = energy
-            self._assignLabel()
-            # After re-grouping if there are any empty cluster, delete it from 
-            # list also delete corresponding centroid.
-            for i in range(len(self.clusters)):
-                if (len(self.clusters[i]) == 0):
-                    self.clusters.pop(i)
-                    self.centroids.pop(i)
-                    self.colors.pop(i)
-            self._computeCentroid()
-            energy = self._computeEnergy()
+        energy_prev = 0
+        energy_thisTurn = self._computeEnergy()  # initialization result
+        while(energy_thisTurn != energy_prev):
+            energy_prev = energy_thisTurn
+            energy_thisTurn = self._clustering()
+
+    def generatePointCluster(self):
+        """Generate random points
+
+        1. Generate random points
+        2. Randomly assgin label to each points
+        3. Disperse points by cluster one more time
+        4. Return the initial energy
+        """
+
+        self._generatePoints()
+        self._initialLabel()
+        self._dispersePoints()
+        self._computeCentroid()
 
     def plotGraph(self):
         """Plot current clustering result"""
@@ -83,7 +93,7 @@ class KMeans:
         plt.title('k-means')
         plt.xlabel('X')
         plt.ylabel('Y')
-        
+
         for i in range(len(self.clusters)):
             for x, y in self.clusters[i]:
                 plt.scatter(x, y, marker='.', color=self.colors[i])
@@ -201,25 +211,29 @@ class KMeans:
 
         return energy
 
-    def _generatePointCluster(self):
-        """Generate random points
+    def _clustering(self):
+        """Run algorithm one iteration
 
-        1. Generate random points
-        2. Randomly assgin label to each points
-        3. Disperse points by cluster one more time
-        4. Return the initial energy
+        Return:
+            energy: This iteration's result energy
         """
 
-        self._generatePoints()
-        self._initialLabel()
-        self._dispersePoints()
+        self._assignLabel()
+        # After re-grouping if there are any empty cluster, delete it from 
+        # list also delete corresponding centroid.
+        for i in range(len(self.clusters)):
+            if (len(self.clusters[i]) == 0):
+                self.clusters.pop(i)
+                self.centroids.pop(i)
+                self.colors.pop(i)
         self._computeCentroid()
+        energy = self._computeEnergy()
 
-        return self._computeEnergy()
+        return energy
 
 
-# plot function
-def plot_points(cluster):
+# plot functions
+def plot_p(cluster):
     """Plot given points
 
     Parameter:
@@ -242,15 +256,67 @@ def plot_points(cluster):
     ax.spines['bottom'].set_position('center')
     plt.show()
 
+
+def plotInputData(data):
+    """Plot the randomly generated points from KMeans
+
+    Parameter:
+        data(list): a list of 2d vectors
+    """
+
+    plt.title('Input Data')
+    plt.xlabel('X')
+    plt.ylabel('Y')
+
+    for x, y in data:
+        plt.scatter(x, y, color='black', marker='.')
+    plt.show()
+
+
+def plotEnergy(data):
+    """Plot energy history
+
+    Parameter:
+        data(list): a list of energy
+    """
+
+    plt.rc('text', usetex=True)
+    plt.rc('font', family='serif')
+
+    plt.title('Energy Variation')
+    plt.xlabel('Iteration')
+    plt.ylabel(r'$J^{clust}$')
+    plt.xticks(range(len(data)+1))
+
+    ite = [i for i in np.arange(1, len(data)+1, 1)]
+    plt.plot(ite, data, 'o-', color='b')
+    plt.show()
+
+
+def plotLabel(kmeans):
+    """Plot initial clusters"""
+
+    plt.title('Label')
+    plt.xlabel('X')
+    plt.ylabel('Y')
+
+    for i in range(kmeans.getNumOfClusters()):
+        clusters = kmeans.getClusters()
+        colors = kmeans.getColors()
+        for x, y in clusters[i]:
+            plt.scatter(x, y, marker='.', color=colors[i])
+    plt.show()
+
+
 if __name__ == '__main__':
-    kmeans = KMeans(3, 50)
+    kmeans = KMeans(3, 100)
+    kmeans.generatePointCluster()
+    plotInputData(kmeans.getPoints())  # input data
+    plotLabel(kmeans)  # initial label
+    kmeans.plotGraph()  # initial centroids
+
     kmeans.run()
 
-    print('centroids: ')
-    print(kmeans.getCentroids())
-    print('Energy: ')
-    print(kmeans._computeEnergy())
-    print(kmeans.getEnergyHistory())
-
-    kmeans.plotGraph()
-    # plot_points(kmeans)
+    plotLabel(kmeans)  # final label
+    kmeans.plotGraph()  # final result
+    plotEnergy(kmeans.getEnergyHistory())
