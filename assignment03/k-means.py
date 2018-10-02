@@ -37,11 +37,13 @@ class KMeans:
         self.energy_history = []
         self.points = []
         self.centroids = []
+        self.colors = list(cm.rainbow(np.linspace(0, 1, k)))
+        print(type(self.colors))
         self.clusters = []
         for _ in range(k):
             self.clusters.append([])
 
-    def getHistoryEnergy(self):
+    def getEnergyHistory(self):
         return self.energy_history
 
     def getPoints(self):
@@ -60,7 +62,7 @@ class KMeans:
         Iterate until the energy of the result not change.
         """
 
-        previous_energy = 0 
+        previous_energy = 0
         energy = self._generatePointCluster()
         while(energy != previous_energy):
             previous_energy = energy
@@ -71,8 +73,24 @@ class KMeans:
                 if (len(self.clusters[i]) == 0):
                     self.clusters.pop(i)
                     self.centroids.pop(i)
+                    self.colors.pop(i)
             self._computeCentroid()
             energy = self._computeEnergy()
+
+    def plotGraph(self):
+        """Plot current clustering result"""
+
+        plt.title('k-means')
+        plt.xlabel('X')
+        plt.ylabel('Y')
+        
+        for i in range(len(self.clusters)):
+            for x, y in self.clusters[i]:
+                plt.scatter(x, y, marker='.', color=self.colors[i])
+            x_centroid = self.centroids[i][0]
+            y_centroid = self.centroids[i][1]
+            plt.scatter(x_centroid, y_centroid, marker='s', color=self.colors[i])
+        plt.show()
 
     def _generatePoints(self):
         randoms = np.random.rand(self.num_points, self.num_dims)
@@ -88,10 +106,10 @@ class KMeans:
     def _dispersePoints(self):
         # move each cluster's point with random offset
         for i in range(self.k):
-            # x_off = np.random.randint(-50, 50)
-            # y_off = np.random.randint(-50, 50)
-            x_off = np.random.randint(0, 10)
-            y_off = np.random.randint(0, 10)
+            x_off = np.random.randint(-50, 50)
+            y_off = np.random.randint(-50, 50)
+            # x_off = np.random.randint(0, 10)
+            # y_off = np.random.randint(0, 10)
             points_moved = []
             for x, y in self.clusters[i]:
                 points_moved.append([x+x_off, y+y_off])
@@ -199,7 +217,8 @@ class KMeans:
 
         return self._computeEnergy()
 
-### plot function
+
+# plot function
 def plot_points(cluster):
     """Plot given points
 
@@ -211,7 +230,7 @@ def plot_points(cluster):
     plt.ylabel('Y')
     plt.title('k-means')
     for x, y in cluster.getPoints():
-        plt.scatter(x, y, color='red', marker='o')
+        plt.scatter(x, y, color='red', marker='.')
 
     for x, y in cluster.getCentroids():
         plt.scatter(x, y, color='blue', marker='s')
@@ -224,13 +243,14 @@ def plot_points(cluster):
     plt.show()
 
 if __name__ == '__main__':
-    kmeans = KMeans(3, 5)
+    kmeans = KMeans(3, 50)
     kmeans.run()
 
     print('centroids: ')
     print(kmeans.getCentroids())
     print('Energy: ')
     print(kmeans._computeEnergy())
-    print(kmeans.getHistoryEnergy())
+    print(kmeans.getEnergyHistory())
 
-    plot_points(kmeans)
+    kmeans.plotGraph()
+    # plot_points(kmeans)
