@@ -19,6 +19,8 @@ class DataSet:
         _handle_file.close()
 
         self.num_image = len(_data)
+        # test
+        # print(self.num_image)
 
         self.list_image = np.empty((self.len_vec, self.num_image), dtype=float)
         self.list_label = np.empty(self.num_image, dtype=int)
@@ -32,7 +34,7 @@ class DataSet:
             img_vector = self._normalize(img_vector)
 
             self.list_label[_count] = label
-            self.list_image[:, _count] = img_vector
+            self.list_image[:, _count] = img_vector  # [:, i] get ith col
             _count += 1
 
     def _normalize(self, data):

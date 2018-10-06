@@ -21,7 +21,7 @@ import numpy as np
 from matplotlib import pyplot as plt
 from matplotlib import cm
 
-import DataSet
+import data_set
 
 
 class KMeans:
@@ -36,9 +36,15 @@ class KMeans:
         self.k = k
         self.data = data
         self.energy_history = []
-        self.centroids = []
-        self.clusters = [[]] * k  # store image's index in list_image
         self.accuracy_history = []
+        self.centroids = []
+        self.clusters = [[] for _ in range(k)]
+
+    def getEnergyHistory(self):
+        return self.energy_history
+
+    def getAccuracyHistory(self):
+        return self.accuracy_history
 
     def initialCluster(self):
         self._initialLabel()
@@ -52,15 +58,15 @@ class KMeans:
         """
 
         energy_prev = 0
-        energy_thisTurn = self._computeEnergy()  # initialization result
-        while(energy_thisTurn != energy_prev):
-            energy_prev = energy_thisTurn
-            energy_thisTurn = self._clustering()
-
-    def computeAccuracy(self):
-        pass
+        energy_this = self._computeEnergy()  # initialization energy
+        self._computeAccuracy()  # initialization accuracy
+        while(energy_this != energy_prev):
+            energy_prev = energy_this
+            energy_this = self._clustering()
+            self._computeAccuracy()
 
     def _initialLabel(self):
+        # for i in range(100):
         for i in range(self.data.num_image):
             index = i % self.k
             self.clusters[index].append(i)
@@ -72,16 +78,15 @@ class KMeans:
         n = self.data.len_vec
 
         for cluster in self.clusters:
-            centroid = [[0]] * n
+            centroid = [0] * n
             num_elements = 0
 
             # sum of the cluster's elements
-            for index in cluster:
+            for img in cluster:
                 num_elements += 1
-                for i in n:
-                    centroid[i] += self.data.list_image[index][i]
+                for row in range(n):
+                    centroid[row] += self.data.list_image[row][img]
 
-            # new_list = [expression(i) for i in old_list if filter(i)]
             centroid = [row/num_elements for row in centroid]
             new_centroids.append(centroid)
 
@@ -95,12 +100,8 @@ class KMeans:
         """
 
         self._assignLabel()
-        # After re-grouping if there are any empty cluster, delete it from 
-        # list also delete corresponding centroid.
-        for i in range(len(self.clusters)):
-            if (len(self.clusters[i]) == 0):
-                self.clusters.pop(i)
-                self.centroids.pop(i)
+        # After re-grouping if there are any empty cluster, delete it from list
+        self.clusters = [list for list in self.clusters if list]
         self._computeCentroid()
 
         return self._computeEnergy()
@@ -114,7 +115,7 @@ class KMeans:
 
         # for each element, compute the distance, get the closest centroid
         # generate k new cluster
-        new_clusters = [[]] * len(self.clusters)
+        new_clusters = [[] for _ in range(len(self.clusters))]
 
         for index in range(self.data.num_image):
             min = math.inf
@@ -122,7 +123,7 @@ class KMeans:
             # find the closest centroid
             for j in range(len(self.centroids)):
                 dist = self._computeDistance(
-                    x=self.data.list_image[index], y=self.centroids[j])
+                    x=self.data.list_image[:, index], y=self.centroids[j])
                 if dist < min:
                     min = dist
                     closest = j
@@ -138,6 +139,7 @@ class KMeans:
         """
 
         # convert python list to np.array
+        x = np.array(x)
         y = np.array(y)
 
         d = (x - y)**2
@@ -154,11 +156,11 @@ class KMeans:
 
         energy = 0
         for i in range(len(self.centroids)):
-            centroid = np.array(self.centroids[i])
+            centroid = self.centroids[i]
             part_energy = 0
             for index in self.clusters[i]:
                 part_energy += self._computeDistance(
-                    x=self.data.list_image[index], y=centroid)
+                    x=self.data.list_image[:, index], y=centroid)
             energy += part_energy
         energy = energy / self.data.num_image
         self.energy_history.append(energy)
@@ -171,8 +173,56 @@ class KMeans:
         In each group, let the largest number of elements to be the group label.
         """
 
-        # for each cluster
-        # find the most numerous elements.
-        # compute each cluster's accuracy
-        # compute the average accuracy value
+        accuracy = 0
+
         for cluster in self.clusters:
+            labels = []
+
+            # get all the labels in the cluster
+            for index in cluster:
+                labels.append(self.data.list_label[index])
+
+            # get the largest number of lable, count the occurences
+            labels.sort()
+            count = 0
+            count_max = 0
+            label_prev = -1
+            for label in labels:
+                if label == label_prev:
+                    count += 1
+                else:
+                    if count > count_max:
+                        count_max = count
+                    label_prev = label
+                    count = 1
+            # check the last item
+            if count > count_max:
+                count_max = count
+
+            accuracy_part = count_max / len(cluster)
+            accuracy += accuracy_part
+
+        accuracy = accuracy / len(self.clusters)
+        self.accuracy_history.append(accuracy)
+
+        return accuracy
+
+
+if __name__ == '__main__':
+    data = data_set.DataSet()
+    kmeans = KMeans(data, 5)
+    kmeans.initialCluster()
+
+    # kmeans._computeEnergy()
+    # kmeans._computeAccuracy()
+    # print('energy histoty:')
+    # print(kmeans.getEnergyHistory())
+    # print('\naccuracy history: ')
+    # print(kmeans.getAccuracyHistory())
+
+    kmeans.run()
+    print('After')
+    print('energy histoty:')
+    print(kmeans.getEnergyHistory())
+    print('\naccuracy history: ')
+    print(kmeans.getAccuracyHistory())
