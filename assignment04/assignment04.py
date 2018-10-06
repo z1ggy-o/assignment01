@@ -61,7 +61,7 @@ for i in range(150):
     im_vector   = list_image[:, i]
     im_matrix   = im_vector.reshape((size_row, size_col))
 
-    plt.subplot(10, 15, i+1)
+    plt.subplot(10, 15, i+1)  # 10 rows, 15 cols
     plt.title(label)
     plt.imshow(im_matrix, cmap='Greys', interpolation='None')
 
