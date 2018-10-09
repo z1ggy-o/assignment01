@@ -1,0 +1,942 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{assignment04}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \section{K-means Algorithm with
+Images}\label{k-means-algorithm-with-images}
+
+\textbf{Name}: ZHU GUANGYU\\
+\textbf{Student ID}: 20165953\\
+\textbf{Github Repo}: \href{}{assignment03}
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+\subsection{Clustering}\label{clustering}
+
+the goal of \emph{clustering} is to group or partition the vectors into
+\emph{k} groups or clusters, with the vectors in each group close to
+each other.
+
+the best clustering: - can find the best slustering, if the
+representatives are fixed; - can find the vest representatives, if the
+clustering is fixed.
+
+We use a single number to judge a choice of clustering, along with a
+choice of the group. We define:
+
+\[
+J^{clust}=(||x_{1}-z_{c_{1}}||^{2}+ \cdots +||x_{N}-z_{c_{N}}||^{2})/N
+\]
+
+Here \(x_{N}\) is vector, \(z_{c_{N}}\) is correspond representatives.
+We call this value \emph{energy} or \emph{cost}.
+
+\subsubsection{When representatives
+fixed}\label{when-representatives-fixed}
+
+We assign each date vector \(x_{i}\) to its nearest representatives.
+Since the representatives are fixed, we actually re-grouped vectors into
+different partitions. We have:
+\[ ||x_{i}-z_{c_{i}}|| = \min_{j=1,\cdots\,k}||x_{i}-z_{c_{i}}|| \]
+
+This gives us the minimum \(J^{clust}\).
+
+\subsubsection{When group assignment
+fixed}\label{when-group-assignment-fixed}
+
+This means the element vectors of each group are fixed. We need to find
+the group representatives to minimize our cost \(J^{clust}\).
+
+Simply, choose the average of the vectros in its group:
+\[ z_{j} = (1/|G_{j}|)\sum_{i\in G_{j}}x_{i}\]
+
+since this makes the sum of distance between points and its
+representative minimum.
+
+\subsection{\texorpdfstring{\emph{k}-means
+Algorithm}{k-means Algorithm}}\label{k-means-algorithm}
+
+Previous two methods can help us get the best clustering. But the two
+methods are depend on each other. To solve this problem, we can use
+\emph{k-means algorithm}.
+
+\emph{k-means algorithm}'s idea is simple. We repeatedly alternate
+between updating the group assignments, then updating the
+representatives. In each iteration we get a better \(J^{clust}\) until
+the step does not change the choice.
+
+Have to be aware of is k-means algorithm \textbf{cannot} guarantee that
+the partition it finds minimizes \(J^{clust}\). Commonly, we run it
+several times with different initial representatives, and choose the one
+with the smallest cost.
+
+There is another problem is to determin the optimal number of clusters
+(here is the \emph{k}).\\
+If you have given number of clusters, that's fine. If you don't, there
+are few methods can help us:
+
+\begin{itemize}
+\tightlist
+\item
+  \href{https://en.wikipedia.org/wiki/Elbow_method_\%28clustering\%29}{Elbow
+  method}
+\item
+  \href{https://en.wikipedia.org/wiki/Silhouette_\%28clustering\%29}{The
+  silhouette method}
+\item
+  \href{http://web.stanford.edu/~hastie/Papers/gap.pdf}{Gap statistic}
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+    \subsection{Implementation}\label{implementation}
+
+This time we try to modify the \emph{k-means} algorithm we did last time
+to cluster image datas.
+
+The algorithm part is almost same, just need to change the data vector
+size and plotting functions.
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+First, import packages that we need.
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{numpy} for scientific computing
+\item
+  \texttt{matplotlib} for visualization
+\item
+  \texttt{math} is the python build in math packages.
+\end{itemize}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} \PY{k+kn}{import} \PY{n+nn}{math}
+        \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+        \PY{k+kn}{from} \PY{n+nn}{matplotlib} \PY{k}{import} \PY{n}{pyplot} \PY{k}{as} \PY{n}{plt}
+\end{Verbatim}
+
+
+    \subsubsection{Read file and
+pre-processing}\label{read-file-and-pre-processing}
+
+Define a class called \texttt{DataSet} to read image data from file and
+normaize the input data.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}2}]:} \PY{k}{class} \PY{n+nc}{DataSet}\PY{p}{:}
+            \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}Read data from files}
+        
+        \PY{l+s+sd}{    Read image datas from data files.}
+        \PY{l+s+sd}{    Normalize the data then change the data to vector from}
+        \PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+        
+            \PY{k}{def} \PY{n+nf}{\PYZus{}\PYZus{}init\PYZus{}\PYZus{}}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{file}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{mnist\PYZus{}test.csv}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{:}
+                \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{size\PYZus{}row} \PY{o}{=} \PY{l+m+mi}{28}  \PY{c+c1}{\PYZsh{} height of the image data}
+                \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{size\PYZus{}col} \PY{o}{=} \PY{l+m+mi}{28}  \PY{c+c1}{\PYZsh{} width of the image data}
+                \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{len\PYZus{}vec} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{size\PYZus{}row} \PY{o}{*} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{size\PYZus{}col}
+        
+                \PY{c+c1}{\PYZsh{} read data from file}
+                \PY{n}{\PYZus{}handle\PYZus{}file} \PY{o}{=} \PY{n+nb}{open}\PY{p}{(}\PY{n}{file}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{r}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+                \PY{n}{\PYZus{}data} \PY{o}{=} \PY{n}{\PYZus{}handle\PYZus{}file}\PY{o}{.}\PY{n}{readlines}\PY{p}{(}\PY{p}{)}
+                \PY{n}{\PYZus{}handle\PYZus{}file}\PY{o}{.}\PY{n}{close}\PY{p}{(}\PY{p}{)}
+        
+                \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{num\PYZus{}image} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{\PYZus{}data}\PY{p}{)}
+        
+                \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{list\PYZus{}image} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{empty}\PY{p}{(}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{len\PYZus{}vec}\PY{p}{,} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{num\PYZus{}image}\PY{p}{)}\PY{p}{,} \PY{n}{dtype}\PY{o}{=}\PY{n+nb}{float}\PY{p}{)}
+                \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{list\PYZus{}label} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{empty}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{num\PYZus{}image}\PY{p}{,} \PY{n}{dtype}\PY{o}{=}\PY{n+nb}{int}\PY{p}{)}
+        
+                \PY{c+c1}{\PYZsh{} change the image datas into vector forms}
+                \PY{n}{\PYZus{}count} \PY{o}{=} \PY{l+m+mi}{0}
+                \PY{k}{for} \PY{n}{line} \PY{o+ow}{in} \PY{n}{\PYZus{}data}\PY{p}{:}
+                    \PY{n}{line\PYZus{}data} \PY{o}{=} \PY{n}{line}\PY{o}{.}\PY{n}{split}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{,}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+                    \PY{n}{label} \PY{o}{=} \PY{n}{line\PYZus{}data}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+                    \PY{n}{img\PYZus{}vector} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{asfarray}\PY{p}{(}\PY{n}{line\PYZus{}data}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{:}\PY{p}{]}\PY{p}{)}
+                    \PY{n}{img\PYZus{}vector} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{\PYZus{}normalize}\PY{p}{(}\PY{n}{img\PYZus{}vector}\PY{p}{)}
+        
+                    \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{list\PYZus{}label}\PY{p}{[}\PY{n}{\PYZus{}count}\PY{p}{]} \PY{o}{=} \PY{n}{label}
+                    \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{list\PYZus{}image}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{n}{\PYZus{}count}\PY{p}{]} \PY{o}{=} \PY{n}{img\PYZus{}vector}  \PY{c+c1}{\PYZsh{} [:, i] get ith col}
+                    \PY{n}{\PYZus{}count} \PY{o}{+}\PY{o}{=} \PY{l+m+mi}{1}
+\end{Verbatim}
+
+
+    \emph{normalizing} means transforming the vector so that it has unit
+norm.
+
+Here we do the normalizing by formula:
+\[z_{i} = \frac{x_{i}-\min{(x)}}{\max{(x)}-\min{(x)}}\]
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}4}]:}     \PY{k}{def} \PY{n+nf}{\PYZus{}normalize}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{data}\PY{p}{)}\PY{p}{:}
+                \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}Normalize the values of the input data into [0, 1]\PYZdq{}\PYZdq{}\PYZdq{}}
+                \PY{n}{data\PYZus{}normalized} \PY{o}{=} \PY{p}{(}\PY{n}{data} \PY{o}{\PYZhy{}} \PY{n+nb}{min}\PY{p}{(}\PY{n}{data}\PY{p}{)}\PY{p}{)} \PY{o}{/} \PY{p}{(}\PY{n+nb}{max}\PY{p}{(}\PY{n}{data}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{n+nb}{min}\PY{p}{(}\PY{n}{data}\PY{p}{)}\PY{p}{)}
+        
+                \PY{k}{return} \PY{n}{data\PYZus{}normalized}
+            
+        \PY{c+c1}{\PYZsh{} for jupyter notebook}
+        \PY{n}{DataSet}\PY{o}{.}\PY{n}{\PYZus{}normalize} \PY{o}{=} \PY{n}{\PYZus{}normalize}
+\end{Verbatim}
+
+
+    \begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+\subsubsection{k-means algorithm part}\label{k-means-algorithm-part}
+
+Create a class \texttt{KMeans} to group the functions about algorithm
+together.
+
+Here the \texttt{\_\_init\_\_} constructor has two parameters:
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{data}: image data read by \texttt{DataSet}
+\item
+  \texttt{k}: number of clusters we want
+\end{itemize}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}5}]:} \PY{k}{class} \PY{n+nc}{KMeans}\PY{p}{:}
+            \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}k\PYZhy{}means algorithm for images}
+        
+        \PY{l+s+sd}{    Clustring the image datas into k groups.}
+        \PY{l+s+sd}{    Compute each iteration\PYZsq{}s energy and accuracy. }
+        \PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+        
+            \PY{k}{def} \PY{n+nf}{\PYZus{}\PYZus{}init\PYZus{}\PYZus{}}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{data}\PY{p}{,} \PY{n}{k}\PY{o}{=}\PY{l+m+mi}{10}\PY{p}{)}\PY{p}{:}
+                \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{k} \PY{o}{=} \PY{n}{k}
+                \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{data} \PY{o}{=} \PY{n}{data}
+                \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{energy\PYZus{}history} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+                \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{accuracy\PYZus{}history} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+                \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{centroids} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+                \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{clusters} \PY{o}{=} \PY{p}{[}\PY{p}{[}\PY{p}{]} \PY{k}{for} \PY{n}{\PYZus{}} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{k}\PY{p}{)}\PY{p}{]}
+                \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{labels} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+\end{Verbatim}
+
+
+    \paragraph{Define some getter function for plotting
+graph.}\label{define-some-getter-function-for-plotting-graph.}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}6}]:}     \PY{k}{def} \PY{n+nf}{getEnergyHistory}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{)}\PY{p}{:}
+                \PY{k}{return} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{energy\PYZus{}history}
+        
+            \PY{k}{def} \PY{n+nf}{getAccuracyHistory}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{)}\PY{p}{:}
+                \PY{k}{return} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{accuracy\PYZus{}history}
+            
+        \PY{c+c1}{\PYZsh{} for jupyter notebook}
+        \PY{n}{KMeans}\PY{o}{.}\PY{n}{getEnergyHistory} \PY{o}{=} \PY{n}{getEnergyHistory}
+        \PY{n}{KMeans}\PY{o}{.}\PY{n}{getAccuracyHistory} \PY{o}{=} \PY{n}{getAccuracyHistory}
+\end{Verbatim}
+
+
+    \paragraph{Define the initialization
+function}\label{define-the-initialization-function}
+
+This initialization function will:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  randomly assign labels to images
+\item
+  compute the initial centroids
+\item
+  compute the initial system energy
+\item
+  compute the initial accuracy
+\end{enumerate}
+
+We separate each step into different functions.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}7}]:}     \PY{k}{def} \PY{n+nf}{initialCluster}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{)}\PY{p}{:}
+                \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{\PYZus{}initialLabel}\PY{p}{(}\PY{p}{)}
+                \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{\PYZus{}computeCentroid}\PY{p}{(}\PY{p}{)}
+                \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{\PYZus{}computeEnergy}\PY{p}{(}\PY{p}{)}
+                \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{\PYZus{}computeAccuracy}\PY{p}{(}\PY{p}{)}
+                
+        \PY{c+c1}{\PYZsh{} for jupyter notebook}
+        \PY{n}{KMeans}\PY{o}{.}\PY{n}{initialCluster} \PY{o}{=} \PY{n}{initialCluster}
+\end{Verbatim}
+
+
+    Label initialization is very simple.\\
+In range \([0,k)\), we assign labels to images in order.
+
+Instead of store the data vector into cluster list, we just append
+image's index in \texttt{list\_image}.\\
+Use index can let easily get each image's original label.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}8}]:}     \PY{k}{def} \PY{n+nf}{\PYZus{}initialLabel}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{)}\PY{p}{:}
+                \PY{c+c1}{\PYZsh{} for i in range(100):}
+                \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{data}\PY{o}{.}\PY{n}{num\PYZus{}image}\PY{p}{)}\PY{p}{:}
+                    \PY{n}{index} \PY{o}{=} \PY{n}{i} \PY{o}{\PYZpc{}} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{k}
+                    \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{clusters}\PY{p}{[}\PY{n}{index}\PY{p}{]}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{i}\PY{p}{)}
+                    
+        \PY{c+c1}{\PYZsh{} for jupyter notebook}
+        \PY{n}{KMeans}\PY{o}{.}\PY{n}{\PYZus{}initialLabel} \PY{o}{=} \PY{n}{\PYZus{}initialLabel}
+\end{Verbatim}
+
+
+    We still use vectors' mean value as cluster's centroid.
+
+The compute method is same, but the data structure have been changed.
+Here we use nest array to represent a data matrix. Each column of the
+matrix is one image's data.
+
+I used the simplest way, traversal the matrix, to access data. It works,
+but the time complexity becomes to \(row \cdot col\)
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}9}]:}    \PY{k}{def} \PY{n+nf}{\PYZus{}computeCentroid}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{)}\PY{p}{:}
+                \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{} Compute each groups centroid then update self.controids \PYZdq{}\PYZdq{}\PYZdq{}}
+        
+                \PY{n}{new\PYZus{}centroids} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+                \PY{n}{n} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{data}\PY{o}{.}\PY{n}{len\PYZus{}vec}
+        
+                \PY{k}{for} \PY{n}{cluster} \PY{o+ow}{in} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{clusters}\PY{p}{:}
+                    \PY{n}{centroid} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{*} \PY{n}{n}
+                    \PY{n}{num\PYZus{}elements} \PY{o}{=} \PY{l+m+mi}{0}
+        
+                    \PY{c+c1}{\PYZsh{} sum of the cluster\PYZsq{}s elements}
+                    \PY{k}{for} \PY{n}{img} \PY{o+ow}{in} \PY{n}{cluster}\PY{p}{:}
+                        \PY{n}{num\PYZus{}elements} \PY{o}{+}\PY{o}{=} \PY{l+m+mi}{1}
+                        \PY{k}{for} \PY{n}{row} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{n}\PY{p}{)}\PY{p}{:}
+                            \PY{n}{centroid}\PY{p}{[}\PY{n}{row}\PY{p}{]} \PY{o}{+}\PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{data}\PY{o}{.}\PY{n}{list\PYZus{}image}\PY{p}{[}\PY{n}{row}\PY{p}{]}\PY{p}{[}\PY{n}{img}\PY{p}{]}
+        
+                    \PY{n}{centroid} \PY{o}{=} \PY{p}{[}\PY{n}{row}\PY{o}{/}\PY{n}{num\PYZus{}elements} \PY{k}{for} \PY{n}{row} \PY{o+ow}{in} \PY{n}{centroid}\PY{p}{]}
+                    \PY{n}{new\PYZus{}centroids}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{centroid}\PY{p}{)}
+        
+                \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{centroids} \PY{o}{=} \PY{n}{new\PYZus{}centroids}
+                
+        \PY{c+c1}{\PYZsh{} for jupyter notebook}
+        \PY{n}{KMeans}\PY{o}{.}\PY{n}{\PYZus{}computeCentroid} \PY{o}{=} \PY{n}{\PYZus{}computeCentroid}
+\end{Verbatim}
+
+
+    The \textbf{energy} computation is same as before: \[
+J^{clust}=(||x_{1}-z_{c_{1}}||^{2}+ \cdots +||x_{N}-z_{c_{N}}||^{2})/N
+\]
+
+Because of the data representation, we use
+\texttt{list\_image{[}:,\ index{]}} this syntex to get the column of the
+matrix.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}11}]:} \PY{k}{def} \PY{n+nf}{\PYZus{}computeEnergy}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{)}\PY{p}{:}
+                 \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{} Compute the cost of the clustering result}
+         
+         \PY{l+s+sd}{        Return:}
+         \PY{l+s+sd}{            energy(float): the energy of this clustering.}
+         \PY{l+s+sd}{        \PYZdq{}\PYZdq{}\PYZdq{}}
+         
+                 \PY{n}{energy} \PY{o}{=} \PY{l+m+mi}{0}
+                 \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{centroids}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+                     \PY{n}{centroid} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{centroids}\PY{p}{[}\PY{n}{i}\PY{p}{]}
+                     \PY{n}{part\PYZus{}energy} \PY{o}{=} \PY{l+m+mi}{0}
+                     \PY{k}{for} \PY{n}{index} \PY{o+ow}{in} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{clusters}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{:}
+                         \PY{n}{part\PYZus{}energy} \PY{o}{+}\PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{\PYZus{}computeDistance}\PY{p}{(}
+                             \PY{n}{x}\PY{o}{=}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{data}\PY{o}{.}\PY{n}{list\PYZus{}image}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{n}{index}\PY{p}{]}\PY{p}{,} \PY{n}{y}\PY{o}{=}\PY{n}{centroid}\PY{p}{)}
+                     \PY{n}{energy} \PY{o}{+}\PY{o}{=} \PY{n}{part\PYZus{}energy}
+                 \PY{n}{energy} \PY{o}{=} \PY{n}{energy} \PY{o}{/} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{data}\PY{o}{.}\PY{n}{num\PYZus{}image}
+                 \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{energy\PYZus{}history}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{energy}\PY{p}{)}
+         
+                 \PY{k}{return} \PY{n}{energy}
+             
+         \PY{c+c1}{\PYZsh{} for jupyter notebook}
+         \PY{n}{KMeans}\PY{o}{.}\PY{n}{\PYZus{}computeEnergy} \PY{o}{=} \PY{n}{\PYZus{}computeEnergy}
+\end{Verbatim}
+
+
+    The \textbf{accuracy} is the ratio of the most frequently occurring
+elements in the group.\\
+So we need to iterate all the elements then find the most frequently
+occurring image and count the number of occurrences.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}12}]:} \PY{k}{def} \PY{n+nf}{\PYZus{}computeAccuracy}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{)}\PY{p}{:}
+                 \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}Compute the arrcuracy of the result}
+         
+         \PY{l+s+sd}{        In each group, let the largest number of elements to be the group label.}
+         \PY{l+s+sd}{        \PYZdq{}\PYZdq{}\PYZdq{}}
+         
+                 \PY{n}{accuracy} \PY{o}{=} \PY{l+m+mi}{0}
+                 \PY{n}{labels\PYZus{}clusters} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+         
+                 \PY{k}{for} \PY{n}{cluster} \PY{o+ow}{in} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{clusters}\PY{p}{:}
+                     \PY{n}{labels} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+         
+                     \PY{c+c1}{\PYZsh{} get all the labels in the cluster}
+                     \PY{k}{for} \PY{n}{index} \PY{o+ow}{in} \PY{n}{cluster}\PY{p}{:}
+                         \PY{n}{labels}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{data}\PY{o}{.}\PY{n}{list\PYZus{}label}\PY{p}{[}\PY{n}{index}\PY{p}{]}\PY{p}{)}
+         
+                     \PY{c+c1}{\PYZsh{} get the largest number of lable, count the occurences}
+                     \PY{n}{labels}\PY{o}{.}\PY{n}{sort}\PY{p}{(}\PY{p}{)}
+                     \PY{n}{count} \PY{o}{=} \PY{l+m+mi}{0}
+                     \PY{n}{count\PYZus{}max} \PY{o}{=} \PY{l+m+mi}{0}
+                     \PY{n}{label\PYZus{}prev} \PY{o}{=} \PY{o}{\PYZhy{}}\PY{l+m+mi}{1}
+                     \PY{n}{label\PYZus{}max} \PY{o}{=} \PY{o}{\PYZhy{}}\PY{l+m+mi}{1}
+                     \PY{k}{for} \PY{n}{label} \PY{o+ow}{in} \PY{n}{labels}\PY{p}{:}
+                         \PY{k}{if} \PY{n}{label} \PY{o}{==} \PY{n}{label\PYZus{}prev}\PY{p}{:}
+                             \PY{n}{count} \PY{o}{+}\PY{o}{=} \PY{l+m+mi}{1}
+                         \PY{k}{else}\PY{p}{:}
+                             \PY{k}{if} \PY{n}{count} \PY{o}{\PYZgt{}} \PY{n}{count\PYZus{}max}\PY{p}{:}
+                                 \PY{n}{count\PYZus{}max} \PY{o}{=} \PY{n}{count}
+                                 \PY{n}{label\PYZus{}max} \PY{o}{=} \PY{n}{label\PYZus{}prev}
+                             \PY{n}{label\PYZus{}prev} \PY{o}{=} \PY{n}{label}
+                             \PY{n}{count} \PY{o}{=} \PY{l+m+mi}{1}
+                     \PY{c+c1}{\PYZsh{} check the last item}
+                     \PY{k}{if} \PY{n}{count} \PY{o}{\PYZgt{}} \PY{n}{count\PYZus{}max}\PY{p}{:}
+                         \PY{n}{count\PYZus{}max} \PY{o}{=} \PY{n}{count}
+                         \PY{n}{label\PYZus{}max} \PY{o}{=} \PY{n}{label\PYZus{}prev}
+         
+                     \PY{n}{labels\PYZus{}clusters}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{label\PYZus{}max}\PY{p}{)}
+                     \PY{n}{accuracy\PYZus{}part} \PY{o}{=} \PY{n}{count\PYZus{}max} \PY{o}{/} \PY{n+nb}{len}\PY{p}{(}\PY{n}{cluster}\PY{p}{)}
+                     \PY{n}{accuracy} \PY{o}{+}\PY{o}{=} \PY{n}{accuracy\PYZus{}part}
+         
+                 \PY{n}{accuracy} \PY{o}{=} \PY{n}{accuracy} \PY{o}{/} \PY{n+nb}{len}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{clusters}\PY{p}{)}
+                 \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{labels} \PY{o}{=} \PY{n}{labels\PYZus{}clusters}
+                 \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{accuracy\PYZus{}history}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{accuracy}\PY{p}{)}
+                 
+         \PY{c+c1}{\PYZsh{} for jupyter notebook}
+         \PY{n}{KMeans}\PY{o}{.}\PY{n}{\PYZus{}computeAccuracy} \PY{o}{=} \PY{n}{\PYZus{}computeAccuracy}
+\end{Verbatim}
+
+
+    \begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+\subsubsection{Trigger funtions}\label{trigger-funtions}
+
+In trigger function \texttt{run}, we define the condition to control
+when to stop our algorithm.
+
+Here we let the algorithm keep running until the \texttt{energy} not
+change.\\
+Also computhe \emph{energy} and \emph{accuracy} of each iteration.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}13}]:}     \PY{k}{def} \PY{n+nf}{run}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{)}\PY{p}{:}
+                 \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}Run algorithm}
+         
+         \PY{l+s+sd}{        Repeatly assign labels to points and compute new centroids.}
+         \PY{l+s+sd}{        Iterate until the energy of the result not change.}
+         \PY{l+s+sd}{        \PYZdq{}\PYZdq{}\PYZdq{}}
+         
+                 \PY{n}{energy\PYZus{}prev} \PY{o}{=} \PY{l+m+mi}{0}
+                 \PY{n}{energy\PYZus{}this} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{energy\PYZus{}history}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+                 \PY{k}{while}\PY{p}{(}\PY{n}{energy\PYZus{}this} \PY{o}{!=} \PY{n}{energy\PYZus{}prev}\PY{p}{)}\PY{p}{:}
+                     \PY{n}{energy\PYZus{}prev} \PY{o}{=} \PY{n}{energy\PYZus{}this}
+                     \PY{n}{energy\PYZus{}this} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{\PYZus{}clustering}\PY{p}{(}\PY{p}{)}
+                     \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{\PYZus{}computeAccuracy}\PY{p}{(}\PY{p}{)}
+                     
+         \PY{c+c1}{\PYZsh{} for jupyter notebook}
+         \PY{n}{KMeans}\PY{o}{.}\PY{n}{run} \PY{o}{=} \PY{n}{run}
+\end{Verbatim}
+
+
+    Inside the \texttt{\_clustering} function, it call
+\texttt{\_assignLabel} and \texttt{\_computeCentroid} one time to
+generate new result.
+
+Here we add one step after \texttt{\_assignLabel} to remove the empty
+clusters.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}15}]:}     \PY{k}{def} \PY{n+nf}{\PYZus{}clustering}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{)}\PY{p}{:}
+                 \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}Run algorithm one iteration}
+         
+         \PY{l+s+sd}{        Return:}
+         \PY{l+s+sd}{            energy: This iteration\PYZsq{}s result energy}
+         \PY{l+s+sd}{        \PYZdq{}\PYZdq{}\PYZdq{}}
+         
+                 \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{\PYZus{}assignLabel}\PY{p}{(}\PY{p}{)}
+                 \PY{c+c1}{\PYZsh{} After re\PYZhy{}grouping if there are any empty cluster, delete it from list}
+                 \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{clusters} \PY{o}{=} \PY{p}{[}\PY{n+nb}{list} \PY{k}{for} \PY{n+nb}{list} \PY{o+ow}{in} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{clusters} \PY{k}{if} \PY{n+nb}{list}\PY{p}{]}
+                 \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{\PYZus{}computeCentroid}\PY{p}{(}\PY{p}{)}
+         
+                 \PY{k}{return} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{\PYZus{}computeEnergy}\PY{p}{(}\PY{p}{)}
+             
+         \PY{c+c1}{\PYZsh{} for jupyter notebook}
+         \PY{n}{KMeans}\PY{o}{.}\PY{n}{\PYZus{}clustering} \PY{o}{=} \PY{n}{\PYZus{}clustering}
+\end{Verbatim}
+
+
+    Assign new label to images depends on the Euclidean distance between
+each image vector and its centroid vector.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}16}]:}     \PY{k}{def} \PY{n+nf}{\PYZus{}assignLabel}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{)}\PY{p}{:}
+                 \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{} Assign labels to elemetns for generating new groups}
+         
+         \PY{l+s+sd}{        Compute distance between each element with each centroid,}
+         \PY{l+s+sd}{        assign it to the closest centroid\PYZsq{}s group.}
+         \PY{l+s+sd}{        \PYZdq{}\PYZdq{}\PYZdq{}}
+         
+                 \PY{c+c1}{\PYZsh{} for each element, compute the distance, get the closest centroid}
+                 \PY{c+c1}{\PYZsh{} generate k new cluster}
+                 \PY{n}{new\PYZus{}clusters} \PY{o}{=} \PY{p}{[}\PY{p}{[}\PY{p}{]} \PY{k}{for} \PY{n}{\PYZus{}} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{clusters}\PY{p}{)}\PY{p}{)}\PY{p}{]}
+         
+                 \PY{k}{for} \PY{n}{index} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{data}\PY{o}{.}\PY{n}{num\PYZus{}image}\PY{p}{)}\PY{p}{:}
+                     \PY{n+nb}{min} \PY{o}{=} \PY{n}{math}\PY{o}{.}\PY{n}{inf}
+                     \PY{n}{closest} \PY{o}{=} \PY{l+m+mi}{0}
+                     \PY{c+c1}{\PYZsh{} find the closest centroid}
+                     \PY{k}{for} \PY{n}{j} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{centroids}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+                         \PY{n}{dist} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{\PYZus{}computeDistance}\PY{p}{(}
+                             \PY{n}{x}\PY{o}{=}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{data}\PY{o}{.}\PY{n}{list\PYZus{}image}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{n}{index}\PY{p}{]}\PY{p}{,} \PY{n}{y}\PY{o}{=}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{centroids}\PY{p}{[}\PY{n}{j}\PY{p}{]}\PY{p}{)}
+                         \PY{k}{if} \PY{n}{dist} \PY{o}{\PYZlt{}} \PY{n+nb}{min}\PY{p}{:}
+                             \PY{n+nb}{min} \PY{o}{=} \PY{n}{dist}
+                             \PY{n}{closest} \PY{o}{=} \PY{n}{j}
+                     \PY{c+c1}{\PYZsh{} put point into new group}
+                     \PY{n}{new\PYZus{}clusters}\PY{p}{[}\PY{n}{closest}\PY{p}{]}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{index}\PY{p}{)}
+         
+                 \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{clusters} \PY{o}{=} \PY{n}{new\PYZus{}clusters}
+                 
+         \PY{c+c1}{\PYZsh{} for jupyter notebook}
+         \PY{n}{KMeans}\PY{o}{.}\PY{n}{\PYZus{}assignLabel} \PY{o}{=} \PY{n}{\PYZus{}assignLabel}
+\end{Verbatim}
+
+
+    \emph{Euclidean distance} function.\\
+Since we just use this value to do the comparison, we do not need the
+square root value.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}17}]:}     \PY{k}{def} \PY{n+nf}{\PYZus{}computeDistance}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{x}\PY{p}{,} \PY{n}{y}\PY{p}{)}\PY{p}{:}
+                 \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}Compute the distance between two points}
+         
+         \PY{l+s+sd}{        (x1\PYZhy{}x2)\PYZca{}2 + (y1\PYZhy{}y2)\PYZca{}2}
+         \PY{l+s+sd}{        \PYZdq{}\PYZdq{}\PYZdq{}}
+         
+                 \PY{c+c1}{\PYZsh{} convert python list to np.array}
+                 \PY{n}{x} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{x}\PY{p}{)}
+                 \PY{n}{y} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{y}\PY{p}{)}
+         
+                 \PY{n}{d} \PY{o}{=} \PY{p}{(}\PY{n}{x} \PY{o}{\PYZhy{}} \PY{n}{y}\PY{p}{)}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}
+                 \PY{n}{s} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{d}\PY{p}{)}
+         
+                 \PY{k}{return} \PY{n}{s}
+             
+         \PY{c+c1}{\PYZsh{} for jupyter notebook}
+         \PY{n}{KMeans}\PY{o}{.}\PY{n}{\PYZus{}computeDistance} \PY{o}{=} \PY{n}{\PYZus{}computeDistance}
+\end{Verbatim}
+
+
+    \subsubsection{Plotting functions}\label{plotting-functions}
+
+We define two plotting functions here.
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{plotImages}: plot the clustering result images
+\item
+  \texttt{plotChanges}: plot each iteration's energy and accuracy
+  variations
+\end{itemize}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}44}]:} \PY{k}{def} \PY{n+nf}{plotImages}\PY{p}{(}\PY{n}{kmeans}\PY{p}{)}\PY{p}{:}
+             \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}Plot the graph of clusters average value\PYZdq{}\PYZdq{}\PYZdq{}}
+             \PY{n}{k} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{kmeans}\PY{o}{.}\PY{n}{clusters}\PY{p}{)}
+             \PY{n}{size} \PY{o}{=} \PY{n}{kmeans}\PY{o}{.}\PY{n}{data}\PY{o}{.}\PY{n}{len\PYZus{}vec}
+         
+             \PY{n}{im\PYZus{}average} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{(}\PY{n}{size}\PY{p}{,} \PY{n}{k}\PY{p}{)}\PY{p}{,} \PY{n}{dtype}\PY{o}{=}\PY{n+nb}{float}\PY{p}{)}
+             \PY{n}{im\PYZus{}count} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{n}{k}\PY{p}{,} \PY{n}{dtype}\PY{o}{=}\PY{n+nb}{int}\PY{p}{)}
+         
+             \PY{c+c1}{\PYZsh{} add each cluster\PYZsq{}s image value together}
+             \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{k}\PY{p}{)}\PY{p}{:}
+                 \PY{k}{for} \PY{n}{img} \PY{o+ow}{in} \PY{n}{kmeans}\PY{o}{.}\PY{n}{clusters}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{:}
+                     \PY{n}{im\PYZus{}average}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{n}{i}\PY{p}{]} \PY{o}{+}\PY{o}{=} \PY{n}{kmeans}\PY{o}{.}\PY{n}{data}\PY{o}{.}\PY{n}{list\PYZus{}image}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{n}{img}\PY{p}{]}
+         
+             \PY{c+c1}{\PYZsh{} count number of each cluster\PYZsq{}s elements}
+             \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{k}\PY{p}{)}\PY{p}{:}
+                 \PY{n}{im\PYZus{}count}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{kmeans}\PY{o}{.}\PY{n}{clusters}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{)}
+         
+             \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{k}\PY{p}{)}\PY{p}{:}
+                 \PY{n}{im\PYZus{}average}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{n}{i}\PY{p}{]} \PY{o}{/}\PY{o}{=} \PY{n}{im\PYZus{}count}\PY{p}{[}\PY{n}{i}\PY{p}{]}
+         
+                 \PY{n}{plt}\PY{o}{.}\PY{n}{subplot}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{,} \PY{n}{i}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}
+                 \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{n}{kmeans}\PY{o}{.}\PY{n}{labels}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{)}
+                 \PY{n}{plt}\PY{o}{.}\PY{n}{imshow}\PY{p}{(}\PY{n}{im\PYZus{}average}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{n}{i}\PY{p}{]}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}
+                                                     \PY{p}{(}\PY{n}{kmeans}\PY{o}{.}\PY{n}{data}\PY{o}{.}\PY{n}{size\PYZus{}row}\PY{p}{,}
+                                                      \PY{n}{kmeans}\PY{o}{.}\PY{n}{data}\PY{o}{.}\PY{n}{size\PYZus{}col}\PY{p}{)}\PY{p}{)}\PY{p}{,}
+                            \PY{n}{cmap}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Greys}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{interpolation}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{None}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         
+                 \PY{n}{frame} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{gca}\PY{p}{(}\PY{p}{)}
+                 \PY{n}{frame}\PY{o}{.}\PY{n}{axes}\PY{o}{.}\PY{n}{get\PYZus{}xaxis}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{set\PYZus{}visible}\PY{p}{(}\PY{k+kc}{False}\PY{p}{)}
+                 \PY{n}{frame}\PY{o}{.}\PY{n}{axes}\PY{o}{.}\PY{n}{get\PYZus{}yaxis}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{set\PYZus{}visible}\PY{p}{(}\PY{k+kc}{False}\PY{p}{)}
+         
+             \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+             
+         
+         \PY{k}{def} \PY{n+nf}{plotChanges}\PY{p}{(}\PY{n}{energies}\PY{p}{,} \PY{n}{accuracis}\PY{p}{)}\PY{p}{:}
+             \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}Plot energy \PYZam{} accuracy history}
+         
+         \PY{l+s+sd}{    Parameter:}
+         \PY{l+s+sd}{        energies(list): a list of energy}
+         \PY{l+s+sd}{        accuracis(list): a list of accuracy}
+         \PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+         
+             \PY{n}{plt}\PY{o}{.}\PY{n}{rc}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{text}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{usetex}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{rc}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{font}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{family}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{serif}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         
+             \PY{n}{fig} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{p}{)}
+             
+             \PY{n}{ite} \PY{o}{=} \PY{p}{[}\PY{n}{i} \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{n+nb}{len}\PY{p}{(}\PY{n}{energies}\PY{p}{)}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{]}
+                 
+             \PY{n}{ax1} \PY{o}{=} \PY{n}{fig}\PY{o}{.}\PY{n}{add\PYZus{}subplot}\PY{p}{(}\PY{l+m+mi}{111}\PY{p}{)}
+             \PY{n}{ax1}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Energy and Accuracy Variasion}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+             \PY{n}{ax1}\PY{o}{.}\PY{n}{set\PYZus{}ylabel}\PY{p}{(}\PY{l+s+sa}{r}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Energy \PYZdl{}J\PYZca{}}\PY{l+s+si}{\PYZob{}clust\PYZcb{}}\PY{l+s+s1}{\PYZdl{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+             \PY{n}{ax1}\PY{o}{.}\PY{n}{set\PYZus{}xticks}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{n+nb}{len}\PY{p}{(}\PY{n}{energies}\PY{p}{)}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{step}\PY{o}{=}\PY{l+m+mi}{5}\PY{p}{)}\PY{p}{)}
+             \PY{n}{ax1}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{ite}\PY{p}{,} \PY{n}{energies}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{.\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{b}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+             
+             \PY{n}{ax2} \PY{o}{=} \PY{n}{ax1}\PY{o}{.}\PY{n}{twinx}\PY{p}{(}\PY{p}{)}
+             \PY{n}{ax2}\PY{o}{.}\PY{n}{set\PYZus{}ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Accuray}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+             \PY{n}{ax2}\PY{o}{.}\PY{n}{get\PYZus{}xaxis}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{set\PYZus{}visible}\PY{p}{(}\PY{k+kc}{False}\PY{p}{)}
+             \PY{n}{ax2}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{ite}\PY{p}{,} \PY{n}{accuracis}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{.\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{r}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+             
+             \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+             
+\end{Verbatim}
+
+
+    \subsection{Result}\label{result}
+
+Now let run the program to check the result.
+
+\subsubsection{K=10}\label{k10}
+
+First, let's try when \texttt{k=10}:
+
+\paragraph{1. Initial Images:}\label{initial-images}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}21}]:} \PY{k}{if} \PY{n+nv+vm}{\PYZus{}\PYZus{}name\PYZus{}\PYZus{}} \PY{o}{==} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZus{}\PYZus{}main\PYZus{}\PYZus{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}
+             \PY{n}{data} \PY{o}{=} \PY{n}{DataSet}\PY{p}{(}\PY{p}{)}
+             \PY{n}{kmeans} \PY{o}{=} \PY{n}{KMeans}\PY{p}{(}\PY{n}{data}\PY{p}{,} \PY{l+m+mi}{10}\PY{p}{)}
+             \PY{n}{kmeans}\PY{o}{.}\PY{n}{initialCluster}\PY{p}{(}\PY{p}{)}
+             \PY{n}{plotImages}\PY{p}{(}\PY{n}{kmeans}\PY{p}{)}
+         
+             \PY{n}{kmeans}\PY{o}{.}\PY{n}{run}\PY{p}{(}\PY{p}{)}
+             
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \paragraph{2. Final Images}\label{final-images}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}22}]:} \PY{n}{plotImages}\PY{p}{(}\PY{n}{kmeans}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_34_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \paragraph{3. Energy and Accuray
+changes}\label{energy-and-accuray-changes}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}45}]:} \PY{n}{plotChanges}\PY{p}{(}\PY{n}{kmeans}\PY{o}{.}\PY{n}{getEnergyHistory}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{n}{kmeans}\PY{o}{.}\PY{n}{getAccuracyHistory}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_36_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}

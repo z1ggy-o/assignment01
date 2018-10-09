@@ -19,7 +19,6 @@ import math
 
 import numpy as np
 from matplotlib import pyplot as plt
-from matplotlib import cm
 
 import data_set
 
@@ -39,6 +38,7 @@ class KMeans:
         self.accuracy_history = []
         self.centroids = []
         self.clusters = [[] for _ in range(k)]
+        self.labels = []
 
     def getEnergyHistory(self):
         return self.energy_history
@@ -49,6 +49,8 @@ class KMeans:
     def initialCluster(self):
         self._initialLabel()
         self._computeCentroid()
+        self._computeEnergy()
+        self._computeAccuracy()
 
     def run(self):
         """Run algorithm
@@ -58,8 +60,7 @@ class KMeans:
         """
 
         energy_prev = 0
-        energy_this = self._computeEnergy()  # initialization energy
-        self._computeAccuracy()  # initialization accuracy
+        energy_this = self.energy_history[0]
         while(energy_this != energy_prev):
             energy_prev = energy_this
             energy_this = self._clustering()
@@ -174,6 +175,7 @@ class KMeans:
         """
 
         accuracy = 0
+        labels_clusters = []
 
         for cluster in self.clusters:
             labels = []
@@ -187,38 +189,68 @@ class KMeans:
             count = 0
             count_max = 0
             label_prev = -1
+            label_max = -1
             for label in labels:
                 if label == label_prev:
                     count += 1
                 else:
                     if count > count_max:
                         count_max = count
+                        label_max = label_prev
                     label_prev = label
                     count = 1
             # check the last item
             if count > count_max:
                 count_max = count
+                label_max = label_prev
 
+            labels_clusters.append(label_max)
             accuracy_part = count_max / len(cluster)
             accuracy += accuracy_part
 
         accuracy = accuracy / len(self.clusters)
+        self.labels = labels_clusters
         self.accuracy_history.append(accuracy)
 
-        return accuracy
 
+def plotImages(kmeans):
+    """Plot the graph of clusters average value"""
+    k = len(kmeans.clusters)
+    size = kmeans.data.len_vec
+
+    im_average = np.zeros((size, k), dtype=float)
+    im_count = np.zeros(k, dtype=int)
+
+    # add each cluster's image value together
+    for i in range(k):
+        for img in kmeans.clusters[i]:
+            im_average[:, i] += kmeans.data.list_image[:, img]
+
+    # count number of each cluster's elements
+    for i in range(k):
+        im_count[i] = len(kmeans.clusters[i])
+
+    for i in range(k):
+        im_average[:, i] /= im_count[i]
+
+        plt.subplot(2, 5, i+1)
+        plt.title(kmeans.labels[i])
+        plt.imshow(im_average[:, i].reshape(
+                                            (kmeans.data.size_row,
+                                             kmeans.data.size_col)),
+                   cmap='Greys', interpolation='None')
+
+        frame = plt.gca()
+        frame.axes.get_xaxis().set_visible(False)
+        frame.axes.get_yaxis().set_visible(False)
+
+    plt.show()
 
 if __name__ == '__main__':
     data = data_set.DataSet()
-    kmeans = KMeans(data, 5)
+    kmeans = KMeans(data, 10)
     kmeans.initialCluster()
-
-    # kmeans._computeEnergy()
-    # kmeans._computeAccuracy()
-    # print('energy histoty:')
-    # print(kmeans.getEnergyHistory())
-    # print('\naccuracy history: ')
-    # print(kmeans.getAccuracyHistory())
+    plotImages(kmeans)
 
     kmeans.run()
     print('After')
@@ -226,3 +258,4 @@ if __name__ == '__main__':
     print(kmeans.getEnergyHistory())
     print('\naccuracy history: ')
     print(kmeans.getAccuracyHistory())
+    plotImages(kmeans)
