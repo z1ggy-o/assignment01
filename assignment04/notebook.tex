@@ -285,7 +285,8 @@ Images}\label{k-means-algorithm-with-images}
 
 \textbf{Name}: ZHU GUANGYU\\
 \textbf{Student ID}: 20165953\\
-\textbf{Github Repo}: \href{}{assignment03}
+\textbf{Github Repo}:
+\href{https://github.com/z1ggy-o/cv_assignment/tree/master/assignment04}{assignment04}
 
 \begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
 
@@ -817,7 +818,7 @@ We define two plotting functions here.
 \end{itemize}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}44}]:} \PY{k}{def} \PY{n+nf}{plotImages}\PY{p}{(}\PY{n}{kmeans}\PY{p}{)}\PY{p}{:}
+{\color{incolor}In [{\color{incolor}61}]:} \PY{k}{def} \PY{n+nf}{plotImages}\PY{p}{(}\PY{n}{kmeans}\PY{p}{)}\PY{p}{:}
              \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}Plot the graph of clusters average value\PYZdq{}\PYZdq{}\PYZdq{}}
              \PY{n}{k} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{kmeans}\PY{o}{.}\PY{n}{clusters}\PY{p}{)}
              \PY{n}{size} \PY{o}{=} \PY{n}{kmeans}\PY{o}{.}\PY{n}{data}\PY{o}{.}\PY{n}{len\PYZus{}vec}
@@ -864,18 +865,21 @@ We define two plotting functions here.
          
              \PY{n}{fig} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{p}{)}
              
+             
              \PY{n}{ite} \PY{o}{=} \PY{p}{[}\PY{n}{i} \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{n+nb}{len}\PY{p}{(}\PY{n}{energies}\PY{p}{)}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{]}
-                 
+             
              \PY{n}{ax1} \PY{o}{=} \PY{n}{fig}\PY{o}{.}\PY{n}{add\PYZus{}subplot}\PY{p}{(}\PY{l+m+mi}{111}\PY{p}{)}
              \PY{n}{ax1}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Energy and Accuracy Variasion}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
              \PY{n}{ax1}\PY{o}{.}\PY{n}{set\PYZus{}ylabel}\PY{p}{(}\PY{l+s+sa}{r}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Energy \PYZdl{}J\PYZca{}}\PY{l+s+si}{\PYZob{}clust\PYZcb{}}\PY{l+s+s1}{\PYZdl{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
              \PY{n}{ax1}\PY{o}{.}\PY{n}{set\PYZus{}xticks}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{n+nb}{len}\PY{p}{(}\PY{n}{energies}\PY{p}{)}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{step}\PY{o}{=}\PY{l+m+mi}{5}\PY{p}{)}\PY{p}{)}
-             \PY{n}{ax1}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{ite}\PY{p}{,} \PY{n}{energies}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{.\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{b}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+             \PY{n}{ax1}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{ite}\PY{p}{,} \PY{n}{energies}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{.\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{b}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Energy}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+             \PY{n}{ax1}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{n}{bbox\PYZus{}to\PYZus{}anchor}\PY{o}{=}\PY{p}{(}\PY{l+m+mf}{1.05}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,} \PY{n}{loc}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{,} \PY{n}{borderaxespad}\PY{o}{=}\PY{l+m+mf}{0.}\PY{p}{)}
              
              \PY{n}{ax2} \PY{o}{=} \PY{n}{ax1}\PY{o}{.}\PY{n}{twinx}\PY{p}{(}\PY{p}{)}
              \PY{n}{ax2}\PY{o}{.}\PY{n}{set\PYZus{}ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Accuray}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
              \PY{n}{ax2}\PY{o}{.}\PY{n}{get\PYZus{}xaxis}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{set\PYZus{}visible}\PY{p}{(}\PY{k+kc}{False}\PY{p}{)}
-             \PY{n}{ax2}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{ite}\PY{p}{,} \PY{n}{accuracis}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{.\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{r}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+             \PY{n}{ax2}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{ite}\PY{p}{,} \PY{n}{accuracis}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{.\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{r}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Accuracy}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+             \PY{n}{ax2}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{n}{bbox\PYZus{}to\PYZus{}anchor}\PY{o}{=}\PY{p}{(}\PY{l+m+mf}{1.05}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,} \PY{n}{loc}\PY{o}{=}\PY{l+m+mi}{3}\PY{p}{,} \PY{n}{borderaxespad}\PY{o}{=}\PY{l+m+mf}{0.}\PY{p}{)}
              
              \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
              
@@ -925,12 +929,132 @@ First, let's try when \texttt{k=10}:
 changes}\label{energy-and-accuray-changes}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}45}]:} \PY{n}{plotChanges}\PY{p}{(}\PY{n}{kmeans}\PY{o}{.}\PY{n}{getEnergyHistory}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{n}{kmeans}\PY{o}{.}\PY{n}{getAccuracyHistory}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}86}]:} \PY{n}{plotChanges}\PY{p}{(}\PY{n}{kmeans}\PY{o}{.}\PY{n}{getEnergyHistory}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{n}{kmeans}\PY{o}{.}\PY{n}{getAccuracyHistory}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+         
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Accuracy: }\PY{l+s+si}{\PYZob{}0:.2f\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{kmeans}\PY{o}{.}\PY{n}{getAccuracyHistory}\PY{p}{(}\PY{p}{)}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}\PY{p}{)}
 \end{Verbatim}
 
 
     \begin{center}
     \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_36_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+Accuracy: 0.63
+
+    \end{Verbatim}
+
+    \subsubsection{\texorpdfstring{Other \emph{k}
+values}{Other k values}}\label{other-k-values}
+
+Let try other k to check how accuracy changes.
+
+\paragraph{k = 5}\label{k-5}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}64}]:}     \PY{n}{kmeans\PYZus{}5} \PY{o}{=} \PY{n}{KMeans}\PY{p}{(}\PY{n}{data}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{)}
+             \PY{n}{kmeans\PYZus{}5}\PY{o}{.}\PY{n}{initialCluster}\PY{p}{(}\PY{p}{)}
+             \PY{n}{kmeans\PYZus{}5}\PY{o}{.}\PY{n}{run}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}66}]:} \PY{n}{plotChanges}\PY{p}{(}\PY{n}{kmeans\PYZus{}5}\PY{o}{.}\PY{n}{getEnergyHistory}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{n}{kmeans\PYZus{}5}\PY{o}{.}\PY{n}{getAccuracyHistory}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_39_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \paragraph{k = 20}\label{k-20}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}67}]:}     \PY{n}{kmeans\PYZus{}20} \PY{o}{=} \PY{n}{KMeans}\PY{p}{(}\PY{n}{data}\PY{p}{,} \PY{l+m+mi}{20}\PY{p}{)}
+             \PY{n}{kmeans\PYZus{}20}\PY{o}{.}\PY{n}{initialCluster}\PY{p}{(}\PY{p}{)}
+             \PY{n}{kmeans\PYZus{}20}\PY{o}{.}\PY{n}{run}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}68}]:} \PY{n}{plotChanges}\PY{p}{(}\PY{n}{kmeans\PYZus{}20}\PY{o}{.}\PY{n}{getEnergyHistory}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{n}{kmeans\PYZus{}20}\PY{o}{.}\PY{n}{getAccuracyHistory}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_42_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \paragraph{k = 50}\label{k-50}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}69}]:}     \PY{n}{kmeans\PYZus{}50} \PY{o}{=} \PY{n}{KMeans}\PY{p}{(}\PY{n}{data}\PY{p}{,} \PY{l+m+mi}{50}\PY{p}{)}
+             \PY{n}{kmeans\PYZus{}50}\PY{o}{.}\PY{n}{initialCluster}\PY{p}{(}\PY{p}{)}
+             \PY{n}{kmeans\PYZus{}50}\PY{o}{.}\PY{n}{run}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}71}]:} \PY{n}{plotChanges}\PY{p}{(}\PY{n}{kmeans\PYZus{}50}\PY{o}{.}\PY{n}{getEnergyHistory}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{n}{kmeans\PYZus{}50}\PY{o}{.}\PY{n}{getAccuracyHistory}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_45_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \paragraph{K = 100}\label{k-100}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}72}]:}     \PY{n}{kmeans\PYZus{}100} \PY{o}{=} \PY{n}{KMeans}\PY{p}{(}\PY{n}{data}\PY{p}{,} \PY{l+m+mi}{100}\PY{p}{)}
+             \PY{n}{kmeans\PYZus{}100}\PY{o}{.}\PY{n}{initialCluster}\PY{p}{(}\PY{p}{)}
+             \PY{n}{kmeans\PYZus{}100}\PY{o}{.}\PY{n}{run}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}74}]:} \PY{n}{plotChanges}\PY{p}{(}\PY{n}{kmeans\PYZus{}100}\PY{o}{.}\PY{n}{getEnergyHistory}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{n}{kmeans\PYZus{}100}\PY{o}{.}\PY{n}{getAccuracyHistory}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_48_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \paragraph{Compare}\label{compare}
+
+We can see from the graph, along with the \emph{k} increase, the
+accuracy increase too.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}83}]:} \PY{n}{acc} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+         \PY{n}{acc}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{kmeans\PYZus{}5}\PY{o}{.}\PY{n}{getAccuracyHistory}\PY{p}{(}\PY{p}{)}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
+         \PY{n}{acc}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{kmeans}\PY{o}{.}\PY{n}{getAccuracyHistory}\PY{p}{(}\PY{p}{)}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
+         \PY{n}{acc}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{kmeans\PYZus{}20}\PY{o}{.}\PY{n}{getAccuracyHistory}\PY{p}{(}\PY{p}{)}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
+         \PY{n}{acc}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{kmeans\PYZus{}50}\PY{o}{.}\PY{n}{getAccuracyHistory}\PY{p}{(}\PY{p}{)}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
+         \PY{n}{acc}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{kmeans\PYZus{}100}\PY{o}{.}\PY{n}{getAccuracyHistory}\PY{p}{(}\PY{p}{)}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
+         
+         \PY{n}{fig} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{)}
+             
+         \PY{n}{ite} \PY{o}{=} \PY{p}{[}\PY{n}{i} \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{6}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{]}
+         \PY{n}{index\PYZus{}ls} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{5}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{10}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{20}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{50}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{100}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Relation between k and accuracy}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{xticks}\PY{p}{(}\PY{n}{ite}\PY{p}{,} \PY{n}{index\PYZus{}ls}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Accuracy}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{k}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{ite}\PY{p}{,} \PY{n}{acc}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{.\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{b}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         
+         \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_50_0.png}
     \end{center}
     { \hspace*{\fill} \\}
     
