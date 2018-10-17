@@ -57,6 +57,21 @@ de_x = signal.convolve2d(im_gray, kernel_x, boundary='symm', mode='same')
 # derivative y-axis
 de_y = signal.convolve2d(im_gray, kernel_y, boundary='symm', mode='same')
 
+# absolute value of gradient
+def gradient_abs(de_x, de_y):
+    n_row = len(de_x)
+    n_col = len(de_x[0])
+    gd_x = []
+    gd_y = []
+
+    for i in range(n_row):
+        for j in range(n_col):
+            abs_x = abs(de_x[i][j])
+            gd_x.append(abs_x)
+            abs_y = abs(de_y[i][j])
+            gd_y.append(abs_y)
+    
+    return (gd_x, gd_y)
 
 # function for computing magnitude of the gradient
 def magnitude(de_x, de_y):
@@ -134,14 +149,7 @@ p6.set_title('sharpen')
 plt.imshow(sharpen, cmap='gray')
 plt.axis('off')
 
-# p3 = plt.subplot(2,2,3)
-# p3.set_title('convolution kernel')
-# plt.imshow(ker, cmap='gray')
-# plt.axis('off')
-
-# p4 = plt.subplot(2,2,4)
-# p4.set_title('convolution result')
-# plt.imshow(im_conv, cmap='gray')
-# plt.axis('off')
-
+# gradients
+g_x, g_y = gradient_abs(de_x, de_y)
+plt.quiver(g_x, g_y)
 plt.show()
