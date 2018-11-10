@@ -9,3 +9,4 @@ about Git (by LaTex)
 - [assignment04](./assignment04/): K-means Algorithm with images
 - [assignment05](./assignment05/): Convolution and Image Processing
 - [assignment06](./assignment06/): Straight-line Fit
+- [assignment07](./assignment07/): Polynomial Fit
