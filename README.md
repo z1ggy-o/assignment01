@@ -10,3 +10,4 @@ about Git (by LaTex)
 - [assignment05](./assignment05/): Convolution and Image Processing
 - [assignment06](./assignment06/): Straight-line Fit
 - [assignment07](./assignment07/): Polynomial Fit
+- [assignment08](./assignment08/): Binary Classifier
