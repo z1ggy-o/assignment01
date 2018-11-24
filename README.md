@@ -11,3 +11,4 @@ about Git (by LaTex)
 - [assignment06](./assignment06/): Straight-line Fit
 - [assignment07](./assignment07/): Polynomial Fit
 - [assignment08](./assignment08/): Binary Classifier
+- [assignment09](./assignment09/): Binary Classifier with Different #Features
