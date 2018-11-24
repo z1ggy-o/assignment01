@@ -1,0 +1,892 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{assignment09}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \section{Binary Classification with Different
+Features}\label{binary-classification-with-different-features}
+
+\textbf{Name}: ZHU GUANGYU\\
+\textbf{Student ID}: 20165953\\
+\textbf{Github Repo}:
+\href{https://github.com/z1ggy-o/cv_assignment/tree/master/assignment09}{assignment09}
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+In a \emph{classification problem}, the outcome takes on only a finit
+number of values. In the simplest case, outcome has only two values, for
+example TRUE or FALSE. This is called the \emph{binary classification
+problem}.
+
+As in real-valued data fitting, we assume that an approxomate relation
+ship of the form \(y \approx f(x)\) holds, where
+\(f: R^{n} \rightarrow {-1, +1}\). The model \(\hat{f}\) is called a
+\emph{classifier}.
+
+For a given data point x, y with predicted outcome
+\(\hat{y} = \hat{f}(x)\), there are four possibilities:
+
+\begin{itemize}
+\tightlist
+\item
+  \emph{True positive}: \(y = +1\) and \(\hat{y} = +1\).
+\item
+  \emph{True negative}: \(y = -1\) and \(\hat{y} = -1\).
+\item
+  \emph{False positive}: \(y = -1\) and \(\hat{y} = +1\).
+\item
+  \emph{False negative}: \(y = +1\) and \(\hat{y} = -1\).
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+Continue ｗith assignmen08, we still use \emph{least squares classifer}
+to separate 0 and other numbers in MNIST data set.
+
+Sign function is same: \[ sign(x)=\left\{
+\begin{aligned}
++1 & & if  x \geq 0 \\
+-1 & & if  x < 0 
+\end{aligned}
+\right.
+\]
+
+But this time, we change feature function to see the differencies.
+
+We define new feature functions as
+\(f_{i} = r_{i}^{T}x, r_{i} \sim N(0, \sigma)\), and try with varing the
+number of parameter \(p\) with the standard deviation \(\sigma = 1\) of
+the random feature vectore \(r\).
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+    \subsection{Create Classifier}\label{create-classifier}
+
+\subsubsection{First, import data sets}\label{first-import-data-sets}
+
+We have two data sets, one for training, one for testing. Each element
+is a image that has height 28 and width 28 pixels.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} \PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
+        \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+        
+        \PY{n}{file\PYZus{}data\PYZus{}train} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{mnist\PYZus{}train.csv}\PY{l+s+s2}{\PYZdq{}}
+        \PY{n}{file\PYZus{}data\PYZus{}test}  \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{mnist\PYZus{}test.csv}\PY{l+s+s2}{\PYZdq{}}
+        
+        \PY{n}{h\PYZus{}data\PYZus{}train}    \PY{o}{=} \PY{n+nb}{open}\PY{p}{(}\PY{n}{file\PYZus{}data\PYZus{}train}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{r}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        \PY{n}{h\PYZus{}data\PYZus{}test}     \PY{o}{=} \PY{n+nb}{open}\PY{p}{(}\PY{n}{file\PYZus{}data\PYZus{}test}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{r}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        
+        \PY{n}{data\PYZus{}train}      \PY{o}{=} \PY{n}{h\PYZus{}data\PYZus{}train}\PY{o}{.}\PY{n}{readlines}\PY{p}{(}\PY{p}{)}
+        \PY{n}{data\PYZus{}test}       \PY{o}{=} \PY{n}{h\PYZus{}data\PYZus{}test}\PY{o}{.}\PY{n}{readlines}\PY{p}{(}\PY{p}{)}
+        
+        \PY{n}{h\PYZus{}data\PYZus{}train}\PY{o}{.}\PY{n}{close}\PY{p}{(}\PY{p}{)}
+        \PY{n}{h\PYZus{}data\PYZus{}test}\PY{o}{.}\PY{n}{close}\PY{p}{(}\PY{p}{)}
+        
+        \PY{n}{size\PYZus{}row}    \PY{o}{=} \PY{l+m+mi}{28}    \PY{c+c1}{\PYZsh{} height of the image}
+        \PY{n}{size\PYZus{}col}    \PY{o}{=} \PY{l+m+mi}{28}    \PY{c+c1}{\PYZsh{} width of the image}
+        
+        \PY{n}{num\PYZus{}train}   \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{data\PYZus{}train}\PY{p}{)}   \PY{c+c1}{\PYZsh{} number of training images}
+        \PY{n}{num\PYZus{}test}    \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{data\PYZus{}test}\PY{p}{)}    \PY{c+c1}{\PYZsh{} number of testing images}
+        
+        \PY{c+c1}{\PYZsh{} number of training images: 60000}
+        \PY{c+c1}{\PYZsh{} number of testing images: 10000}
+\end{Verbatim}
+
+
+    To reduce the bias, we need to normalize the data.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}2}]:} \PY{c+c1}{\PYZsh{}}
+        \PY{c+c1}{\PYZsh{} normalize the values of the input data to be [0, 1]}
+        \PY{c+c1}{\PYZsh{}}
+        \PY{k}{def} \PY{n+nf}{normalize}\PY{p}{(}\PY{n}{data}\PY{p}{)}\PY{p}{:}
+        
+            \PY{n}{data\PYZus{}normalized} \PY{o}{=} \PY{p}{(}\PY{n}{data} \PY{o}{\PYZhy{}} \PY{n+nb}{min}\PY{p}{(}\PY{n}{data}\PY{p}{)}\PY{p}{)} \PY{o}{/} \PY{p}{(}\PY{n+nb}{max}\PY{p}{(}\PY{n}{data}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{n+nb}{min}\PY{p}{(}\PY{n}{data}\PY{p}{)}\PY{p}{)}
+        
+            \PY{k}{return}\PY{p}{(}\PY{n}{data\PYZus{}normalized}\PY{p}{)}
+\end{Verbatim}
+
+
+    Normalize each pixel, and put image data into a 784*num\_image matrix.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}3}]:} \PY{c+c1}{\PYZsh{}}
+        \PY{c+c1}{\PYZsh{} make a matrix each column of which represents an images in a vector form }
+        \PY{c+c1}{\PYZsh{}}
+        \PY{n}{list\PYZus{}image\PYZus{}train}    \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{empty}\PY{p}{(}\PY{p}{(}\PY{n}{size\PYZus{}row} \PY{o}{*} \PY{n}{size\PYZus{}col}\PY{p}{,} \PY{n}{num\PYZus{}train}\PY{p}{)}\PY{p}{,} \PY{n}{dtype}\PY{o}{=}\PY{n+nb}{float}\PY{p}{)}  \PY{c+c1}{\PYZsh{} 784 * num\PYZus{}trian matrix}
+        \PY{n}{list\PYZus{}label\PYZus{}train}    \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{empty}\PY{p}{(}\PY{n}{num\PYZus{}train}\PY{p}{,} \PY{n}{dtype}\PY{o}{=}\PY{n+nb}{int}\PY{p}{)}
+        
+        \PY{n}{list\PYZus{}image\PYZus{}test}     \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{empty}\PY{p}{(}\PY{p}{(}\PY{n}{size\PYZus{}row} \PY{o}{*} \PY{n}{size\PYZus{}col}\PY{p}{,} \PY{n}{num\PYZus{}test}\PY{p}{)}\PY{p}{,} \PY{n}{dtype}\PY{o}{=}\PY{n+nb}{float}\PY{p}{)}
+        \PY{n}{list\PYZus{}label\PYZus{}test}     \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{empty}\PY{p}{(}\PY{n}{num\PYZus{}test}\PY{p}{,} \PY{n}{dtype}\PY{o}{=}\PY{n+nb}{int}\PY{p}{)}
+        
+        \PY{n}{count} \PY{o}{=} \PY{l+m+mi}{0}
+        
+        \PY{k}{for} \PY{n}{line} \PY{o+ow}{in} \PY{n}{data\PYZus{}train}\PY{p}{:}
+        
+            \PY{n}{line\PYZus{}data}   \PY{o}{=} \PY{n}{line}\PY{o}{.}\PY{n}{split}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{,}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+            \PY{n}{label}       \PY{o}{=} \PY{n}{line\PYZus{}data}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+            \PY{n}{im\PYZus{}vector}   \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{asfarray}\PY{p}{(}\PY{n}{line\PYZus{}data}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{:}\PY{p}{]}\PY{p}{)}  \PY{c+c1}{\PYZsh{} convert to float type}
+            \PY{n}{im\PYZus{}vector}   \PY{o}{=} \PY{n}{normalize}\PY{p}{(}\PY{n}{im\PYZus{}vector}\PY{p}{)}
+        
+            \PY{n}{list\PYZus{}label\PYZus{}train}\PY{p}{[}\PY{n}{count}\PY{p}{]}     \PY{o}{=} \PY{n}{label}
+            \PY{n}{list\PYZus{}image\PYZus{}train}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{n}{count}\PY{p}{]}  \PY{o}{=} \PY{n}{im\PYZus{}vector}  \PY{c+c1}{\PYZsh{} each column is a image}
+        
+            \PY{n}{count} \PY{o}{+}\PY{o}{=} \PY{l+m+mi}{1}
+        
+        \PY{n}{count} \PY{o}{=} \PY{l+m+mi}{0}
+        
+        \PY{k}{for} \PY{n}{line} \PY{o+ow}{in} \PY{n}{data\PYZus{}test}\PY{p}{:}
+        
+            \PY{n}{line\PYZus{}data}   \PY{o}{=} \PY{n}{line}\PY{o}{.}\PY{n}{split}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{,}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+            \PY{n}{label}       \PY{o}{=} \PY{n}{line\PYZus{}data}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+            \PY{n}{im\PYZus{}vector}   \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{asfarray}\PY{p}{(}\PY{n}{line\PYZus{}data}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{:}\PY{p}{]}\PY{p}{)}
+            \PY{n}{im\PYZus{}vector}   \PY{o}{=} \PY{n}{normalize}\PY{p}{(}\PY{n}{im\PYZus{}vector}\PY{p}{)}
+        
+            \PY{n}{list\PYZus{}label\PYZus{}test}\PY{p}{[}\PY{n}{count}\PY{p}{]}      \PY{o}{=} \PY{n}{label}
+            \PY{n}{list\PYZus{}image\PYZus{}test}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{n}{count}\PY{p}{]}   \PY{o}{=} \PY{n}{im\PYZus{}vector}    
+        
+            \PY{n}{count} \PY{o}{+}\PY{o}{=} \PY{l+m+mi}{1}
+\end{Verbatim}
+
+
+    \subsubsection{Define feature functions
+generator}\label{define-feature-functions-generator}
+
+This is the core part of this assignment.
+
+Depends on the given number of parameters we should generate correponde
+feature functions \(r\). Each element of \(r\) is a vector with length
+\(28 * 28\). The element of \(r_{i}\) is random number from a normal
+distribution.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}4}]:} \PY{k}{def} \PY{n+nf}{generate\PYZus{}features}\PY{p}{(}\PY{n}{n}\PY{p}{,} \PY{n}{size}\PY{p}{)}\PY{p}{:}
+            \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}Generate feature functions}
+        \PY{l+s+sd}{    }
+        \PY{l+s+sd}{    Argumengs:}
+        \PY{l+s+sd}{        n(int): number of parameters}
+        \PY{l+s+sd}{        size: number of elements of each vector}
+        \PY{l+s+sd}{    Return:}
+        \PY{l+s+sd}{        functions(2d matrix): feature function matrix}
+        \PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+            
+            \PY{n}{functions} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+            
+            \PY{c+c1}{\PYZsh{} for n, generate vectore with \PYZsh{}size elements}
+            \PY{n}{mean}\PY{p}{,} \PY{n}{sigma} \PY{o}{=} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{1}
+            
+            \PY{k}{for} \PY{n}{\PYZus{}} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{n}\PY{p}{)}\PY{p}{:}
+                \PY{n}{ri} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{normal}\PY{p}{(}\PY{n}{mean}\PY{p}{,} \PY{n}{sigma}\PY{p}{,} \PY{n}{size}\PY{p}{)}
+                \PY{n}{functions}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{ri}\PY{p}{)}
+            
+            \PY{k}{return} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{functions}\PY{p}{)} 
+\end{Verbatim}
+
+
+    \subsubsection{Generate the matrix of feature funtions and
+data}\label{generate-the-matrix-of-feature-funtions-and-data}
+
+Since we have got feature functions, now we can apply them on input
+data.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}5}]:} \PY{k}{def} \PY{n+nf}{generate\PYZus{}tilde\PYZus{}matrix}\PY{p}{(}\PY{n}{feature\PYZus{}func}\PY{p}{,} \PY{n}{data}\PY{p}{,} \PY{n}{num\PYZus{}data}\PY{p}{)}\PY{p}{:}
+            \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}Create matrix of feature function on data}
+        \PY{l+s+sd}{    }
+        \PY{l+s+sd}{    Arguments:}
+        \PY{l+s+sd}{        feature\PYZus{}func(2d matrix): feature function matrix}
+        \PY{l+s+sd}{        data: input image data}
+        \PY{l+s+sd}{        num\PYZus{}data: number of input data}
+        \PY{l+s+sd}{    Return:}
+        \PY{l+s+sd}{        matrix of feature functions applied on image data}
+        \PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+            
+            \PY{n}{A} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+            
+            \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{num\PYZus{}data}\PY{p}{)}\PY{p}{:}
+                \PY{n}{img} \PY{o}{=} \PY{n}{data}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{n}{i}\PY{p}{]}  \PY{c+c1}{\PYZsh{} ith image(column)}
+                \PY{n}{row} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{inner}\PY{p}{(}\PY{n}{feature\PYZus{}func}\PY{p}{,} \PY{n}{img}\PY{p}{)}
+                \PY{n}{A}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{row}\PY{p}{)}
+            
+            \PY{k}{return} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{A}\PY{p}{)}
+\end{Verbatim}
+
+
+    \subsubsection{\texorpdfstring{Compute
+\(\theta\)}{Compute \textbackslash{}theta}}\label{compute-theta}
+
+Depends on \(A\theta = y\), while \(A\) is the matrix of feature
+function apply on data set, \(\theta\) is perameters, and \(y\) is the
+label.
+
+Because we just want to separate 0 and other numbers, we need to process
+label \(y\) which gives 0's image \(+1\) and other number's image
+\(-1\).
+
+Through pseudo inverse \((A^{T}A)^{-1}A\) we can compute the \(\theta\).
+Here we use \texttt{np.linalg.pinv} to get \(A^{-1}\).
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}6}]:} \PY{c+c1}{\PYZsh{} process label array}
+        \PY{k}{def} \PY{n+nf}{process\PYZus{}label}\PY{p}{(}\PY{n}{labels}\PY{p}{)}\PY{p}{:}
+            \PY{n}{result} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+            \PY{k}{for} \PY{n}{label} \PY{o+ow}{in} \PY{n}{labels}\PY{p}{:}
+                \PY{k}{if} \PY{n}{label} \PY{o}{==} \PY{l+m+mi}{0}\PY{p}{:}
+                    \PY{n}{result}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{)}
+                \PY{k}{else}\PY{p}{:}
+                    \PY{n}{result}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}
+            
+            \PY{k}{return} \PY{n}{result}
+        
+                
+        \PY{k}{def} \PY{n+nf}{compute\PYZus{}theta}\PY{p}{(}\PY{n}{A}\PY{p}{,} \PY{n}{y}\PY{p}{)}\PY{p}{:}
+            \PY{n}{A\PYZus{}inv} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{linalg}\PY{o}{.}\PY{n}{pinv}\PY{p}{(}\PY{n}{A}\PY{p}{)}
+            \PY{n}{theta} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{inner}\PY{p}{(}\PY{n}{A\PYZus{}inv}\PY{p}{,} \PY{n}{y}\PY{p}{)}
+            
+            \PY{k}{return} \PY{n}{theta}
+\end{Verbatim}
+
+
+    \subsubsection{\texorpdfstring{Define classifier
+\(\hat{f}(x)\)}{Define classifier \textbackslash{}hat\{f\}(x)}}\label{define-classifier-hatfx}
+
+Now we have had feature functions, parameters, so we can create our
+classifier \(\hat{f}(x) = sign(\tilde{f}(x))\), where
+
+\[ sign(x)=\left\{
+\begin{aligned}
++1 & & if  x \geq 0 \\
+-1 & & if  x < 0 
+\end{aligned}
+\right.
+\]
+
+\[\tilde{f}(x) = \theta_{1}f_{1}(x) + \theta_{2}f_{2}(x) + \cdots + \theta_{p}f_{p}(x)\]
+
+    \paragraph{sign function}\label{sign-function}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}7}]:} \PY{k}{def} \PY{n+nf}{sign\PYZus{}func}\PY{p}{(}\PY{n}{x}\PY{p}{)}\PY{p}{:}
+            \PY{k}{if} \PY{n}{x} \PY{o}{\PYZgt{}}\PY{o}{=} \PY{l+m+mi}{0}\PY{p}{:}
+                \PY{k}{return} \PY{l+m+mi}{1}
+            \PY{k}{else}\PY{p}{:}
+                \PY{k}{return} \PY{o}{\PYZhy{}}\PY{l+m+mi}{1}
+\end{Verbatim}
+
+
+    \paragraph{Combine all components}\label{combine-all-components}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}8}]:} \PY{k}{def} \PY{n+nf}{classifier}\PY{p}{(}\PY{n}{input\PYZus{}data}\PY{p}{,} \PY{n}{data\PYZus{}num}\PY{p}{,} \PY{n}{feature\PYZus{}funcs}\PY{p}{,} \PY{n}{theta}\PY{p}{)}\PY{p}{:}
+                \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}Given classify result}
+        \PY{l+s+sd}{        }
+        \PY{l+s+sd}{        Argument:}
+        \PY{l+s+sd}{            input\PYZus{}data(2d matrix): testing image data}
+        \PY{l+s+sd}{        Return:}
+        \PY{l+s+sd}{            determine result array}
+        \PY{l+s+sd}{        \PYZdq{}\PYZdq{}\PYZdq{}}
+                
+                \PY{c+c1}{\PYZsh{} generate tilde f matrix}
+                \PY{n}{tilde\PYZus{}matrix} \PY{o}{=} \PY{n}{generate\PYZus{}tilde\PYZus{}matrix}\PY{p}{(}\PY{n}{feature\PYZus{}funcs}\PY{p}{,} \PY{n}{input\PYZus{}data}\PY{p}{,} \PY{n}{data\PYZus{}num}\PY{p}{)}
+                
+                \PY{c+c1}{\PYZsh{} get classify result}
+                \PY{n}{f\PYZus{}tilde} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{inner}\PY{p}{(}\PY{n}{tilde\PYZus{}matrix}\PY{p}{,} \PY{n}{theta}\PY{p}{)}
+                \PY{n}{f\PYZus{}hat} \PY{o}{=} \PY{n+nb}{list}\PY{p}{(}\PY{n+nb}{map}\PY{p}{(}\PY{n}{sign\PYZus{}func}\PY{p}{,} \PY{n}{f\PYZus{}tilde}\PY{p}{)}\PY{p}{)}
+                
+                \PY{k}{return} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{f\PYZus{}hat}\PY{p}{)}
+        
+        
+        \PY{k}{def} \PY{n+nf}{eles\PYZus{}classifier}\PY{p}{(}\PY{n}{num\PYZus{}paras}\PY{p}{,} \PY{n}{size}\PY{p}{,} \PY{n}{data\PYZus{}train}\PY{p}{,} \PY{n}{num\PYZus{}data}\PY{p}{,} \PY{n}{labels}\PY{p}{)}\PY{p}{:}
+            \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}Generate feature functions, compute parameters}
+        \PY{l+s+sd}{    }
+        \PY{l+s+sd}{    Arguments:}
+        \PY{l+s+sd}{        num\PYZus{}paras(int): number os parameters}
+        \PY{l+s+sd}{        size(int): size of input data}
+        \PY{l+s+sd}{        data\PYZus{}train(2d matrix): training data set}
+        \PY{l+s+sd}{        num\PYZus{}data(int): number of data}
+        \PY{l+s+sd}{        labels(array): label of each training data}
+        \PY{l+s+sd}{    Returen:}
+        \PY{l+s+sd}{        (tuple): feature function, theta}
+        \PY{l+s+sd}{        }
+        \PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+            
+            \PY{c+c1}{\PYZsh{} generate feature functions}
+            \PY{n}{feature\PYZus{}funcs} \PY{o}{=} \PY{n}{generate\PYZus{}features}\PY{p}{(}\PY{n}{num\PYZus{}paras}\PY{p}{,} \PY{n}{size}\PY{p}{)}
+            
+            \PY{c+c1}{\PYZsh{} generate tilde f matrix}
+            \PY{n}{A} \PY{o}{=} \PY{n}{generate\PYZus{}tilde\PYZus{}matrix}\PY{p}{(}\PY{n}{feature\PYZus{}funcs}\PY{p}{,} \PY{n}{data\PYZus{}train}\PY{p}{,} \PY{n}{num\PYZus{}data}\PY{p}{)}
+            
+            \PY{c+c1}{\PYZsh{} process label}
+            \PY{n}{label\PYZus{}list} \PY{o}{=} \PY{n}{process\PYZus{}label}\PY{p}{(}\PY{n}{labels}\PY{p}{)}
+            
+            \PY{c+c1}{\PYZsh{} compute parameter}
+            \PY{n}{theta} \PY{o}{=} \PY{n}{compute\PYZus{}theta}\PY{p}{(}\PY{n}{A}\PY{p}{,} \PY{n}{label\PYZus{}list}\PY{p}{)}
+            
+            \PY{k}{return} \PY{n}{feature\PYZus{}funcs}\PY{p}{,} \PY{n}{theta}
+\end{Verbatim}
+
+
+    \subsubsection{Count predicted outcome: TP, FP, TN, and
+FN}\label{count-predicted-outcome-tp-fp-tn-and-fn}
+
+We have already got the prediction by our classifier \(\hat{f}(x)\), now
+let's compare it with the label of testing data set to check how it
+works.
+
+The outcome are
+
+\begin{itemize}
+\tightlist
+\item
+  \emph{True positive}: \(y = +1\) and \(\hat{y} = +1\).
+\item
+  \emph{True negative}: \(y = -1\) and \(\hat{y} = -1\).
+\item
+  \emph{False positive}: \(y = -1\) and \(\hat{y} = +1\).
+\item
+  \emph{False negative}: \(y = +1\) and \(\hat{y} = -1\).
+\end{itemize}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}9}]:} \PY{k}{def} \PY{n+nf}{outcomes}\PY{p}{(}\PY{n}{labels}\PY{p}{,} \PY{n}{prediction}\PY{p}{)}\PY{p}{:}
+            \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}count outcomes of prediction}
+        \PY{l+s+sd}{    }
+        \PY{l+s+sd}{    Input:}
+        \PY{l+s+sd}{        label(array): correct labels}
+        \PY{l+s+sd}{        prediction(array): prediction of classifier}
+        \PY{l+s+sd}{    Return:}
+        \PY{l+s+sd}{        A dictionary contains the indices of each outcome type}
+        \PY{l+s+sd}{        tp: true positive}
+        \PY{l+s+sd}{        tn: true negative}
+        \PY{l+s+sd}{        fp: false positive}
+        \PY{l+s+sd}{        fn: flase negative}
+        \PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+            
+            \PY{c+c1}{\PYZsh{} process labels, let 0 == +1, others == \PYZhy{}1}
+            \PY{n}{label\PYZus{}processed} \PY{o}{=} \PY{n}{process\PYZus{}label}\PY{p}{(}\PY{n}{labels}\PY{p}{)}
+            
+            \PY{n}{length} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{label\PYZus{}processed}\PY{p}{)}
+            \PY{n}{tp} \PY{o}{=} \PY{p}{[}\PY{p}{]}  
+            \PY{n}{fp} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+            \PY{n}{tn} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+            \PY{n}{fn} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+            
+            \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{length}\PY{p}{)}\PY{p}{:}
+                \PY{k}{if} \PY{n}{label\PYZus{}processed}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{==} \PY{l+m+mi}{1} \PY{o+ow}{and} \PY{n}{prediction}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{==} \PY{l+m+mi}{1}\PY{p}{:}
+                    \PY{n}{tp}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{i}\PY{p}{)}
+                \PY{k}{elif} \PY{n}{label\PYZus{}processed}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{==} \PY{l+m+mi}{1} \PY{o+ow}{and} \PY{n}{prediction}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{==} \PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{:}
+                    \PY{n}{fn}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{i}\PY{p}{)}
+                \PY{k}{elif} \PY{n}{label\PYZus{}processed}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{==} \PY{o}{\PYZhy{}}\PY{l+m+mi}{1} \PY{o+ow}{and} \PY{n}{prediction}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{==} \PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{:}
+                    \PY{n}{tn}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{i}\PY{p}{)}
+                \PY{k}{else}\PY{p}{:}
+                    \PY{n}{fp}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{i}\PY{p}{)}
+                    
+            \PY{n}{outcome} \PY{o}{=} \PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{TP}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{tp}\PY{p}{,}
+                       \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{FP}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{fp}\PY{p}{,}
+                       \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{TN}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{tn}\PY{p}{,}
+                       \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{FN}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{fn}\PY{p}{\PYZcb{}}
+            
+            \PY{k}{return} \PY{n}{outcome}
+\end{Verbatim}
+
+
+    \subsubsection{\texorpdfstring{Define \(F_{1}\) score
+funtion}{Define F\_\{1\} score funtion}}\label{define-f_1-score-funtion}
+
+\[F_{1} score = 2 \cdot \frac{precision \cdot recall}{precision + recall},\]
+
+where
+\(precision = \frac{true \ positives}{true \ positives \ + \ false \ positives}\),
+\(recall = \frac{true \ positives}{false \ negative \ + \ true \ positive}\)
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}10}]:} \PY{k}{def} \PY{n+nf}{f1\PYZus{}score}\PY{p}{(}\PY{n}{outcome}\PY{p}{)}\PY{p}{:}
+             
+             \PY{n}{tp} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{outcome}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{TP}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+             \PY{n}{fp} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{outcome}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{FP}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+             \PY{n}{tn} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{outcome}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{TN}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+             \PY{n}{fn} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{outcome}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{FN}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+             
+             \PY{n}{precision} \PY{o}{=} \PY{n}{tp} \PY{o}{/} \PY{p}{(}\PY{n}{tp} \PY{o}{+} \PY{n}{fp}\PY{p}{)}
+             \PY{n}{recall} \PY{o}{=} \PY{n}{tp} \PY{o}{/} \PY{p}{(}\PY{n}{fn} \PY{o}{+} \PY{n}{tp}\PY{p}{)}
+             
+             \PY{k}{return} \PY{l+m+mi}{2} \PY{o}{*} \PY{n}{precision} \PY{o}{*} \PY{n}{recall} \PY{o}{/} \PY{p}{(}\PY{n}{precision} \PY{o}{+} \PY{n}{recall}\PY{p}{)}
+\end{Verbatim}
+
+
+    \subsubsection{Plotting funcions}\label{plotting-funcions}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}11}]:} \PY{k}{def} \PY{n+nf}{average\PYZus{}img}\PY{p}{(}\PY{n}{data}\PY{p}{,} \PY{n}{indices}\PY{p}{)}\PY{p}{:}
+             \PY{c+c1}{\PYZsh{} compute the average value of one outcome type}
+             
+             \PY{n}{size} \PY{o}{=} \PY{l+m+mi}{28} \PY{o}{*} \PY{l+m+mi}{28}
+             \PY{n}{sum\PYZus{}img} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{n}{size}\PY{p}{)}
+             
+             \PY{k}{for} \PY{n}{index} \PY{o+ow}{in} \PY{n}{indices}\PY{p}{:}
+                 \PY{n}{img} \PY{o}{=} \PY{n}{data}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{n}{index}\PY{p}{]}
+                 \PY{n}{sum\PYZus{}img} \PY{o}{+}\PY{o}{=} \PY{n}{img}
+             
+             \PY{n}{num\PYZus{}img} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{indices}\PY{p}{)}
+             
+             \PY{k}{return} \PY{n}{sum\PYZus{}img} \PY{o}{/} \PY{n}{num\PYZus{}img}
+             
+         
+         \PY{k}{def} \PY{n+nf}{plot\PYZus{}all}\PY{p}{(}\PY{n}{data}\PY{p}{,} \PY{n}{outcomes}\PY{p}{)}\PY{p}{:}
+             
+             \PY{n}{labels} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{TP}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{FP}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{TN}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{FN}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+             
+             \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{4}\PY{p}{)}\PY{p}{:}
+         
+                 \PY{n}{label} \PY{o}{=} \PY{n}{labels}\PY{p}{[}\PY{n}{i}\PY{p}{]}
+                 \PY{n}{imgs} \PY{o}{=} \PY{n}{average\PYZus{}img}\PY{p}{(}\PY{n}{data}\PY{p}{,} \PY{n}{outcomes}\PY{p}{[}\PY{n}{label}\PY{p}{]}\PY{p}{)}
+                 \PY{n}{img\PYZus{}matrix} \PY{o}{=} \PY{n}{imgs}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{p}{(}\PY{l+m+mi}{28}\PY{p}{,} \PY{l+m+mi}{28}\PY{p}{)}\PY{p}{)}
+         
+                 \PY{n}{plt}\PY{o}{.}\PY{n}{subplot}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{n}{i}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}
+                 \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Average Image of }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{label}\PY{p}{)}
+                 \PY{n}{plt}\PY{o}{.}\PY{n}{imshow}\PY{p}{(}\PY{n}{img\PYZus{}matrix}\PY{p}{,} \PY{n}{cmap}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Greys}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{interpolation}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{None}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         
+                 \PY{n}{frame}   \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{gca}\PY{p}{(}\PY{p}{)}
+                 \PY{n}{frame}\PY{o}{.}\PY{n}{axes}\PY{o}{.}\PY{n}{get\PYZus{}xaxis}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{set\PYZus{}visible}\PY{p}{(}\PY{k+kc}{False}\PY{p}{)}
+                 \PY{n}{frame}\PY{o}{.}\PY{n}{axes}\PY{o}{.}\PY{n}{get\PYZus{}yaxis}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{set\PYZus{}visible}\PY{p}{(}\PY{k+kc}{False}\PY{p}{)}
+          
+             \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+\subsection{Try different number of
+parameters}\label{try-different-number-of-parameters}
+
+Now let's try different number parameters.
+
+Here we use logarithm \(2^{n}, n \in [1, 10]\) number of parameters.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}17}]:} \PY{n}{num\PYZus{}paras} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{2}\PY{o}{*}\PY{o}{*}\PY{n}{n} \PY{k}{for} \PY{n}{n} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{11}\PY{p}{)}\PY{p}{]}
+         
+         \PY{n}{f1\PYZus{}history} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+         
+         \PY{k}{for} \PY{n}{p} \PY{o+ow}{in} \PY{n}{num\PYZus{}paras}\PY{p}{:}
+             
+             \PY{n}{features}\PY{p}{,} \PY{n}{theta} \PY{o}{=} \PY{n}{eles\PYZus{}classifier}\PY{p}{(}\PY{n}{p}\PY{p}{,} \PY{l+m+mi}{28}\PY{o}{*}\PY{l+m+mi}{28}\PY{p}{,} \PY{n}{list\PYZus{}image\PYZus{}train}\PY{p}{,} \PY{n}{num\PYZus{}train}\PY{p}{,} \PY{n}{list\PYZus{}label\PYZus{}train}\PY{p}{)}
+             
+             \PY{n}{prediction} \PY{o}{=} \PY{n}{classifier}\PY{p}{(}\PY{n}{list\PYZus{}image\PYZus{}test}\PY{p}{,} \PY{n}{num\PYZus{}test}\PY{p}{,} \PY{n}{features}\PY{p}{,} \PY{n}{theta}\PY{p}{)}
+             \PY{n}{outcome} \PY{o}{=} \PY{n}{outcomes}\PY{p}{(}\PY{n}{list\PYZus{}label\PYZus{}test}\PY{p}{,} \PY{n}{prediction}\PY{p}{)}
+         
+             \PY{n}{f1\PYZus{}history}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{f1\PYZus{}score}\PY{p}{(}\PY{n}{outcome}\PY{p}{)}\PY{p}{)}
+             
+             \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{ }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s2}{ parameters}\PY{l+s+s2}{\PYZsq{}}\PY{l+s+s2}{ images}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{p}\PY{p}{)}\PY{p}{)}
+             \PY{n}{plot\PYZus{}all}\PY{p}{(}\PY{n}{list\PYZus{}image\PYZus{}test}\PY{p}{,} \PY{n}{outcome}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+ 2 parameters' images
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_25_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+ 4 parameters' images
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_25_3.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+ 8 parameters' images
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_25_5.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+ 16 parameters' images
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_25_7.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+ 32 parameters' images
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_25_9.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+ 64 parameters' images
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_25_11.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+ 128 parameters' images
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_25_13.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+ 256 parameters' images
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_25_15.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+ 512 parameters' images
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_25_17.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+ 1024 parameters' images
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_25_19.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}20}]:} \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{F1 Score History}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{num\PYZus{}paras}\PY{p}{,} \PY{n}{f1\PYZus{}history}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{b\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{number of parameters}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{F1 score}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_26_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
