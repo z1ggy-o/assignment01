@@ -12,3 +12,6 @@ about Git (by LaTex)
 - [assignment07](./assignment07/): Polynomial Fit
 - [assignment08](./assignment08/): Binary Classifier
 - [assignment09](./assignment09/): Binary Classifier with Different #Features
+  (single number)
+- [assignment10](./assignment10/): Binary Classifier with Different #Features
+  (multiple number)
