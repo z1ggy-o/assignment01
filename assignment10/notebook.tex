@@ -1,0 +1,979 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{assignment10}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \section{Binary Classification with Different Features ( multiple
+number)}\label{binary-classification-with-different-features-multiple-number}
+
+\textbf{Name}: ZHU GUANGYU\\
+\textbf{Student ID}: 20165953\\
+\textbf{Github Repo}:
+\href{https://github.com/z1ggy-o/cv_assignment/tree/master/assignment10}{assignment10}
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+In a \emph{classification problem}, the outcome takes on only a finit
+number of values. In the simplest case, outcome has only two values, for
+example TRUE or FALSE. This is called the \emph{binary classification
+problem}.
+
+As in real-valued data fitting, we assume that an approxomate relation
+ship of the form \(y \approx f(x)\) holds, where
+\(f: R^{n} \rightarrow {-1, +1}\). The model \(\hat{f}\) is called a
+\emph{classifier}.
+
+For a given data point x, y with predicted outcome
+\(\hat{y} = \hat{f}(x)\), there are four possibilities:
+
+\begin{itemize}
+\tightlist
+\item
+  \emph{True positive}: \(y = +1\) and \(\hat{y} = +1\).
+\item
+  \emph{True negative}: \(y = -1\) and \(\hat{y} = -1\).
+\item
+  \emph{False positive}: \(y = -1\) and \(\hat{y} = +1\).
+\item
+  \emph{False negative}: \(y = +1\) and \(\hat{y} = -1\).
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+Continue ｗith assignmen09, this time we use \emph{least squares
+classifer} to build classifiers for each number in MNIST data set.
+
+We still use feature functions
+\(f_{i} = r_{i}^{T}x, r_{i} \sim N(0, \sigma)\), and try with varing the
+number of parameter \(p\) with the standard deviation \(\sigma = 1\) of
+the random feature vectore \(r\).
+
+Since this time we want to do the classification for ten numbers, our
+sign function is change to: \[ argmax_{n} \tilde{f}_{n}(x)\]
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+    \subsection{Create Classifier}\label{create-classifier}
+
+\subsubsection{Import data set}\label{import-data-set}
+
+We have two data sets, one for training, one for testing. Each element
+is a image that has height 28 and width 28 pixels.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} \PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
+        \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+        
+        \PY{n}{file\PYZus{}data\PYZus{}train} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{mnist\PYZus{}train.csv}\PY{l+s+s2}{\PYZdq{}}
+        \PY{n}{file\PYZus{}data\PYZus{}test}  \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{mnist\PYZus{}test.csv}\PY{l+s+s2}{\PYZdq{}}
+        
+        \PY{n}{h\PYZus{}data\PYZus{}train}    \PY{o}{=} \PY{n+nb}{open}\PY{p}{(}\PY{n}{file\PYZus{}data\PYZus{}train}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{r}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        \PY{n}{h\PYZus{}data\PYZus{}test}     \PY{o}{=} \PY{n+nb}{open}\PY{p}{(}\PY{n}{file\PYZus{}data\PYZus{}test}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{r}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        
+        \PY{n}{data\PYZus{}train}      \PY{o}{=} \PY{n}{h\PYZus{}data\PYZus{}train}\PY{o}{.}\PY{n}{readlines}\PY{p}{(}\PY{p}{)}
+        \PY{n}{data\PYZus{}test}       \PY{o}{=} \PY{n}{h\PYZus{}data\PYZus{}test}\PY{o}{.}\PY{n}{readlines}\PY{p}{(}\PY{p}{)}
+        
+        \PY{n}{h\PYZus{}data\PYZus{}train}\PY{o}{.}\PY{n}{close}\PY{p}{(}\PY{p}{)}
+        \PY{n}{h\PYZus{}data\PYZus{}test}\PY{o}{.}\PY{n}{close}\PY{p}{(}\PY{p}{)}
+        
+        \PY{n}{size\PYZus{}row}    \PY{o}{=} \PY{l+m+mi}{28}    \PY{c+c1}{\PYZsh{} height of the image}
+        \PY{n}{size\PYZus{}col}    \PY{o}{=} \PY{l+m+mi}{28}    \PY{c+c1}{\PYZsh{} width of the image}
+        
+        \PY{n}{num\PYZus{}train}   \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{data\PYZus{}train}\PY{p}{)}   \PY{c+c1}{\PYZsh{} number of training images}
+        \PY{n}{num\PYZus{}test}    \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{data\PYZus{}test}\PY{p}{)}    \PY{c+c1}{\PYZsh{} number of testing images}
+        
+        \PY{c+c1}{\PYZsh{} number of training images: 60000}
+        \PY{c+c1}{\PYZsh{} number of testing images: 10000}
+\end{Verbatim}
+
+
+    To reduce the bias, we need to normalize the data.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}2}]:} \PY{c+c1}{\PYZsh{}}
+        \PY{c+c1}{\PYZsh{} normalize the values of the input data to be [0, 1]}
+        \PY{c+c1}{\PYZsh{}}
+        \PY{k}{def} \PY{n+nf}{normalize}\PY{p}{(}\PY{n}{data}\PY{p}{)}\PY{p}{:}
+        
+            \PY{n}{data\PYZus{}normalized} \PY{o}{=} \PY{p}{(}\PY{n}{data} \PY{o}{\PYZhy{}} \PY{n+nb}{min}\PY{p}{(}\PY{n}{data}\PY{p}{)}\PY{p}{)} \PY{o}{/} \PY{p}{(}\PY{n+nb}{max}\PY{p}{(}\PY{n}{data}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{n+nb}{min}\PY{p}{(}\PY{n}{data}\PY{p}{)}\PY{p}{)}
+        
+            \PY{k}{return}\PY{p}{(}\PY{n}{data\PYZus{}normalized}\PY{p}{)}
+\end{Verbatim}
+
+
+    Normalize each pixel, and put image data into a \(784*num\_image\)
+matrix.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}3}]:} \PY{c+c1}{\PYZsh{}}
+        \PY{c+c1}{\PYZsh{} make a matrix each column of which represents an images in a vector form }
+        \PY{c+c1}{\PYZsh{}}
+        \PY{n}{list\PYZus{}image\PYZus{}train}    \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{empty}\PY{p}{(}\PY{p}{(}\PY{n}{size\PYZus{}row} \PY{o}{*} \PY{n}{size\PYZus{}col}\PY{p}{,} \PY{n}{num\PYZus{}train}\PY{p}{)}\PY{p}{,} \PY{n}{dtype}\PY{o}{=}\PY{n+nb}{float}\PY{p}{)}  \PY{c+c1}{\PYZsh{} 784 * num\PYZus{}trian matrix}
+        \PY{n}{list\PYZus{}label\PYZus{}train}    \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{empty}\PY{p}{(}\PY{n}{num\PYZus{}train}\PY{p}{,} \PY{n}{dtype}\PY{o}{=}\PY{n+nb}{int}\PY{p}{)}
+        
+        \PY{n}{list\PYZus{}image\PYZus{}test}     \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{empty}\PY{p}{(}\PY{p}{(}\PY{n}{size\PYZus{}row} \PY{o}{*} \PY{n}{size\PYZus{}col}\PY{p}{,} \PY{n}{num\PYZus{}test}\PY{p}{)}\PY{p}{,} \PY{n}{dtype}\PY{o}{=}\PY{n+nb}{float}\PY{p}{)}
+        \PY{n}{list\PYZus{}label\PYZus{}test}     \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{empty}\PY{p}{(}\PY{n}{num\PYZus{}test}\PY{p}{,} \PY{n}{dtype}\PY{o}{=}\PY{n+nb}{int}\PY{p}{)}
+        
+        \PY{n}{count} \PY{o}{=} \PY{l+m+mi}{0}
+        
+        \PY{k}{for} \PY{n}{line} \PY{o+ow}{in} \PY{n}{data\PYZus{}train}\PY{p}{:}
+        
+            \PY{n}{line\PYZus{}data}   \PY{o}{=} \PY{n}{line}\PY{o}{.}\PY{n}{split}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{,}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+            \PY{n}{label}       \PY{o}{=} \PY{n}{line\PYZus{}data}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+            \PY{n}{im\PYZus{}vector}   \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{asfarray}\PY{p}{(}\PY{n}{line\PYZus{}data}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{:}\PY{p}{]}\PY{p}{)}  \PY{c+c1}{\PYZsh{} convert to float type}
+            \PY{n}{im\PYZus{}vector}   \PY{o}{=} \PY{n}{normalize}\PY{p}{(}\PY{n}{im\PYZus{}vector}\PY{p}{)}
+        
+            \PY{n}{list\PYZus{}label\PYZus{}train}\PY{p}{[}\PY{n}{count}\PY{p}{]}     \PY{o}{=} \PY{n}{label}
+            \PY{n}{list\PYZus{}image\PYZus{}train}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{n}{count}\PY{p}{]}  \PY{o}{=} \PY{n}{im\PYZus{}vector}  \PY{c+c1}{\PYZsh{} each column is a image}
+        
+            \PY{n}{count} \PY{o}{+}\PY{o}{=} \PY{l+m+mi}{1}
+        
+        \PY{n}{count} \PY{o}{=} \PY{l+m+mi}{0}
+        
+        \PY{k}{for} \PY{n}{line} \PY{o+ow}{in} \PY{n}{data\PYZus{}test}\PY{p}{:}
+        
+            \PY{n}{line\PYZus{}data}   \PY{o}{=} \PY{n}{line}\PY{o}{.}\PY{n}{split}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{,}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+            \PY{n}{label}       \PY{o}{=} \PY{n}{line\PYZus{}data}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+            \PY{n}{im\PYZus{}vector}   \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{asfarray}\PY{p}{(}\PY{n}{line\PYZus{}data}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{:}\PY{p}{]}\PY{p}{)}
+            \PY{n}{im\PYZus{}vector}   \PY{o}{=} \PY{n}{normalize}\PY{p}{(}\PY{n}{im\PYZus{}vector}\PY{p}{)}
+        
+            \PY{n}{list\PYZus{}label\PYZus{}test}\PY{p}{[}\PY{n}{count}\PY{p}{]}      \PY{o}{=} \PY{n}{label}
+            \PY{n}{list\PYZus{}image\PYZus{}test}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{n}{count}\PY{p}{]}   \PY{o}{=} \PY{n}{im\PYZus{}vector}    
+        
+            \PY{n}{count} \PY{o}{+}\PY{o}{=} \PY{l+m+mi}{1}
+\end{Verbatim}
+
+
+    \subsubsection{Define feature functions
+generator}\label{define-feature-functions-generator}
+
+Depends on the given number of parameters we should generate correponde
+feature functions \(r\). Each element of \(r\) is a vector with length
+\(28 * 28\). The element of \(r_{i}\) is random number from a normal
+distribution.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}4}]:} \PY{k}{def} \PY{n+nf}{generate\PYZus{}features}\PY{p}{(}\PY{n}{n}\PY{p}{,} \PY{n}{size}\PY{p}{)}\PY{p}{:}
+            \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}Generate feature functions}
+        \PY{l+s+sd}{    }
+        \PY{l+s+sd}{    Argumengs:}
+        \PY{l+s+sd}{        n(int): number of parameters}
+        \PY{l+s+sd}{        size: number of elements of each vector}
+        \PY{l+s+sd}{    Return:}
+        \PY{l+s+sd}{        functions(2d matrix): feature function matrix}
+        \PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+            
+            \PY{n}{functions} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+            
+            \PY{c+c1}{\PYZsh{} for n, generate vectore with \PYZsh{}size elements}
+            \PY{n}{mean}\PY{p}{,} \PY{n}{sigma} \PY{o}{=} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{1}
+            
+            \PY{k}{for} \PY{n}{\PYZus{}} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{n}\PY{p}{)}\PY{p}{:}
+                \PY{n}{ri} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{normal}\PY{p}{(}\PY{n}{mean}\PY{p}{,} \PY{n}{sigma}\PY{p}{,} \PY{n}{size}\PY{p}{)}
+                \PY{n}{functions}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{ri}\PY{p}{)}
+            
+            \PY{k}{return} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{functions}\PY{p}{)}
+\end{Verbatim}
+
+
+    \subsubsection{Generate the matrix of feature funtions and
+data}\label{generate-the-matrix-of-feature-funtions-and-data}
+
+Since we have got feature functions, now we can apply them on input
+data.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}5}]:} \PY{k}{def} \PY{n+nf}{generate\PYZus{}tilde\PYZus{}matrix}\PY{p}{(}\PY{n}{feature\PYZus{}func}\PY{p}{,} \PY{n}{data}\PY{p}{,} \PY{n}{num\PYZus{}data}\PY{p}{)}\PY{p}{:}
+            \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}Create matrix of feature function on data}
+        \PY{l+s+sd}{    }
+        \PY{l+s+sd}{    Arguments:}
+        \PY{l+s+sd}{        feature\PYZus{}func(2d matrix): feature function matrix}
+        \PY{l+s+sd}{        data: input image data}
+        \PY{l+s+sd}{        num\PYZus{}data: number of input data}
+        \PY{l+s+sd}{    Return:}
+        \PY{l+s+sd}{        matrix of feature functions applied on image data}
+        \PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+            
+            \PY{n}{A} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+            
+            \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{num\PYZus{}data}\PY{p}{)}\PY{p}{:}
+                \PY{n}{img} \PY{o}{=} \PY{n}{data}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{n}{i}\PY{p}{]}  \PY{c+c1}{\PYZsh{} ith image(column)}
+                \PY{n}{row} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{inner}\PY{p}{(}\PY{n}{feature\PYZus{}func}\PY{p}{,} \PY{n}{img}\PY{p}{)}
+                \PY{n}{A}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{row}\PY{p}{)}
+            
+            \PY{k}{return} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{A}\PY{p}{)}
+\end{Verbatim}
+
+
+    \subsubsection{\texorpdfstring{Compute each number's
+\(\theta_{n}\)}{Compute each number's \textbackslash{}theta\_\{n\}}}\label{compute-each-numbers-theta_n}
+
+For computing, we need to process label \(y\) which gives correspond
+number's image \(+1\) and other number's image \(-1\).
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}6}]:} \PY{c+c1}{\PYZsh{} process label array}
+        \PY{k}{def} \PY{n+nf}{process\PYZus{}label}\PY{p}{(}\PY{n}{labels}\PY{p}{,} \PY{n}{number}\PY{p}{)}\PY{p}{:}
+            \PY{n}{result} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+            \PY{k}{for} \PY{n}{label} \PY{o+ow}{in} \PY{n}{labels}\PY{p}{:}
+                \PY{k}{if} \PY{n}{label} \PY{o}{==} \PY{n}{number}\PY{p}{:}
+                    \PY{n}{result}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{)}
+                \PY{k}{else}\PY{p}{:}
+                    \PY{n}{result}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}
+            
+            \PY{k}{return} \PY{n}{result}
+\end{Verbatim}
+
+
+    Depends on \(A\theta = y\), while \(A\) is the matrix of feature
+function apply on data set, \(\theta\) is perameters, and \(y\) is the
+label.
+
+Through pseudo inverse \((A^{T}A)^{-1}A\) we can compute the \(\theta\).
+Here we use \texttt{np.linalg.pinv} to get \(A^{-1}\).
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}7}]:} \PY{k}{def} \PY{n+nf}{compute\PYZus{}theta}\PY{p}{(}\PY{n}{A}\PY{p}{,} \PY{n}{y}\PY{p}{)}\PY{p}{:}
+            \PY{n}{A\PYZus{}inv} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{linalg}\PY{o}{.}\PY{n}{pinv}\PY{p}{(}\PY{n}{A}\PY{p}{)}
+            \PY{n}{theta} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{inner}\PY{p}{(}\PY{n}{A\PYZus{}inv}\PY{p}{,} \PY{n}{y}\PY{p}{)}
+            
+            \PY{k}{return} \PY{n}{theta}
+\end{Verbatim}
+
+
+    Because we need to which label is the best result for current number
+image, we need each number's parameter to do the comparision.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}8}]:} \PY{k}{def} \PY{n+nf}{compute\PYZus{}all\PYZus{}thetas}\PY{p}{(}\PY{n}{A}\PY{p}{,} \PY{n}{image\PYZus{}labels}\PY{p}{)}\PY{p}{:}
+            \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}Compute parameters for each number}
+        \PY{l+s+sd}{    }
+        \PY{l+s+sd}{    Generate correspond label list, then use it to compute theta.}
+        \PY{l+s+sd}{    }
+        \PY{l+s+sd}{    Argument:}
+        \PY{l+s+sd}{        A(2d matrix): tilde matrix of feature funcion on input images}
+        \PY{l+s+sd}{    Return:}
+        \PY{l+s+sd}{        A list of parameters. Index correspond to number label.}
+        \PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+            
+            \PY{n}{parameters} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+            
+            \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{)}\PY{p}{:}
+                \PY{n}{label\PYZus{}processed} \PY{o}{=} \PY{n}{process\PYZus{}label}\PY{p}{(}\PY{n}{image\PYZus{}labels}\PY{p}{,} \PY{n}{i}\PY{p}{)}
+                \PY{n}{theta} \PY{o}{=} \PY{n}{compute\PYZus{}theta}\PY{p}{(}\PY{n}{A}\PY{p}{,} \PY{n}{label\PYZus{}processed}\PY{p}{)}
+                \PY{n}{parameters}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{theta}\PY{p}{)}
+            
+            \PY{k}{return} \PY{n}{parameters}
+\end{Verbatim}
+
+
+    \subsubsection{\texorpdfstring{Define classifier
+\(\hat{f}(x)\)}{Define classifier \textbackslash{}hat\{f\}(x)}}\label{define-classifier-hatfx}
+
+Now we have had feature functions, parameters, so we can create our
+classifier \(\hat{f}(x) = argmax_{n}(\tilde{f}_{n}(x))\), where
+\(\tilde{f}(x) = \theta_{1}f_{1}(x) + \theta_{2}f_{2}(x) + \cdots + \theta_{p}f_{p}(x)\)
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}9}]:} \PY{k}{def} \PY{n+nf}{argmax}\PY{p}{(}\PY{n}{A}\PY{p}{,} \PY{n}{parameters}\PY{p}{,} \PY{n}{num\PYZus{}images}\PY{p}{)}\PY{p}{:}
+            \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}Give back maximum argument\PYZsq{}s label}
+        \PY{l+s+sd}{    }
+        \PY{l+s+sd}{    Arguments:}
+        \PY{l+s+sd}{        A(2d matrix): tilde matrix of feature function on input images}
+        \PY{l+s+sd}{        parameters(list): list of parameters of each number image}
+        \PY{l+s+sd}{    Return:}
+        \PY{l+s+sd}{        prediction label of images}
+        \PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+            \PY{n}{tilde\PYZus{}all} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+            
+            \PY{c+c1}{\PYZsh{} compute each images\PYZsq{}s tilde value correspond to diff parameter}
+            \PY{k}{for} \PY{n}{parameter} \PY{o+ow}{in} \PY{n}{parameters}\PY{p}{:}
+                \PY{n}{f\PYZus{}tilde\PYZus{}n} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{inner}\PY{p}{(}\PY{n}{A}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{parameter}\PY{p}{)}\PY{p}{)}
+                \PY{n}{tilde\PYZus{}all}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{f\PYZus{}tilde\PYZus{}n}\PY{p}{)}
+            
+            \PY{n}{tilde\PYZus{}all} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{tilde\PYZus{}all}\PY{p}{)}
+            
+            \PY{n}{result} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+            \PY{c+c1}{\PYZsh{} find maximum tilde value for each image}
+            \PY{c+c1}{\PYZsh{} let its label be images\PYZsq{}s prediction}
+            \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{num\PYZus{}images}\PY{p}{)}\PY{p}{:}
+                \PY{n}{value\PYZus{}i} \PY{o}{=} \PY{n}{tilde\PYZus{}all}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{n}{i}\PY{p}{]}
+                \PY{n}{label} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{argmax}\PY{p}{(}\PY{n}{value\PYZus{}i}\PY{p}{)}
+                \PY{n}{result}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{label}\PY{p}{)}
+                
+            \PY{k}{return} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{result}\PY{p}{)}
+\end{Verbatim}
+
+
+    \subsection{\texorpdfstring{Create Confusion Matrix and \(F_{1}\)
+Scores}{Create Confusion Matrix and F\_\{1\} Scores}}\label{create-confusion-matrix-and-f_1-scores}
+
+\subsubsection{Create confusion matrix}\label{create-confusion-matrix}
+
+Let row of matrix be digits, column be the number of correspond
+predictions.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}10}]:} \PY{k}{def} \PY{n+nf}{create\PYZus{}confusion\PYZus{}matrix}\PY{p}{(}\PY{n}{test\PYZus{}labels}\PY{p}{,} \PY{n}{predictions}\PY{p}{)}\PY{p}{:}
+             \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}Build confusion matrix}
+         \PY{l+s+sd}{    }
+         \PY{l+s+sd}{    Matrix that indicates the number of classification for the digit}
+         \PY{l+s+sd}{    }
+         \PY{l+s+sd}{    Argument:}
+         \PY{l+s+sd}{        test\PYZus{}labels(1d array): correct label of input images}
+         \PY{l+s+sd}{        predictions(1d array): predicted label of input images}
+         \PY{l+s+sd}{    Return:}
+         \PY{l+s+sd}{        2d matrix}
+         \PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+             
+             \PY{n}{matrix} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{,} \PY{l+m+mi}{10}\PY{p}{)}\PY{p}{,} \PY{n}{dtype}\PY{o}{=}\PY{n+nb}{int}\PY{p}{)}  \PY{c+c1}{\PYZsh{} there are ten numbers}
+             
+             \PY{n}{length} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{test\PYZus{}labels}\PY{p}{)}
+             \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{length}\PY{p}{)}\PY{p}{:}
+                 \PY{n}{matrix}\PY{p}{[}\PY{n}{test\PYZus{}labels}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{]}\PY{p}{[}\PY{n}{predictions}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{]} \PY{o}{+}\PY{o}{=} \PY{l+m+mi}{1}
+                 
+             \PY{k}{return} \PY{n}{matrix}
+\end{Verbatim}
+
+
+    \subsubsection{\texorpdfstring{Compute \(F_{1}\)
+scores}{Compute F\_\{1\} scores}}\label{compute-f_1-scores}
+
+\[F_{1} score = 2 \cdot \frac{precision \cdot recall}{precision + recall},\]
+
+where
+\(precision = \frac{true \ positives}{true \ positives \ + \ false \ positives}\),
+\(recall = \frac{true \ positives}{false \ negative \ + \ true \ positive}\)
+
+We compute each number's \(F_{1}\) score then use their average value as
+finial score for current number of parameters.
+
+From confusion matrix \(M\), we can tell, for each index \(i\):
+
+\begin{itemize}
+\tightlist
+\item
+  \(M[i][i]\) is the True Positive of number \(i\),
+\item
+  sum of \(row[i]\) is True Posive adds False Nagetive
+\item
+  sum of \(column[i]\) is True Posive adds False Positive
+\end{itemize}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}11}]:} \PY{k}{def} \PY{n+nf}{get\PYZus{}f1}\PY{p}{(}\PY{n}{M}\PY{p}{)}\PY{p}{:}
+             
+             \PY{n}{f1\PYZus{}scores} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+             
+             \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{)}\PY{p}{:}  \PY{c+c1}{\PYZsh{} there are ten numbers}
+                 \PY{n}{tp} \PY{o}{=} \PY{n}{M}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{n}{i}\PY{p}{]}
+                 \PY{n}{fn} \PY{o}{=} \PY{n+nb}{sum}\PY{p}{(}\PY{n}{M}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{n}{tp}
+                 \PY{n}{fp} \PY{o}{=} \PY{n+nb}{sum}\PY{p}{(}\PY{n}{M}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{n}{i}\PY{p}{]}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{n}{tp}
+                 \PY{n}{f1\PYZus{}scores}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{compute\PYZus{}f1}\PY{p}{(}\PY{n}{tp}\PY{p}{,} \PY{n}{fn}\PY{p}{,} \PY{n}{fp}\PY{p}{)}\PY{p}{)}
+             
+             \PY{k}{return} \PY{n+nb}{sum}\PY{p}{(}\PY{n}{f1\PYZus{}scores}\PY{p}{)} \PY{o}{/} \PY{l+m+mi}{10}
+         
+         
+         \PY{k}{def} \PY{n+nf}{compute\PYZus{}f1}\PY{p}{(}\PY{n}{tp}\PY{p}{,} \PY{n}{fn}\PY{p}{,} \PY{n}{fp}\PY{p}{)}\PY{p}{:}
+             \PY{n}{precision} \PY{o}{=} \PY{n}{tp} \PY{o}{/} \PY{p}{(}\PY{n}{tp} \PY{o}{+} \PY{n}{fp}\PY{p}{)}
+             \PY{n}{recall} \PY{o}{=} \PY{n}{tp} \PY{o}{/} \PY{p}{(}\PY{n}{fn} \PY{o}{+} \PY{n}{tp}\PY{p}{)}
+             
+             \PY{k}{return} \PY{l+m+mi}{2}\PY{o}{*}\PY{n}{precision}\PY{o}{*}\PY{n}{recall} \PY{o}{/} \PY{p}{(}\PY{n}{precision}\PY{o}{+}\PY{n}{recall}\PY{p}{)}
+\end{Verbatim}
+
+
+    \subsubsection{Combine all parts
+together}\label{combine-all-parts-together}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}17}]:} \PY{k}{def} \PY{n+nf}{classificate}\PY{p}{(}\PY{n}{p}\PY{p}{,}
+                          \PY{n}{image\PYZus{}train}\PY{p}{,} \PY{n}{num\PYZus{}trian}\PY{p}{,} \PY{n}{labels\PYZus{}train}\PY{p}{,}
+                          \PY{n}{image\PYZus{}test}\PY{p}{,} \PY{n}{num\PYZus{}test}\PY{p}{,} \PY{n}{labels\PYZus{}test}\PY{p}{)}\PY{p}{:}
+             
+             \PY{n}{size\PYZus{}img} \PY{o}{=} \PY{l+m+mi}{28} \PY{o}{*} \PY{l+m+mi}{28}
+             
+             \PY{c+c1}{\PYZsh{} generate features}
+             \PY{n}{r} \PY{o}{=} \PY{n}{generate\PYZus{}features}\PY{p}{(}\PY{n}{p}\PY{p}{,} \PY{n}{size\PYZus{}img}\PY{p}{)}
+             
+             \PY{c+c1}{\PYZsh{} generate training img tilde matrix}
+             \PY{n}{A\PYZus{}train} \PY{o}{=} \PY{n}{generate\PYZus{}tilde\PYZus{}matrix}\PY{p}{(}\PY{n}{r}\PY{p}{,} \PY{n}{image\PYZus{}train}\PY{p}{,} \PY{n}{num\PYZus{}train}\PY{p}{)}
+             
+             \PY{c+c1}{\PYZsh{} compute parameters}
+             \PY{n}{parameters} \PY{o}{=} \PY{n}{compute\PYZus{}all\PYZus{}thetas}\PY{p}{(}\PY{n}{A\PYZus{}train}\PY{p}{,} \PY{n}{labels\PYZus{}train}\PY{p}{)}
+             
+             \PY{c+c1}{\PYZsh{} generate testing img tilde matrix}
+             \PY{n}{A\PYZus{}test} \PY{o}{=} \PY{n}{generate\PYZus{}tilde\PYZus{}matrix}\PY{p}{(}\PY{n}{r}\PY{p}{,} \PY{n}{image\PYZus{}test}\PY{p}{,} \PY{n}{num\PYZus{}test}\PY{p}{)}
+             
+             \PY{c+c1}{\PYZsh{} get predictions}
+             \PY{n}{predictions} \PY{o}{=} \PY{n}{argmax}\PY{p}{(}\PY{n}{A\PYZus{}test}\PY{p}{,} \PY{n}{parameters}\PY{p}{,} \PY{n}{num\PYZus{}test}\PY{p}{)}
+             
+             \PY{c+c1}{\PYZsh{} generate confusion matrix}
+             \PY{n}{confusion} \PY{o}{=} \PY{n}{create\PYZus{}confusion\PYZus{}matrix}\PY{p}{(}\PY{n}{labels\PYZus{}test}\PY{p}{,} \PY{n}{predictions}\PY{p}{)}
+             
+             \PY{c+c1}{\PYZsh{} compute F1 score}
+             \PY{n}{f1} \PY{o}{=} \PY{n}{get\PYZus{}f1}\PY{p}{(}\PY{n}{confusion}\PY{p}{)}
+             
+             \PY{k}{return} \PY{n}{confusion}\PY{p}{,} \PY{n}{f1}
+\end{Verbatim}
+
+
+    \begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+\subsection{\texorpdfstring{Test With Different
+\(p\)}{Test With Different p}}\label{test-with-different-p}
+
+Now let's try different number of parameters to see how \(F_{1}\) score
+changes.
+
+    \subsubsection{Functions for present
+results}\label{functions-for-present-results}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}13}]:} \PY{k+kn}{from} \PY{n+nn}{prettytable} \PY{k}{import} \PY{n}{PrettyTable}
+         
+         \PY{k}{def} \PY{n+nf}{print\PYZus{}table}\PY{p}{(}\PY{n}{M}\PY{p}{)}\PY{p}{:}
+             \PY{n}{totals} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+             \PY{n}{table} \PY{o}{=} \PY{n}{PrettyTable}\PY{p}{(}\PY{p}{)}
+         
+             \PY{n}{table}\PY{o}{.}\PY{n}{add\PYZus{}column}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{ }\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{,} \PY{l+m+mi}{6}\PY{p}{,} \PY{l+m+mi}{7}\PY{p}{,} \PY{l+m+mi}{8}\PY{p}{,} \PY{l+m+mi}{9}\PY{p}{]}\PY{p}{)}
+             \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{)}\PY{p}{:}
+                 \PY{n}{totals}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n+nb}{sum}\PY{p}{(}\PY{n}{M}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{)}\PY{p}{)}
+                 \PY{n}{table}\PY{o}{.}\PY{n}{add\PYZus{}column}\PY{p}{(}\PY{n+nb}{str}\PY{p}{(}\PY{n}{i}\PY{p}{)}\PY{p}{,} \PY{n}{M}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{n}{i}\PY{p}{]}\PY{o}{.}\PY{n}{flatten}\PY{p}{(}\PY{p}{)}\PY{p}{)}  
+             \PY{n}{table}\PY{o}{.}\PY{n}{add\PYZus{}column}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Total}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{totals}\PY{p}{)}
+             
+             \PY{n+nb}{print}\PY{p}{(}\PY{n}{table}\PY{p}{)}
+\end{Verbatim}
+
+
+    \subsubsection{Try different number of
+parameters}\label{try-different-number-of-parameters}
+
+Now let's try different number parameters.
+
+Here we use logarithm \(2^{n}, n \in [1, 10]\) number of parameters.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}14}]:} \PY{n}{num\PYZus{}paras} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{2}\PY{o}{*}\PY{o}{*}\PY{n}{n} \PY{k}{for} \PY{n}{n} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{11}\PY{p}{)}\PY{p}{]}
+         
+         \PY{n}{f1\PYZus{}history} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+         
+         \PY{k}{for} \PY{n}{p} \PY{o+ow}{in} \PY{n}{num\PYZus{}paras}\PY{p}{:}
+             \PY{n}{confusion}\PY{p}{,} \PY{n}{f1} \PY{o}{=} \PY{n}{classificate}\PY{p}{(}\PY{n}{p}\PY{p}{,}
+                 \PY{n}{list\PYZus{}image\PYZus{}train}\PY{p}{,} \PY{n}{num\PYZus{}train}\PY{p}{,} \PY{n}{list\PYZus{}label\PYZus{}train}\PY{p}{,}
+                 \PY{n}{list\PYZus{}image\PYZus{}test}\PY{p}{,} \PY{n}{num\PYZus{}test}\PY{p}{,} \PY{n}{list\PYZus{}label\PYZus{}test}\PY{p}{)}
+             
+             \PY{n}{f1\PYZus{}history}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n+nb}{round}\PY{p}{(}\PY{n}{f1}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{)}\PY{p}{)}
+             
+             \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Confusion Table with }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s1}{ parameters}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{p}\PY{p}{)}\PY{p}{)}
+             \PY{n}{print\PYZus{}table}\PY{p}{(}\PY{n}{confusion}\PY{p}{)}
+             \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+/home/ziggy/anaconda3/lib/python3.6/site-packages/ipykernel\_launcher.py:15: RuntimeWarning: invalid value encountered in long\_scalars
+  from ipykernel import kernelapp as app
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Confusion Table with 2 parameters
++---+-----+-----+---+---+----+---+---+-----+---+---+-------+
+|   |  0  |  1  | 2 | 3 | 4  | 5 | 6 |  7  | 8 | 9 | Total |
++---+-----+-----+---+---+----+---+---+-----+---+---+-------+
+| 0 | 209 | 178 | 0 | 0 | 2  | 0 | 0 | 591 | 0 | 0 |  980  |
+| 1 | 433 | 207 | 0 | 1 | 48 | 0 | 0 | 446 | 0 | 0 |  1135 |
+| 2 | 200 | 131 | 0 | 0 | 26 | 0 | 0 | 675 | 0 | 0 |  1032 |
+| 3 | 208 | 218 | 0 | 2 | 71 | 0 | 0 | 511 | 0 | 0 |  1010 |
+| 4 | 103 |  24 | 0 | 0 | 61 | 0 | 0 | 794 | 0 | 0 |  982  |
+| 5 | 208 | 166 | 0 | 2 | 18 | 0 | 0 | 498 | 0 | 0 |  892  |
+| 6 | 106 |  25 | 0 | 0 | 10 | 0 | 0 | 817 | 0 | 0 |  958  |
+| 7 | 152 |  30 | 0 | 0 | 2  | 0 | 0 | 844 | 0 | 0 |  1028 |
+| 8 | 310 | 177 | 0 | 1 | 14 | 0 | 0 | 472 | 0 | 0 |  974  |
+| 9 | 151 |  18 | 0 | 0 | 21 | 0 | 0 | 819 | 0 | 0 |  1009 |
++---+-----+-----+---+---+----+---+---+-----+---+---+-------+
+
+
+
+Confusion Table with 4 parameters
++---+-----+-----+-----+----+-----+-----+-----+-----+----+---+-------+
+|   |  0  |  1  |  2  | 3  |  4  |  5  |  6  |  7  | 8  | 9 | Total |
++---+-----+-----+-----+----+-----+-----+-----+-----+----+---+-------+
+| 0 | 304 |  66 |  97 | 48 |  62 |  23 | 164 | 205 | 4  | 7 |  980  |
+| 1 |  3  | 902 |  88 | 1  |  39 |  60 |  13 |  18 | 10 | 1 |  1135 |
+| 2 |  67 |  66 | 421 | 13 | 197 |  6  | 157 |  94 | 8  | 3 |  1032 |
+| 3 | 195 | 109 | 214 | 42 | 115 |  65 | 171 |  92 | 4  | 3 |  1010 |
+| 4 |  21 |  74 | 168 | 8  | 469 |  50 | 141 |  36 | 8  | 7 |  982  |
+| 5 | 120 | 106 |  62 | 30 | 168 | 134 | 180 |  86 | 3  | 3 |  892  |
+| 6 |  77 |  48 | 168 | 21 | 102 |  28 | 449 |  51 | 9  | 5 |  958  |
+| 7 | 249 |  68 | 165 | 4  |  47 |  59 | 149 | 279 | 7  | 1 |  1028 |
+| 8 |  31 | 304 | 161 | 17 | 251 |  17 |  93 |  61 | 31 | 8 |  974  |
+| 9 |  36 | 246 | 158 | 3  | 257 |  89 |  98 |  81 | 32 | 9 |  1009 |
++---+-----+-----+-----+----+-----+-----+-----+-----+----+---+-------+
+
+
+
+Confusion Table with 8 parameters
++---+-----+-----+-----+-----+-----+----+-----+-----+-----+-----+-------+
+|   |  0  |  1  |  2  |  3  |  4  | 5  |  6  |  7  |  8  |  9  | Total |
++---+-----+-----+-----+-----+-----+----+-----+-----+-----+-----+-------+
+| 0 | 135 | 200 |  74 | 171 |  30 | 2  | 194 |  20 | 146 |  8  |  980  |
+| 1 |  22 | 961 |  53 |  37 |  0  | 2  |  25 |  1  |  34 |  0  |  1135 |
+| 2 |  29 | 125 | 339 | 171 | 124 | 1  |  97 |  20 | 110 |  16 |  1032 |
+| 3 |  23 |  88 |  66 | 630 |  15 | 3  | 139 |  9  |  33 |  4  |  1010 |
+| 4 |  15 |  15 |  72 |  12 | 620 | 1  |  68 |  93 |  18 |  68 |  982  |
+| 5 |  72 | 137 |  16 | 148 |  39 | 47 | 159 | 101 | 165 |  8  |  892  |
+| 6 |  15 |  41 |  58 |  20 |  39 | 0  | 740 |  32 |  11 |  2  |  958  |
+| 7 |  19 |  94 | 112 |  8  | 166 | 1  | 101 | 445 |  42 |  40 |  1028 |
+| 8 |  50 |  97 |  90 |  80 |  63 | 3  | 163 |  59 | 347 |  22 |  974  |
+| 9 |  23 |  31 |  82 |  14 | 457 | 0  |  74 |  77 |  48 | 203 |  1009 |
++---+-----+-----+-----+-----+-----+----+-----+-----+-----+-----+-------+
+
+
+
+Confusion Table with 16 parameters
++---+-----+------+-----+-----+-----+----+-----+-----+-----+-----+-------+
+|   |  0  |  1   |  2  |  3  |  4  | 5  |  6  |  7  |  8  |  9  | Total |
++---+-----+------+-----+-----+-----+----+-----+-----+-----+-----+-------+
+| 0 | 862 |  2   |  39 |  22 |  1  | 2  |  16 |  4  |  32 |  0  |  980  |
+| 1 |  0  | 1091 |  2  |  6  |  7  | 1  |  4  |  9  |  15 |  0  |  1135 |
+| 2 |  77 | 160  | 540 |  48 |  27 | 2  |  56 |  33 |  69 |  20 |  1032 |
+| 3 |  55 |  82  |  19 | 696 |  24 | 7  |  35 |  20 |  56 |  16 |  1010 |
+| 4 |  41 |  85  |  52 |  15 | 587 | 1  |  49 |  56 |  32 |  64 |  982  |
+| 5 | 142 |  96  |  39 | 277 |  84 | 48 |  43 |  21 | 122 |  20 |  892  |
+| 6 | 176 |  39  |  63 |  48 |  78 | 3  | 504 |  13 |  25 |  9  |  958  |
+| 7 | 117 | 157  |  26 |  29 |  63 | 1  |  33 | 472 |  59 |  71 |  1028 |
+| 8 |  52 |  80  |  49 | 145 |  62 | 4  |  25 |  21 | 517 |  19 |  974  |
+| 9 |  65 |  95  |  50 |  38 | 170 | 0  |  37 | 111 |  43 | 400 |  1009 |
++---+-----+------+-----+-----+-----+----+-----+-----+-----+-----+-------+
+
+
+
+Confusion Table with 32 parameters
++---+-----+------+-----+-----+-----+-----+-----+-----+-----+-----+-------+
+|   |  0  |  1   |  2  |  3  |  4  |  5  |  6  |  7  |  8  |  9  | Total |
++---+-----+------+-----+-----+-----+-----+-----+-----+-----+-----+-------+
+| 0 | 894 |  5   |  5  |  14 |  6  |  9  |  25 |  10 |  12 |  0  |  980  |
+| 1 |  0  | 1081 |  27 |  4  |  1  |  0  |  9  |  4  |  6  |  3  |  1135 |
+| 2 |  18 | 109  | 709 |  53 |  22 |  0  |  51 |  22 |  40 |  8  |  1032 |
+| 3 |  8  |  42  |  38 | 786 |  9  |  25 |  34 |  26 |  23 |  19 |  1010 |
+| 4 |  12 |  38  |  25 |  36 | 648 |  1  |  44 |  55 |  12 | 111 |  982  |
+| 5 | 169 |  60  |  21 | 109 |  29 | 219 |  81 |  77 |  94 |  33 |  892  |
+| 6 |  62 |  31  |  29 |  8  |  40 |  11 | 772 |  0  |  3  |  2  |  958  |
+| 7 |  17 |  43  |  33 |  38 |  19 |  8  |  3  | 826 |  10 |  31 |  1028 |
+| 8 |  25 | 140  |  21 | 127 |  18 |  23 |  36 |  34 | 527 |  23 |  974  |
+| 9 |  30 |  30  |  23 |  47 |  74 |  3  |  8  | 122 |  15 | 657 |  1009 |
++---+-----+------+-----+-----+-----+-----+-----+-----+-----+-----+-------+
+
+
+
+Confusion Table with 64 parameters
++---+-----+------+-----+-----+-----+-----+-----+-----+-----+-----+-------+
+|   |  0  |  1   |  2  |  3  |  4  |  5  |  6  |  7  |  8  |  9  | Total |
++---+-----+------+-----+-----+-----+-----+-----+-----+-----+-----+-------+
+| 0 | 923 |  0   |  9  |  3  |  0  |  3  |  27 |  2  |  13 |  0  |  980  |
+| 1 |  1  | 1078 |  8  |  11 |  1  |  2  |  9  |  3  |  22 |  0  |  1135 |
+| 2 |  30 |  95  | 740 |  38 |  21 |  2  |  30 |  26 |  43 |  7  |  1032 |
+| 3 |  10 |  33  |  38 | 806 |  3  |  28 |  15 |  41 |  20 |  16 |  1010 |
+| 4 |  3  |  39  |  14 |  3  | 767 |  3  |  27 |  8  |  23 |  95 |  982  |
+| 5 |  34 |  16  |  13 | 120 |  22 | 508 |  46 |  41 |  67 |  25 |  892  |
+| 6 |  25 |  14  |  17 |  1  |  30 |  8  | 857 |  1  |  3  |  2  |  958  |
+| 7 |  6  |  48  |  23 |  5  |  21 |  0  |  2  | 871 |  13 |  39 |  1028 |
+| 8 |  25 |  78  |  29 |  56 |  19 |  28 |  35 |  43 | 626 |  35 |  974  |
+| 9 |  20 |  19  |  10 |  14 |  93 |  8  |  2  |  91 |  24 | 728 |  1009 |
++---+-----+------+-----+-----+-----+-----+-----+-----+-----+-----+-------+
+
+
+
+Confusion Table with 128 parameters
++---+-----+------+-----+-----+-----+-----+-----+-----+-----+-----+-------+
+|   |  0  |  1   |  2  |  3  |  4  |  5  |  6  |  7  |  8  |  9  | Total |
++---+-----+------+-----+-----+-----+-----+-----+-----+-----+-----+-------+
+| 0 | 934 |  1   |  3  |  3  |  2  |  8  |  18 |  3  |  7  |  1  |  980  |
+| 1 |  0  | 1093 |  5  |  5  |  1  |  0  |  6  |  2  |  23 |  0  |  1135 |
+| 2 |  20 |  62  | 820 |  20 |  14 |  1  |  27 |  23 |  37 |  8  |  1032 |
+| 3 |  7  |  19  |  25 | 861 |  4  |  18 |  12 |  27 |  22 |  15 |  1010 |
+| 4 |  1  |  25  |  10 |  1  | 860 |  2  |  12 |  3  |  14 |  54 |  982  |
+| 5 |  28 |  13  |  11 |  99 |  24 | 564 |  33 |  22 |  73 |  25 |  892  |
+| 6 |  20 |  11  |  12 |  0  |  16 |  13 | 880 |  0  |  6  |  0  |  958  |
+| 7 |  4  |  42  |  19 |  11 |  16 |  0  |  3  | 877 |  6  |  50 |  1028 |
+| 8 |  15 |  55  |  12 |  39 |  20 |  37 |  20 |  22 | 734 |  20 |  974  |
+| 9 |  19 |  14  |  9  |  14 |  59 |  4  |  4  |  70 |  14 | 802 |  1009 |
++---+-----+------+-----+-----+-----+-----+-----+-----+-----+-----+-------+
+
+
+
+Confusion Table with 256 parameters
++---+-----+------+-----+-----+-----+-----+-----+-----+-----+-----+-------+
+|   |  0  |  1   |  2  |  3  |  4  |  5  |  6  |  7  |  8  |  9  | Total |
++---+-----+------+-----+-----+-----+-----+-----+-----+-----+-----+-------+
+| 0 | 937 |  0   |  4  |  3  |  1  |  7  |  18 |  1  |  8  |  1  |  980  |
+| 1 |  0  | 1102 |  2  |  2  |  1  |  1  |  5  |  2  |  20 |  0  |  1135 |
+| 2 |  15 |  64  | 807 |  23 |  16 |  0  |  43 |  24 |  39 |  1  |  1032 |
+| 3 |  4  |  18  |  30 | 876 |  2  |  14 |  8  |  24 |  20 |  14 |  1010 |
+| 4 |  0  |  23  |  8  |  1  | 866 |  3  |  12 |  1  |  12 |  56 |  982  |
+| 5 |  16 |  17  |  10 |  94 |  18 | 602 |  24 |  21 |  66 |  24 |  892  |
+| 6 |  17 |  9   |  13 |  0  |  21 |  16 | 873 |  0  |  9  |  0  |  958  |
+| 7 |  5  |  38  |  16 |  11 |  17 |  0  |  2  | 885 |  4  |  50 |  1028 |
+| 8 |  16 |  55  |  8  |  35 |  27 |  43 |  19 |  14 | 733 |  24 |  974  |
+| 9 |  18 |  12  |  4  |  16 |  62 |  0  |  2  |  62 |  8  | 825 |  1009 |
++---+-----+------+-----+-----+-----+-----+-----+-----+-----+-----+-------+
+
+
+
+Confusion Table with 512 parameters
++---+-----+------+-----+-----+-----+-----+-----+-----+-----+-----+-------+
+|   |  0  |  1   |  2  |  3  |  4  |  5  |  6  |  7  |  8  |  9  | Total |
++---+-----+------+-----+-----+-----+-----+-----+-----+-----+-----+-------+
+| 0 | 941 |  0   |  2  |  2  |  1  |  8  |  15 |  2  |  7  |  2  |  980  |
+| 1 |  0  | 1105 |  2  |  2  |  1  |  1  |  5  |  2  |  17 |  0  |  1135 |
+| 2 |  18 |  61  | 812 |  26 |  16 |  0  |  37 |  18 |  39 |  5  |  1032 |
+| 3 |  4  |  15  |  22 | 890 |  2  |  16 |  10 |  21 |  19 |  11 |  1010 |
+| 4 |  0  |  22  |  6  |  2  | 871 |  4  |  9  |  1  |  15 |  52 |  982  |
+| 5 |  21 |  16  |  6  |  87 |  17 | 623 |  20 |  13 |  67 |  22 |  892  |
+| 6 |  19 |  10  |  11 |  0  |  20 |  17 | 872 |  0  |  9  |  0  |  958  |
+| 7 |  4  |  37  |  17 |  8  |  21 |  1  |  1  | 879 |  4  |  56 |  1028 |
+| 8 |  17 |  53  |  10 |  31 |  26 |  40 |  16 |  13 | 746 |  22 |  974  |
+| 9 |  18 |  11  |  4  |  15 |  68 |  0  |  1  |  78 |  12 | 802 |  1009 |
++---+-----+------+-----+-----+-----+-----+-----+-----+-----+-----+-------+
+
+
+
+Confusion Table with 1024 parameters
++---+-----+------+-----+-----+-----+-----+-----+-----+-----+-----+-------+
+|   |  0  |  1   |  2  |  3  |  4  |  5  |  6  |  7  |  8  |  9  | Total |
++---+-----+------+-----+-----+-----+-----+-----+-----+-----+-----+-------+
+| 0 | 942 |  0   |  2  |  2  |  1  |  7  |  15 |  2  |  7  |  2  |  980  |
+| 1 |  0  | 1107 |  2  |  2  |  1  |  1  |  5  |  2  |  15 |  0  |  1135 |
+| 2 |  17 |  56  | 809 |  28 |  16 |  0  |  42 |  21 |  39 |  4  |  1032 |
+| 3 |  4  |  15  |  26 | 887 |  2  |  14 |  9  |  21 |  21 |  11 |  1010 |
+| 4 |  0  |  23  |  6  |  3  | 872 |  5  |  10 |  2  |  13 |  48 |  982  |
+| 5 |  20 |  17  |  2  |  84 |  19 | 624 |  22 |  13 |  69 |  22 |  892  |
+| 6 |  17 |  9   |  10 |  0  |  21 |  20 | 872 |  0  |  9  |  0  |  958  |
+| 7 |  5  |  38  |  18 |  8  |  20 |  0  |  1  | 877 |  3  |  58 |  1028 |
+| 8 |  17 |  54  |  9  |  32 |  27 |  42 |  15 |  12 | 743 |  23 |  974  |
+| 9 |  18 |  10  |  2  |  15 |  72 |  1  |  1  |  77 |  13 | 800 |  1009 |
++---+-----+------+-----+-----+-----+-----+-----+-----+-----+-----+-------+
+
+
+
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}16}]:} \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{F1 Score History}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{num\PYZus{}paras}\PY{p}{,} \PY{n}{f1\PYZus{}history}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{b\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{number of parameters}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{F1 score}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+         
+         \PY{n}{t} \PY{o}{=} \PY{n}{PrettyTable}\PY{p}{(}\PY{n}{num\PYZus{}paras}\PY{p}{)}
+         \PY{n}{t}\PY{o}{.}\PY{n}{add\PYZus{}row}\PY{p}{(}\PY{n}{f1\PYZus{}history}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{t}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_30_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
++-----+--------+--------+--------+-------+--------+--------+--------+--------+--------+
+|  2  |   4    |   8    |   16   |   32  |   64   |  128   |  256   |  512   |  1024  |
++-----+--------+--------+--------+-------+--------+--------+--------+--------+--------+
+| nan | 0.2482 | 0.3999 | 0.5342 | 0.692 | 0.7847 | 0.8386 | 0.8474 | 0.8512 | 0.8503 |
++-----+--------+--------+--------+-------+--------+--------+--------+--------+--------+
+
+    \end{Verbatim}
+
+    When number of parameters is small, sometimes we cannot even get valid
+\(F_{1}\) score, because True Positive and False Posive can both be
+zero.
+
+When have 128 parameters, we almost get one of the best score, after
+that point \(F_{1}\) score still increases but not changes much.
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
