@@ -1,0 +1,812 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{assignment11}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \section{Image Denoising}\label{image-denoising}
+
+\textbf{Name}: ZHU GUANGYU\\
+\textbf{Student ID}: 20165953\\
+\textbf{Github Repo}:
+\href{https://github.com/z1ggy-o/cv_assignment/tree/master/assignment11}{assignment11}
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+\subsection{Multi-objective least
+squares}\label{multi-objective-least-squares}
+
+In some applications we have \emph{multiple} objectives, all of which we
+would like to be small:
+
+\[J_{1} = ||A_{1}x-b_{1}||^{2}, \cdots, J_{k} = ||A_{k}x-b_{k}||^{2} \]
+
+We seek a \emph{single} \(\hat{x}\) that gives a compromise, and makes
+them all small, tothe extent possible. We call this the
+\emph{multi-objective} least squares problem.
+
+We cannot get a single \(\hat{x}\) which makes all the objectives be
+minimum at same time, so we have to come out a compromise plan. A
+standard method for finding a value of \(x\) that gives a compromise in
+making all the objectves small is to choose \(x\) to minimize a
+\emph{weighted sum objective}:
+
+\[ J = \lambda_{1}J_{1} + \cdots + \lambda_{k}J_{k} = \lambda_{1}||A_{1}x-b_{1}||^{2} + \cdots + \lambda_{k}||A_{k}x-b_{k}||^{2}, \]
+
+where \(\lambda\) are positive \emph{weights}, that express our relative
+desire for the terms to be small.
+
+\subsubsection{Weighted sum least squares via
+stacking}\label{weighted-sum-least-squares-via-stacking}
+
+We can minimize the weighted sum obejctive function by expressing it as
+a standard least squares problem, then we can solve it by the method we
+use before. Express \(J\) as the norm squared of a single vector:
+
+\[ J = \begin{Vmatrix}
+\begin{bmatrix}
+\sqrt{\lambda_{1}}(A_{1}x - b_{1}) \\
+\vdots \\
+\sqrt{\lambda_{k}}(A_{k}x - b_{k})
+\end{bmatrix}
+\end{Vmatrix}^{2}\]
+
+so we have
+
+\[
+J = \begin{Vmatrix}
+\begin{bmatrix}\sqrt{\lambda_{1}}A_{1}\\ \vdots \\ \sqrt{\lambda_{k}}A_{k} \end{bmatrix}x -
+\begin{bmatrix}\sqrt{\lambda_{1}}b_{1}\\ \vdots \\ \sqrt{\lambda_{k}}b_{k} \end{bmatrix}
+\end{Vmatrix}^{2}
+=
+\begin{Vmatrix}\tilde{A}x - \tilde{b} \end{Vmatrix}^{2}
+\]
+
+Now, we have reduced the problem of minimizing the weighted sum least
+squares objective to a standard lest squares problem.
+
+Usually, we identify a \emph{primary ojective} \(J_{1}\) that we would
+like to be small. We also identify one or more \emph{secondary
+objectives} that we would also like to be small. There are many possible
+sencondary objectives:
+
+\begin{itemize}
+\tightlist
+\item
+  \(||x||^{2}\): \(x\) should be small.
+\item
+  \(|| x - x^{prior}||^{2}\): \(x\) should be near \(x^{prior}\).
+\item
+  \(||Dx||^{2}\), where \(D\) is the first difference matrix: \(x\)
+  should be smooth.
+\end{itemize}
+
+\subsection{Estination and inversion}\label{estination-and-inversion}
+
+In the broad application area of \emph{estimation}, the goal is to
+estimate a set of \(n\) values (also called parameters), the entries of
+the n-vector \(x\). We are given a set of \emph{m measurements}, the
+entries of an \(m\)-vector \(y\). They are related by
+
+\[ y = Ax + v \]
+
+The \(m\)-vector \(v\) is the \emph{measurement noise}, and is unknown
+but presumed to be small. The estimation problem is to make a sensible
+guess as to what \(x\) is, given \(y\) and prior knowledge about \(x\).
+
+Of course we cannot expect to find \(x\) exactly when the measurement
+noise is nonzero. This is called \emph{approximate inversion}.
+
+If we guess that \(x\) has the value \(\hat{x}\), then we are implicitly
+making the guess that \(v\) has the value \(y - A\hat{x}\). If we assume
+that \(v\) is small, then a sensible choive for \(\hat{x}\) is the least
+squares approximate solution, which minimizes \(||A\hat{x}-y||^{2}\). We
+will take this as our primary objective. And we choose secondary
+objectives by the informations we know about \(x\).
+
+\subsection{Image Denoising}\label{image-denoising-1}
+
+Image de-nosing is one of the \emph{Inversion} problem. The vector \(x\)
+is an image, and the matrix \(A\) gives noise, so \$y = Ax + v \$ is a
+noisy image.
+
+Our prior infromation about \(x\) is that it is smooth; neighboring
+pixels values are not very different from each other. So we choose
+\(||Dx||^2\) be our secondary objective.
+
+Because image is 2D, we form an estimate \(\hat{x}\) image by minimizing
+a cost function of the form
+
+\[||Ax - y||^2 + \lambda (||D_{h}x||^{2} + ||D_{v}x||^{2}) \]
+
+Here \(D_{v}\) and \(D_{h}\) are vertical and horizontal differencing
+operations.
+
+\subsubsection{Our specific denosing
+problem}\label{our-specific-denosing-problem}
+
+In our problem, we do not use matrix \(A\) to add noisy on image, but
+just given noisy image \(y\), so our function is
+
+\[ ||x - y||^2 + \lambda (||D_{h}x||^{2} + ||D_{v}x||^{2}) \]
+
+Express it as a norm squared form, we have
+
+\[
+\begin{Vmatrix}
+\begin{bmatrix} I \\ \sqrt{\lambda}D_{h}\\ \sqrt{\lambda}D_{v} \end{bmatrix}x -
+\begin{bmatrix} y \\ 0 \\ 0 \end{bmatrix}
+\end{Vmatrix}^{2}
+=
+\begin{Vmatrix}\tilde{A}x - \tilde{b} \end{Vmatrix}^{2}
+\]
+
+Suppose the vector \(x\) has length \(MN\) then \(D_{h}\) is a
+\(M(N-1) \times MN\) matrix, \(D_{v}\) be the \((M-1)N \times MN\)
+matrix, and \(I\) is a \(M \times N\) identity matrix.
+
+Now we can use standard least mean square method to get our \(\hat{x}\).
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+    \subsection{Implementation}\label{implementation}
+
+\subsubsection{Import packages \& read input
+data}\label{import-packages-read-input-data}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} \PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
+        \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+        \PY{k+kn}{import} \PY{n+nn}{math}
+        \PY{k+kn}{from} \PY{n+nn}{scipy} \PY{k}{import} \PY{n}{signal}
+        \PY{k+kn}{from} \PY{n+nn}{skimage} \PY{k}{import} \PY{n}{io}\PY{p}{,} \PY{n}{color}
+        \PY{k+kn}{from} \PY{n+nn}{skimage} \PY{k}{import} \PY{n}{exposure}
+        
+        \PY{n}{file\PYZus{}image}	\PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{cau\PYZhy{}resized.jpg}\PY{l+s+s1}{\PYZsq{}}
+        
+        \PY{n}{im\PYZus{}color} 	\PY{o}{=} \PY{n}{io}\PY{o}{.}\PY{n}{imread}\PY{p}{(}\PY{n}{file\PYZus{}image}\PY{p}{)}
+        \PY{n}{im\PYZus{}gray}  	\PY{o}{=} \PY{n}{color}\PY{o}{.}\PY{n}{rgb2gray}\PY{p}{(}\PY{n}{im\PYZus{}color}\PY{p}{)}
+        \PY{n}{im}          \PY{o}{=} \PY{p}{(}\PY{n}{im\PYZus{}gray} \PY{o}{\PYZhy{}} \PY{n}{np}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{n}{im\PYZus{}gray}\PY{p}{)}\PY{p}{)} \PY{o}{/} \PY{n}{np}\PY{o}{.}\PY{n}{std}\PY{p}{(}\PY{n}{im\PYZus{}gray}\PY{p}{)}
+        \PY{n}{row}\PY{p}{,} \PY{n}{col}    \PY{o}{=} \PY{n}{im}\PY{o}{.}\PY{n}{shape}
+\end{Verbatim}
+
+
+    \subsubsection{Function for generate noisy
+image}\label{function-for-generate-noisy-image}
+
+Here we add some noise on original image by normal distribution with
+mean 0 and standard deviation \(\sigma\).
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}38}]:} \PY{k}{def} \PY{n+nf}{create\PYZus{}noisy\PYZus{}img}\PY{p}{(}\PY{n}{img}\PY{p}{,} \PY{n}{noise\PYZus{}std}\PY{p}{)}\PY{p}{:}
+             \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}Add noise on image}
+         \PY{l+s+sd}{    }
+         \PY{l+s+sd}{    Arguments:}
+         \PY{l+s+sd}{        img(np.matrix): input clear image.}
+         \PY{l+s+sd}{        noise\PYZus{}std: noise standard deviation.}
+         \PY{l+s+sd}{    Return:}
+         \PY{l+s+sd}{        noisy image}
+         \PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+             
+             \PY{n}{row}\PY{p}{,} \PY{n}{col} \PY{o}{=} \PY{n}{im}\PY{o}{.}\PY{n}{shape}
+         
+             \PY{n}{noise} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{normal}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{n}{noise\PYZus{}std}\PY{p}{,} \PY{p}{(}\PY{n}{row}\PY{p}{,} \PY{n}{col}\PY{p}{)}\PY{p}{)}
+             \PY{n}{im\PYZus{}noise} \PY{o}{=} \PY{n}{im} \PY{o}{+} \PY{n}{noise}
+             
+             \PY{k}{return} \PY{n}{im\PYZus{}noise}
+\end{Verbatim}
+
+
+    \subsubsection{Build cost function}\label{build-cost-function}
+
+As we talked above, to build cost function, we need a \(M \times N\)
+identity matrix \(I\), a \(M(N-1) \times MN\) matrix \(D_{h}\), and a
+\((M-1)N \times MN\) matrix \(D_{v}\) then combine them to a big matrix
+\(\tilde{A}\).
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}3}]:} \PY{k}{def} \PY{n+nf}{create\PYZus{}tilde\PYZus{}matrix}\PY{p}{(}\PY{n}{row}\PY{p}{,} \PY{n}{col}\PY{p}{,} \PY{n}{weight}\PY{p}{)}\PY{p}{:}
+            \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}Build tilde matrix A in cost function}
+        \PY{l+s+sd}{    }
+        \PY{l+s+sd}{    Arguments:}
+        \PY{l+s+sd}{        row: \PYZsh{}row of image}
+        \PY{l+s+sd}{        col: \PYZsh{}column of image}
+        \PY{l+s+sd}{        weight: weight of secondary objective}
+        \PY{l+s+sd}{    Return:}
+        \PY{l+s+sd}{        matrix row: row*(col\PYZhy{}1) + (row\PYZhy{}1)*col + row*col}
+        \PY{l+s+sd}{               column: row * col}
+        \PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+            
+            \PY{n}{I} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{identity}\PY{p}{(}\PY{n}{row}\PY{o}{*}\PY{n}{col}\PY{p}{)}
+            \PY{n}{Dx\PYZus{}weight} \PY{o}{=} \PY{n}{deri\PYZus{}h}\PY{p}{(}\PY{n}{row}\PY{p}{,} \PY{n}{col}\PY{p}{,} \PY{n}{weight}\PY{p}{)}
+            \PY{n}{Dy\PYZus{}weight} \PY{o}{=} \PY{n}{deri\PYZus{}v}\PY{p}{(}\PY{n}{row}\PY{p}{,} \PY{n}{col}\PY{p}{,} \PY{n}{weight}\PY{p}{)}
+            
+            \PY{n}{A} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{vstack}\PY{p}{(}\PY{p}{(}\PY{n}{I}\PY{p}{,} \PY{n}{Dx\PYZus{}weight}\PY{p}{,} \PY{n}{Dy\PYZus{}weight}\PY{p}{)}\PY{p}{)}
+            
+            \PY{k}{return} \PY{n}{A}
+        
+        
+        \PY{k}{def} \PY{n+nf}{deri\PYZus{}h}\PY{p}{(}\PY{n}{row}\PY{p}{,} \PY{n}{col}\PY{p}{,} \PY{n}{weight}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{:}
+            \PY{n}{dh} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{(}\PY{n}{row}\PY{o}{*}\PY{p}{(}\PY{n}{col}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,} \PY{n}{row}\PY{o}{*}\PY{n}{col}\PY{p}{)}\PY{p}{)}
+            
+            \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{row}\PY{o}{*}\PY{p}{(}\PY{n}{col}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+                \PY{n}{dh}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{=} \PY{o}{\PYZhy{}}\PY{l+m+mi}{1}
+                \PY{n}{dh}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{n}{i}\PY{o}{+}\PY{n}{row}\PY{p}{]} \PY{o}{=} \PY{l+m+mi}{1}
+                
+            \PY{n}{dh} \PY{o}{=} \PY{n}{math}\PY{o}{.}\PY{n}{sqrt}\PY{p}{(}\PY{n}{weight}\PY{p}{)} \PY{o}{*} \PY{n}{dh}
+            
+            \PY{k}{return} \PY{n}{dh}
+        
+        
+        \PY{k}{def} \PY{n+nf}{deri\PYZus{}v}\PY{p}{(}\PY{n}{row}\PY{p}{,} \PY{n}{col}\PY{p}{,} \PY{n}{weight}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{:}
+            \PY{n}{m} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{(}\PY{n}{row}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{row}\PY{p}{)}\PY{p}{)}
+            \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{row}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{:}
+                \PY{n}{m}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{=} \PY{o}{\PYZhy{}}\PY{l+m+mi}{1}
+                \PY{n}{m}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{n}{i}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{]} \PY{o}{=} \PY{l+m+mi}{1}
+            
+            \PY{n}{ident} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{identity}\PY{p}{(}\PY{n}{col}\PY{p}{)}
+            
+            \PY{n}{dv} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{kron}\PY{p}{(}\PY{n}{ident}\PY{p}{,} \PY{n}{m}\PY{p}{)}
+            \PY{n}{dv} \PY{o}{=} \PY{n}{math}\PY{o}{.}\PY{n}{sqrt}\PY{p}{(}\PY{n}{weight}\PY{p}{)} \PY{o}{*} \PY{n}{dv}
+            
+            \PY{k}{return} \PY{n}{dv}
+\end{Verbatim}
+
+
+    \paragraph{\texorpdfstring{Generate
+\(\tilde{b}\)}{Generate \textbackslash{}tilde\{b\}}}\label{generate-tildeb}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}5}]:} \PY{k}{def} \PY{n+nf}{create\PYZus{}tilde\PYZus{}b}\PY{p}{(}\PY{n}{row}\PY{p}{,} \PY{n}{col}\PY{p}{,} \PY{n}{img}\PY{p}{)}\PY{p}{:}
+            \PY{n}{length} \PY{o}{=} \PY{p}{(}\PY{n}{row}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{*}\PY{n}{col} \PY{o}{+} \PY{n}{row}\PY{o}{*}\PY{p}{(}\PY{n}{col}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)} \PY{o}{+} \PY{n}{row}\PY{o}{*}\PY{n}{col}
+            
+            \PY{n}{b} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{n}{length}\PY{p}{)}
+            \PY{n}{img\PYZus{}vec} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+            
+            \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{col}\PY{p}{)}\PY{p}{:}
+                \PY{n}{column} \PY{o}{=} \PY{n}{img}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{n}{i}\PY{p}{]}
+                \PY{k}{for} \PY{n}{j} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{row}\PY{p}{)}\PY{p}{:}
+                    \PY{n}{img\PYZus{}vec}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{column}\PY{p}{[}\PY{n}{j}\PY{p}{]}\PY{p}{)}
+                
+            \PY{k}{for} \PY{n}{k} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{row}\PY{o}{*}\PY{n}{col}\PY{p}{)}\PY{p}{:}
+                \PY{n}{b}\PY{p}{[}\PY{n}{k}\PY{p}{]} \PY{o}{=} \PY{n}{img\PYZus{}vec}\PY{p}{[}\PY{n}{k}\PY{p}{]}
+            
+            \PY{k}{return} \PY{n}{b}
+\end{Verbatim}
+
+
+    \paragraph{\texorpdfstring{Compute
+\(\hat{x}\)}{Compute \textbackslash{}hat\{x\}}}\label{compute-hatx}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}39}]:} \PY{k}{def} \PY{n+nf}{compute\PYZus{}param}\PY{p}{(}\PY{n}{A}\PY{p}{,} \PY{n}{y}\PY{p}{)}\PY{p}{:}
+             \PY{k}{return} \PY{n}{np}\PY{o}{.}\PY{n}{linalg}\PY{o}{.}\PY{n}{lstsq}\PY{p}{(}\PY{n}{A}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{rcond}\PY{o}{=}\PY{k+kc}{None}\PY{p}{)}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+\end{Verbatim}
+
+
+    \subsubsection{De-noising image}\label{de-noising-image}
+
+Since we have got all the components of the cost function, now we can
+compute the approximate inversion \(\hat{x}\)
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}47}]:} \PY{k}{def} \PY{n+nf}{denoising}\PY{p}{(}\PY{n}{row}\PY{p}{,} \PY{n}{col}\PY{p}{,} \PY{n}{weight}\PY{p}{,} \PY{n}{img\PYZus{}noisy}\PY{p}{)}\PY{p}{:}
+             \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}de\PYZhy{}noising image}
+         \PY{l+s+sd}{    }
+         \PY{l+s+sd}{    Arguments:}
+         \PY{l+s+sd}{        row: \PYZsh{}row of image}
+         \PY{l+s+sd}{        col: \PYZsh{}col of image}
+         \PY{l+s+sd}{        weight: weight for secondary objective}
+         \PY{l+s+sd}{        img\PYZus{}noisy: noisy image}
+         \PY{l+s+sd}{    Return:}
+         \PY{l+s+sd}{        img\PYZus{}recon: de\PYZhy{}noised image}
+         \PY{l+s+sd}{        error: error of this denoising}
+         \PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+             \PY{c+c1}{\PYZsh{} tranform image to vector}
+             \PY{n}{b} \PY{o}{=} \PY{n}{create\PYZus{}tilde\PYZus{}b}\PY{p}{(}\PY{n}{row}\PY{p}{,} \PY{n}{col}\PY{p}{,} \PY{n}{im\PYZus{}noise}\PY{p}{)}
+         
+             \PY{c+c1}{\PYZsh{} generate matrix A}
+             \PY{n}{matrix\PYZus{}A} \PY{o}{=} \PY{n}{create\PYZus{}tilde\PYZus{}matrix}\PY{p}{(}\PY{n}{row}\PY{p}{,} \PY{n}{col}\PY{p}{,} \PY{n}{weight}\PY{p}{)}
+         
+             \PY{c+c1}{\PYZsh{} compute recon image}
+             \PY{n}{img\PYZus{}recon} \PY{o}{=} \PY{n}{compute\PYZus{}param}\PY{p}{(}\PY{n}{matrix\PYZus{}A}\PY{p}{,} \PY{n}{b}\PY{p}{)}
+             
+             \PY{c+c1}{\PYZsh{} compute error}
+             \PY{n}{cost\PYZus{}func} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{inner}\PY{p}{(}\PY{n}{matrix\PYZus{}A}\PY{p}{,} \PY{n}{img\PYZus{}recon}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{n}{b}
+             \PY{n}{error} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{linalg}\PY{o}{.}\PY{n}{norm}\PY{p}{(}\PY{n}{cost\PYZus{}func}\PY{p}{)}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}
+             
+             \PY{c+c1}{\PYZsh{} transform to matrix shape}
+             \PY{n}{img\PYZus{}recon} \PY{o}{=} \PY{p}{(}\PY{n}{img\PYZus{}recon}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{p}{(}\PY{n}{col}\PY{p}{,} \PY{n}{row}\PY{p}{)}\PY{p}{)}\PY{p}{)}\PY{o}{.}\PY{n}{T}
+             
+             
+             \PY{k}{return} \PY{n}{img\PYZus{}recon}\PY{p}{,} \PY{n}{error}
+\end{Verbatim}
+
+
+    \begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+\subsection{De-noising Images}\label{de-noising-images}
+
+Now, let's try our \texttt{denoising} function to do some image
+de-noising.
+
+\subsubsection{\texorpdfstring{Try different standard deviation
+\(\sigma\) and regularization parameter
+\(\lambda\)}{Try different standard deviation \textbackslash{}sigma and regularization parameter \textbackslash{}lambda}}\label{try-different-standard-deviation-sigma-and-regularization-parameter-lambda}
+
+First create a function to convenient plotting.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}54}]:} \PY{k}{def} \PY{n+nf}{plot\PYZus{}images}\PY{p}{(}\PY{n}{img}\PY{p}{,} \PY{n}{img\PYZus{}noisy}\PY{p}{,} \PY{n}{img\PYZus{}recon}\PY{p}{)}\PY{p}{:}
+             \PY{n}{noise\PYZus{}recon} \PY{o}{=} \PY{n}{img\PYZus{}noisy} \PY{o}{\PYZhy{}} \PY{n}{img\PYZus{}recon}
+         
+             \PY{n}{p1} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplot}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}
+             \PY{n}{p1}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{original image}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{imshow}\PY{p}{(}\PY{n}{img}\PY{p}{,} \PY{n}{cmap}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{gray}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{axis}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{off}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         
+             \PY{n}{p2} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplot}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{)}
+             \PY{n}{p2}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{noisy image}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{imshow}\PY{p}{(}\PY{n}{img\PYZus{}noisy}\PY{p}{,} \PY{n}{cmap}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{gray}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{axis}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{off}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         
+             \PY{n}{p3} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplot}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{)}
+             \PY{n}{p3}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{reconstruction}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{imshow}\PY{p}{(}\PY{n}{img\PYZus{}recon}\PY{p}{,} \PY{n}{cmap}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{gray}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{axis}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{off}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         
+             \PY{n}{p4} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplot}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{4}\PY{p}{)}
+             \PY{n}{p4}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{estimated noise}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{imshow}\PY{p}{(}\PY{n}{noise\PYZus{}recon}\PY{p}{,} \PY{n}{cmap}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{gray}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{axis}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{off}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         
+             \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Try \(\sigma = 0.2\), \(\lambda = 0.25\)
+\end{enumerate}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}56}]:} \PY{n}{noise\PYZus{}std} \PY{o}{=} \PY{l+m+mf}{0.2}
+         \PY{n}{weight} \PY{o}{=} \PY{l+m+mf}{0.25}
+         
+         \PY{c+c1}{\PYZsh{} generate noisy image}
+         \PY{n}{img\PYZus{}noisy} \PY{o}{=} \PY{n}{create\PYZus{}noisy\PYZus{}img}\PY{p}{(}\PY{n}{im}\PY{p}{,} \PY{n}{noise\PYZus{}std}\PY{p}{)}
+         
+         \PY{c+c1}{\PYZsh{} denoising}
+         \PY{n}{img\PYZus{}recon}\PY{p}{,} \PY{n}{error} \PY{o}{=} \PY{n}{denoising}\PY{p}{(}\PY{n}{row}\PY{p}{,} \PY{n}{col}\PY{p}{,} \PY{n}{weight}\PY{p}{,} \PY{n}{img\PYZus{}noisy}\PY{p}{)}
+         
+         \PY{n}{plot\PYZus{}images}\PY{p}{(}\PY{n}{im}\PY{p}{,} \PY{n}{img\PYZus{}noisy}\PY{p}{,} \PY{n}{img\PYZus{}recon}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_16_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Try \(\sigma = 0.5\), \(\lambda = 0.25\)
+\end{enumerate}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}57}]:} \PY{n}{noise\PYZus{}std} \PY{o}{=} \PY{l+m+mf}{0.5}
+         \PY{n}{weight} \PY{o}{=} \PY{l+m+mf}{0.25}
+         
+         \PY{n}{img\PYZus{}noisy} \PY{o}{=} \PY{n}{create\PYZus{}noisy\PYZus{}img}\PY{p}{(}\PY{n}{im}\PY{p}{,} \PY{n}{noise\PYZus{}std}\PY{p}{)}
+         \PY{n}{img\PYZus{}recon}\PY{p}{,} \PY{n}{error} \PY{o}{=} \PY{n}{denoising}\PY{p}{(}\PY{n}{row}\PY{p}{,} \PY{n}{col}\PY{p}{,} \PY{n}{weight}\PY{p}{,} \PY{n}{img\PYZus{}noisy}\PY{p}{)}
+         
+         \PY{n}{plot\PYZus{}images}\PY{p}{(}\PY{n}{im}\PY{p}{,} \PY{n}{img\PYZus{}noisy}\PY{p}{,} \PY{n}{img\PYZus{}recon}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_18_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  Try \(\sigma = 0.2\), \(\lambda = 1\)
+\end{enumerate}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}58}]:} \PY{n}{noise\PYZus{}std} \PY{o}{=} \PY{l+m+mf}{0.2}
+         \PY{n}{weight} \PY{o}{=} \PY{l+m+mi}{1}
+         
+         \PY{n}{img\PYZus{}noisy} \PY{o}{=} \PY{n}{create\PYZus{}noisy\PYZus{}img}\PY{p}{(}\PY{n}{im}\PY{p}{,} \PY{n}{noise\PYZus{}std}\PY{p}{)}
+         \PY{n}{img\PYZus{}recon}\PY{p}{,} \PY{n}{error} \PY{o}{=} \PY{n}{denoising}\PY{p}{(}\PY{n}{row}\PY{p}{,} \PY{n}{col}\PY{p}{,} \PY{n}{weight}\PY{p}{,} \PY{n}{img\PYZus{}noisy}\PY{p}{)}
+         
+         \PY{n}{plot\PYZus{}images}\PY{p}{(}\PY{n}{im}\PY{p}{,} \PY{n}{img\PYZus{}noisy}\PY{p}{,} \PY{n}{img\PYZus{}recon}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_20_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{3}
+\tightlist
+\item
+  Try \(\sigma = 0.5\), \(\lambda = 1\)
+\end{enumerate}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}59}]:} \PY{n}{noise\PYZus{}std} \PY{o}{=} \PY{l+m+mf}{0.5}
+         \PY{n}{weight} \PY{o}{=} \PY{l+m+mi}{1}
+         
+         \PY{n}{img\PYZus{}noisy} \PY{o}{=} \PY{n}{create\PYZus{}noisy\PYZus{}img}\PY{p}{(}\PY{n}{im}\PY{p}{,} \PY{n}{noise\PYZus{}std}\PY{p}{)}
+         \PY{n}{img\PYZus{}recon}\PY{p}{,} \PY{n}{error} \PY{o}{=} \PY{n}{denoising}\PY{p}{(}\PY{n}{row}\PY{p}{,} \PY{n}{col}\PY{p}{,} \PY{n}{weight}\PY{p}{,} \PY{n}{img\PYZus{}noisy}\PY{p}{)}
+         
+         \PY{n}{plot\PYZus{}images}\PY{p}{(}\PY{n}{im}\PY{p}{,} \PY{n}{img\PYZus{}noisy}\PY{p}{,} \PY{n}{img\PYZus{}recon}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_22_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    Since I do not get memory to compute bigger image, these may not very
+clear.
+
+But we still can see from the above images, when \(\sigma\) bigger the
+noise is more, when \(\lambda\) get bigger the recon images are becoming
+smoother.
+
+    \subsubsection{\texorpdfstring{See how \(\lambda\) affects
+result}{See how \textbackslash{}lambda affects result}}\label{see-how-lambda-affects-result}
+
+Let's fix \(\sigma\) and try different \(\lambda s\) to see the result.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}79}]:} \PY{n}{lambdas} \PY{o}{=} \PY{p}{[}\PY{l+m+mf}{0.5}\PY{o}{*}\PY{o}{*}\PY{n}{x} \PY{k}{for} \PY{n}{x} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mi}{5}\PY{p}{,} \PY{l+m+mi}{11}\PY{p}{)}\PY{p}{]}
+         \PY{n}{img\PYZus{}noisy} \PY{o}{=} \PY{n}{create\PYZus{}noisy\PYZus{}img}\PY{p}{(}\PY{n}{im}\PY{p}{,} \PY{l+m+mf}{0.5}\PY{p}{)}
+         
+         \PY{n}{error\PYZus{}histo} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+         \PY{n}{imgs} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+         
+         \PY{k}{for} \PY{n}{weight} \PY{o+ow}{in} \PY{n}{lambdas}\PY{p}{:}
+             \PY{n}{img\PYZus{}recon}\PY{p}{,} \PY{n}{error} \PY{o}{=}\PY{n}{denoising}\PY{p}{(}\PY{n}{row}\PY{p}{,} \PY{n}{col}\PY{p}{,} \PY{n}{weight}\PY{p}{,} \PY{n}{img\PYZus{}noisy}\PY{p}{)}
+             \PY{n}{imgs}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{img\PYZus{}recon}\PY{p}{)}
+             \PY{n}{error\PYZus{}histo}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{error}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}95}]:} \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{16}\PY{p}{,} \PY{l+m+mi}{16}\PY{p}{)}\PY{p}{)}
+         \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{error\PYZus{}histo}\PY{p}{)}\PY{p}{)}\PY{p}{:}  
+             \PY{n}{p} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplot}\PY{p}{(}\PY{l+m+mi}{6}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{,}\PY{n}{i}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}
+             \PY{n}{img\PYZus{}recon}\PY{o}{=} \PY{n}{imgs}\PY{p}{[}\PY{n}{i}\PY{p}{]}
+             \PY{n}{p}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{weight = }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{lambdas}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{)}\PY{p}{)}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{imshow}\PY{p}{(}\PY{n}{img\PYZus{}recon}\PY{p}{,} \PY{n}{cmap}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{gray}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{axis}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{off}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+             
+         \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_26_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    Let's see how the error of of reconstruction changes.
+
+Error function is
+\(E(u) = ||u-f||_{2}^{2} + \lambda||\nabla u||_{2}^{2}\)
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}98}]:} \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Reconstruction error with diff weight}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{lambdas}\PY{p}{,} \PY{n}{error\PYZus{}histo}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{b\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Lambda}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Error}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_28_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    When \(\lambda\) becomes bigger, reconstructed images are more smooth,
+so the error between it with input noisy image also get bigger.
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
